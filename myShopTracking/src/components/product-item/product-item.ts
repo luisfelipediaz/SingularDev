@@ -43,27 +43,4 @@ export class ProductItemComponent {
   public delete(): void {
     this.productDelete.emit(this.product);
   }
-
-  public optionsClick(slidingItem: ItemSliding, ionItem: Item): void {
-    debugger;
-    if (slidingItem.getSlidingPercent() === 1) {
-      this.closeOptions(slidingItem);
-    } else {
-      this.openOptions(slidingItem, ionItem);
-    }
-  }
-
-  public closeOptions(slidingItem: ItemSliding): void {
-    slidingItem.close();
-    slidingItem.setElementClass("active-slide", false);
-    slidingItem.setElementClass("active-slide", false);
-    slidingItem.setElementClass("active-options-right", false);
-  }
-
-  public openOptions(slidingItem: ItemSliding, ionItem: Item): void {
-    slidingItem.setElementClass("active-sliding", true);
-    slidingItem.setElementClass("active-slide", true);
-    slidingItem.setElementClass("active-options-right", true);
-    ionItem.setElementStyle("transform", "translate3d(-83px, 0px, 0px)")
-  }
 }

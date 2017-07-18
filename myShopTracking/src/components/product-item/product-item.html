@@ -1,5 +1,5 @@
-<ion-item-sliding #slidingItem>
-  <ion-item #item>
+<ion-item-sliding>
+  <ion-item>
     <div item-left>
       <ion-icon color="danger" name="remove-circle" (click)="minus()"></ion-icon>
     </div>
@@ -13,9 +13,6 @@
     <h4>{{ product.unitPrice | currency:'USD':true:'1.0-2' }} c/unidad</h4>
     <div class="item-note" item-right>
       {{ product.price | currency:'USD':true:'1.0-2' }}
-    </div>
-    <div item-right>
-      <ion-icon name="options" (click)="optionsClick(slidingItem, item)"></ion-icon>
     </div>
   </ion-item>
   <ion-item-options side="right">
