@@ -1,0 +1,26 @@
+<ion-item-sliding #slidingItem>
+  <ion-item #item>
+    <div item-left>
+      <ion-icon color="danger" name="remove-circle" (click)="minus()"></ion-icon>
+    </div>
+    <div item-left>
+      {{ product.count | number: '2.0' }}
+    </div>
+    <div item-left>
+      <ion-icon color="secondary" name="add-circle" (click)="more()"></ion-icon>
+    </div>
+    <h2>{{ product.title }}</h2>
+    <h4>{{ product.unitPrice | currency:'USD':true:'1.0-2' }} c/unidad</h4>
+    <div class="item-note" item-right>
+      {{ product.price | currency:'USD':true:'1.0-2' }}
+    </div>
+    <div item-right>
+      <ion-icon name="options" (click)="optionsClick(slidingItem, item)"></ion-icon>
+    </div>
+  </ion-item>
+  <ion-item-options side="right">
+    <button ion-button color="danger" (click)="delete()">
+        Eliminar
+    </button>
+  </ion-item-options>
+</ion-item-sliding>
