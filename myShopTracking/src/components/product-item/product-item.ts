@@ -8,7 +8,7 @@ export class ProductItemComponent {
 
   @Input()
   public product: {
-    id: number,
+    id: any,
     title: string,
     price: number,
     count: number,

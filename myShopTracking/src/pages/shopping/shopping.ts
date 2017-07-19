@@ -11,7 +11,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 export class ShoppingPage {
 
   private items: Array<{
-    id: number,
+    id: any,
     title: string,
     price: number,
     count: number,
@@ -102,9 +102,10 @@ export class ShoppingPage {
 
   public escanerCodigo(): void {
     this.barcodeScanner.scan().then((barcodeData) => {
+      if(!barcodeData.cancelled)
       this.items.push({
-        id: -1,
-        title: JSON.stringify(barcodeData),
+        id: barcodeData.text,
+        title: barcodeData.text,
         price: 0,
         count: 0,
         unitPrice: 0

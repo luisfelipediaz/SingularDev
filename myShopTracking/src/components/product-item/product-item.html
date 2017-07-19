@@ -1,13 +1,17 @@
 <ion-item-sliding>
   <ion-item>
     <div item-left>
-      <ion-icon color="danger" name="remove-circle" (click)="minus()"></ion-icon>
+      <button ion-fab color="danger" mini (click)="minus()">
+        <ion-icon name="remove"></ion-icon>
+      </button>
     </div>
     <div item-left>
       {{ product.count | number: '2.0' }}
     </div>
     <div item-left>
-      <ion-icon color="secondary" name="add-circle" (click)="more()"></ion-icon>
+      <button ion-fab color="secondary" mini (click)="more()">
+        <ion-icon name="add"></ion-icon>
+      </button>
     </div>
     <h2>{{ product.title }}</h2>
     <h4>{{ product.unitPrice | currency:'USD':true:'1.0-2' }} c/unidad</h4>
