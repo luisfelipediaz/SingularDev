@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
-/**
- * Generated class for the ShoppingPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @Component({
   selector: 'page-shopping',
@@ -25,7 +20,10 @@ export class ShoppingPage {
 
   public total: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private alertCtrl: AlertController,
+    private barcodeScanner: BarcodeScanner) {
     this.items.push({
       id: 1,
       title: "Coca cola",
@@ -102,4 +100,17 @@ export class ShoppingPage {
     });
   }
 
+  public escanerCodigo(): void {
+    this.barcodeScanner.scan().then((barcodeData) => {
+      this.items.push({
+        id: -1,
+        title: JSON.stringify(barcodeData),
+        price: 0,
+        count: 0,
+        unitPrice: 0
+      });
+    }, (err) => {
+      // An error occurred
+    });
+  }
 }
