@@ -3,6 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
+import { Product } from '../../interfaces/product';
+import { ProductServiceProvider } from '../../providers/product-service/product-service';
 
 @Component({
   selector: 'page-shopping',
@@ -10,53 +12,12 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 })
 export class ShoppingPage {
 
-  private items: Array<{
-    id: any,
-    title: string,
-    price: number,
-    count: number,
-    unitPrice: number
-  }> = new Array<any>();
+  private items: Array<Product>;
 
   public total: number = 0;
 
-  constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    private alertCtrl: AlertController,
-    private barcodeScanner: BarcodeScanner) {
-    this.items.push({
-      id: 1,
-      title: "Coca cola",
-      price: 6500,
-      count: 1,
-      unitPrice: 6500
-    });
-
-    this.items.push({
-      id: 2,
-      title: "Yogourt",
-      price: 16020,
-      count: 3,
-      unitPrice: 5340
-    });
-
-    this.items.push({
-      id: 3,
-      title: "Pan perro bimbo",
-      price: 4305,
-      count: 7,
-      unitPrice: 615
-    });
-
-    this.items.push({
-      id: 4,
-      title: "Desodorante",
-      price: 1200,
-      count: 12,
-      unitPrice: 100
-    });
-
-    this.calcTotalShopping();
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, private barcodeScanner: BarcodeScanner, private productServiceProvider: ProductServiceProvider) {
+    this.getProducts();
   }
 
   public deleteProduct(product: any): void {
@@ -89,8 +50,6 @@ export class ShoppingPage {
       ]
     });
     alert.present();
-
-
   }
 
   public calcTotalShopping(): void {
@@ -100,18 +59,25 @@ export class ShoppingPage {
     });
   }
 
+  public getProducts(): void {
+    this.productServiceProvider.getProducts().then(products => {      
+      this.items = products || new Array<Product>();
+      this.calcTotalShopping();
+    });
+  }
+
   public escanerCodigo(): void {
     this.barcodeScanner.scan().then((barcodeData) => {
-      if(!barcodeData.cancelled)
-      this.items.push({
-        id: barcodeData.text,
-        title: barcodeData.text,
-        price: 0,
-        count: 0,
-        unitPrice: 0
-      });
+      if (!barcodeData.cancelled)
+        this.items.push({
+          id: barcodeData.text,
+          title: barcodeData.text,
+          price: 0,
+          count: 0,
+          unitPrice: 0
+        });
     }, (err) => {
-      // An error occurred
+      console.log(err);
     });
   }
 }
