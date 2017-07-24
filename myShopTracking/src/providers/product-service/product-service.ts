@@ -11,8 +11,8 @@ export class ProductServiceProvider {
   private isConnected: boolean;
 
   constructor(public http: Http, private network: Network, private storage: Storage) {
-    this.network.onConnect().subscribe(() => this.isConnected = true);
-    this.network.onDisconnect().subscribe(() => this.isConnected = false);
+    this.network.onConnect().subscribe(() => {this.isConnected = true; alert("Estas conectado motherfoca"); });
+    this.network.onDisconnect().subscribe(() => {this.isConnected = false; alert("Estas desconectado motherfoca")});
     this.createProducts();
   }
 
