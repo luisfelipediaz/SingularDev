@@ -6,17 +6,17 @@
       </button>
     </div>
     <div item-left>
-      {{ product.count | number: '2.0' }}
+      {{ item.count | number: '2.0' }}
     </div>
     <div item-left>
       <button ion-fab color="secondary" mini (click)="more()">
         <ion-icon name="add"></ion-icon>
       </button>
     </div>
-    <h2>{{ product.title }}</h2>
-    <h4>{{ product.unitPrice | currency:'USD':true:'1.0-2' }} c/unidad</h4>
+    <h2>{{ item.product.title }}</h2>
+    <h4>{{ item.product.price | currency:'USD':true:'1.0-2' }} c/unidad</h4>
     <div class="item-note" item-right>
-      {{ product.price | currency:'USD':true:'1.0-2' }}
+      {{ item.price | currency:'USD':true:'1.0-2' }}
     </div>
   </ion-item>
   <ion-item-options side="right">

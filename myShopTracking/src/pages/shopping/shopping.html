@@ -10,7 +10,7 @@
 
 <ion-content padding>
   <ion-list>
-    <product-item *ngFor="let item of items" [product]="item" (productChangeCount)="calcTotalShopping()" (productDelete)="deleteProduct($event)"></product-item>
+    <product-item *ngFor="let item of market.products" [item]="item" (productChangeCount)="calcTotalShopping()" (productDelete)="deleteProduct($event)"></product-item>
   </ion-list>
 </ion-content>
 

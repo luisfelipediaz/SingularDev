@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Product } from "../../interfaces/product";
 
 @Component({
   selector: 'product-item',
@@ -7,13 +8,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class ProductItemComponent {
 
   @Input()
-  public product: {
-    id: any,
-    title: string,
-    price: number,
-    count: number,
-    unitPrice: number
-  };
+  public item: {
+        product: Product,
+        price: number;
+        count: number;
+    };
 
   @Output()
   public productChangeCount: EventEmitter<any> = new EventEmitter();
@@ -22,24 +21,23 @@ export class ProductItemComponent {
   public productDelete: EventEmitter<any> = new EventEmitter();
 
   constructor() {
-
   }
 
   public minus(): void {
-    this.product.count--;
-    this.product.price = this.product.count * this.product.unitPrice;
+    this.item.count--;
+    this.item.price = this.item.count * this.item.product.price;
 
-    this.productChangeCount.emit(this.product);
+    this.productChangeCount.emit(this.item);
   }
 
   public more(): void {
-    this.product.count++;
-    this.product.price = this.product.count * this.product.unitPrice;
+    this.item.count++;
+    this.item.price = this.item.count * this.item.product.price;
 
-    this.productChangeCount.emit(this.product);
+    this.productChangeCount.emit(this.item);
   }
 
   public delete(): void {
-    this.productDelete.emit(this.product);
+    this.productDelete.emit(this.item);
   }
 }
