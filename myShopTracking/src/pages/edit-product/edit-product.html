@@ -17,6 +17,10 @@
   <form #productEdit="ngForm">
     <ion-list>
       <ion-item>
+        <ion-label floating>Id</ion-label>
+        <ion-input type="text" required [(ngModel)]="edit.id" name="id"></ion-input>
+      </ion-item>
+      <ion-item>
         <ion-label floating>Name</ion-label>
         <ion-input type="text" required [(ngModel)]="edit.title" name="name"></ion-input>
       </ion-item>

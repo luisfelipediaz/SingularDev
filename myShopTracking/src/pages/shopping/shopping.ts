@@ -31,7 +31,7 @@ export class ShoppingPage {
     }
   }
 
-  public deleteProduct(product: any): void {
+  public deleteProduct(item: any): void {
     let alert = this.alertCtrl.create({
       title: 'Confirmar',
       message: '¿Está seguro de quitar el producto de la compra?',
@@ -45,7 +45,7 @@ export class ShoppingPage {
           handler: () => {
             var indexDel = -1;
             this.market.products.forEach((item, index) => {
-              if (item.product.id === product.id)
+              if (item.product.id === item.product.id)
                 indexDel = index;
             });
 
@@ -67,10 +67,9 @@ export class ShoppingPage {
     });
   }
   public escanerCodigo(): void {
-
     this.barcodeScanner.scan().then((barcodeData) => {
       if (!barcodeData.cancelled) {
-        this.productServiceProvider.getProduct(barcodeData.text).then(product => {
+        this.productServiceProvider.getProduct(barcodeData.text, this.market.supermarket.brand).then(product => {
           if (product) {
             this.market.products.push({
               product: product,

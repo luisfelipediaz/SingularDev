@@ -31,7 +31,7 @@ export class ProductServiceProvider {
 
   public getProduct(id: string, supermarket?: string): Promise<Product> {
     return this.storage.get("products").then(response => {
-      return (response as Product[]).find(item => item.id === id && item.supermarket.brand === supermarket);
+      return (response as Product[]).find(item => item.id === id && (!supermarket || item.supermarket.brand === supermarket));
     });
   }
 
