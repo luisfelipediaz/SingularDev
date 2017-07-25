@@ -24,7 +24,7 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Price</ion-label>
-        <ion-input type="number" required [(ngModel)]="edit.price" name="price"></ion-input>
+        <ion-input type="number" required [ngModel]="edit.price" (ngModelChange)="edit.price = convertToNumber($event)" name="price"></ion-input>
       </ion-item>
     </ion-list>
 

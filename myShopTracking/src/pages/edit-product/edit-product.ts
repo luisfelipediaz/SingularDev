@@ -16,15 +16,17 @@ export class EditProductPage implements OnInit {
   constructor(public navCtrl: NavController, public navParams: NavParams, private productServiceProvider: ProductServiceProvider) {
   }
 
+  public convertToNumber(event): number { return +event; }
+
   public guardar(): void {
     const callBack = this.navParams.get("callback");
-
-    if(this.custom){
+    this.edit.price = parseFloat(this.edit.price.toString());
+    if (this.custom) {
       this.edit.id = this.edit.name;
       callBack(this.edit).then(() => { this.navCtrl.pop() });
       return;
     }
-    
+
     this.productServiceProvider.pushProduct(this.edit).then(() => {
       if (callBack) {
         callBack(this.edit).then(() => { this.navCtrl.pop() });
@@ -49,7 +51,7 @@ export class EditProductPage implements OnInit {
         name: "",
         brand: ""
       };
-    } else if(this.custom){
+    } else if (this.custom) {
       this.edit = {
         id: null,
         price: 100,
