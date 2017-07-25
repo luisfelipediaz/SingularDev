@@ -62,6 +62,16 @@ export class ShoppingPage implements OnInit {
     });
   }
 
+  public customProduct(): void {
+    this.navCtrl.push(EditProductPage, {
+      custom: true,
+      callback: (product) => new Promise((resolve, reject) => {
+        this.market.add(product);
+        resolve();
+      })
+    });
+  }
+
   ngOnInit(): void {
     this.market = new Market();
 

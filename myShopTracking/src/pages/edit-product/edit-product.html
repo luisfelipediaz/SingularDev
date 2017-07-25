@@ -1,9 +1,3 @@
-<!--
-  Generated template for the EditProductPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -16,7 +10,7 @@
 <ion-content padding>
   <form #productEdit="ngForm">
     <ion-list>
-      <ion-item>
+      <ion-item *ngIf="!custom">
         <ion-label floating>Id</ion-label>
         <ion-input type="text" required [(ngModel)]="edit.id" name="id"></ion-input>
       </ion-item>
@@ -24,7 +18,7 @@
         <ion-label floating>Name</ion-label>
         <ion-input type="text" required [(ngModel)]="edit.name" name="name"></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="!custom">
         <ion-label floating>Brand</ion-label>
         <ion-input type="text" required [(ngModel)]="edit.brand" name="brand"></ion-input>
       </ion-item>
