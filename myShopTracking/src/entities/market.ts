@@ -27,6 +27,7 @@ export class Market {
             });
         } else {
             this.products[index].count++;
+            this.products[index].price = this.products[index].count * this.products[index].product.price;
         }
         this.calculateTotal();
     }
