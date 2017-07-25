@@ -4,13 +4,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Product } from '../../interfaces/product';
 import { ProductServiceProvider } from "../../providers/product-service/product-service";
 
-/**
- * Generated class for the EditProductPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-
 @Component({
   selector: 'page-edit-product',
   templateUrl: 'edit-product.html',
@@ -47,7 +40,8 @@ export class EditProductPage implements OnInit {
           city: "Bogotá",
           name: "Alkosto 170"
         },
-        title: ""
+        name: "",
+        brand: ""
       }
     }
   }

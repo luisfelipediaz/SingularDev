@@ -43,7 +43,8 @@ export class ProductServiceProvider {
         products.push(product);
       } else {
         productExist.price = product.price;
-        productExist.title = product.title;
+        productExist.name = product.name;
+        productExist.brand = product.brand;
         productExist.supermarket = product.supermarket;
       }
 
