@@ -45,6 +45,7 @@ export class ShoppingPage implements OnInit {
       if (!barcodeData.cancelled) {
         this.productServiceProvider.getProduct(barcodeData.text, this.market.supermarket.brand).then(product => {
           if (product) {
+            product.price = +product.price;
             this.market.add(product);
           } else {
             this.navCtrl.push(EditProductPage, {

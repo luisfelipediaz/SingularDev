@@ -20,11 +20,9 @@ export class EditProductPage implements OnInit {
 
   public guardar(): void {
     const callBack = this.navParams.get("callback");
-    this.edit.price = parseFloat(this.edit.price.toString());
+
     if (this.custom) {
       this.edit.id = this.edit.name;
-      callBack(this.edit).then(() => { this.navCtrl.pop() });
-      return;
     }
 
     this.productServiceProvider.pushProduct(this.edit).then(() => {
