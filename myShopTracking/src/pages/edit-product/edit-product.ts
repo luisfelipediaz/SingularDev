@@ -51,7 +51,7 @@ export class EditProductPage implements OnInit {
         name: "",
         brand: ""
       };
-    } else if (this.custom) {
+    } else if (this.custom && !this.edit) {
       this.edit = {
         id: null,
         price: 100,

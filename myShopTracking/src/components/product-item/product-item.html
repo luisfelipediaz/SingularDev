@@ -1,4 +1,4 @@
-<ion-item-sliding>
+<ion-item-sliding #slidingItem>
   <ion-item>
     <div item-left>
       <button ion-fab color="danger" mini (click)="minus()">
@@ -19,6 +19,11 @@
       {{ item.price | currency:'USD':true:'1.0-2' }}
     </div>
   </ion-item>
+  <ion-item-options side="left">
+    <button ion-button color="secondary" (click)="edit(slidingItem)">
+        Editar
+    </button>
+  </ion-item-options>
   <ion-item-options side="right">
     <button ion-button color="danger" (click)="delete()">
         Eliminar
