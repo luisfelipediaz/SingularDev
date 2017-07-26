@@ -31,7 +31,6 @@ export class ProductItemViewComponent {
     });
   }
   public delete(): void {
-    if (this.productDelete)
-      this.productDelete.emit(this.product);
+    this.productDelete.emit(this.product);
   }
 }

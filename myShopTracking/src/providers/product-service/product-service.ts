@@ -34,12 +34,23 @@ export class ProductServiceProvider {
       return (response as Product[] || []).find(item => item.id === id && (!supermarket || item.supermarket.brand === supermarket));
     });
   }
+  
   public deleteProduct(product: Product): Promise<any> {
     return this.storage.get("products")
       .then(response => {
         let products = ((response as Product[]) || []);
-        let indice = products.indexOf(product);
-        products.splice(indice, 1);
+        var indexDel = -1;
+
+        for (var index = 0; index < products.length; index++) {
+          if (product.id === products[index].id) {
+            indexDel = index;
+            break;
+          }
+        }
+
+        if (indexDel > -1)
+          products.splice(indexDel, 1);
+
         return this.storage.set("products", products);
       });
   }
