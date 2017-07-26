@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>ListProduct</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <form #listProduct="ngForm">
+        <ion-list>
+            <product-item-view *ngFor="let item of productList" [product]="item" (productDelete)="deleteProduct($event)" ></product-item-view>
+        </ion-list>
+    </form>
+</ion-content>

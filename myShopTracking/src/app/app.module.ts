@@ -16,8 +16,10 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { ShoppingPage } from '../pages/shopping/shopping';
 import { EditProductPage } from '../pages/edit-product/edit-product';
+import { ListProductPage } from '../pages/list-product/list-product';
 
 import { ProductItemComponent } from '../components/product-item/product-item';
+import { ProductItemViewComponent } from '../components/product-item-view/product-item-view';
 import { ProductServiceProvider } from '../providers/product-service/product-service';
 
 @NgModule({
@@ -27,7 +29,9 @@ import { ProductServiceProvider } from '../providers/product-service/product-ser
     ListPage,
     ShoppingPage,
     EditProductPage,
-    ProductItemComponent
+    ProductItemComponent,
+    ProductItemViewComponent,
+    ListProductPage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,8 @@ import { ProductServiceProvider } from '../providers/product-service/product-ser
     HomePage,
     ListPage,
     EditProductPage,
-    ShoppingPage
+    ShoppingPage,
+    ListProductPage
   ],
   providers: [
     Network,

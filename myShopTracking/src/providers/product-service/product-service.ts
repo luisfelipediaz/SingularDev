@@ -34,6 +34,15 @@ export class ProductServiceProvider {
       return (response as Product[] || []).find(item => item.id === id && (!supermarket || item.supermarket.brand === supermarket));
     });
   }
+  public deleteProduct(product: Product): Promise<any> {
+    return this.storage.get("products")
+      .then(response => {
+        let products = ((response as Product[]) || []);
+        let indice = products.indexOf(product);
+        products.splice(indice, 1);
+        return this.storage.set("products", products);
+      });
+  }
 
   public pushProduct(product: Product): Promise<any> {
     return this.storage.get("products").then(response => {

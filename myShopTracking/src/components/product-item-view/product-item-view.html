@@ -1,0 +1,16 @@
+<ion-item-sliding #slidingItem>
+    <ion-item>
+        <h2>{{ product.name }}</h2>
+        <h4>{{ product.price | currency:'USD':true:'1.0-2' }} c/unidad</h4>
+    </ion-item>
+    <ion-item-options side="left">
+        <button ion-button color="secondary" (click)="edit(slidingItem)">
+        Editar
+    </button>
+    </ion-item-options>
+    <ion-item-options side="right">
+        <button ion-button color="danger" (click)="delete()">
+        Eliminar
+    </button>
+    </ion-item-options>
+</ion-item-sliding>
