@@ -35,8 +35,7 @@ export class Market {
     public delete(product: Product): void {
         var indexDel = -1;
         for (var index = 0; index < this.products.length; index++) {
-            var element = this.products[index];
-            if (product.id === element.product.id) {
+            if (product.id === this.products[index].product.id) {
                 indexDel = index;
                 break;
             }
