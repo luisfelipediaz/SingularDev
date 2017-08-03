@@ -9,7 +9,10 @@
 <ion-content padding>
   <form #listProduct="ngForm">
     <ion-list>
-      <product-item-view *ngFor="let item of productList" [product]="item" (productDelete)="deleteProduct($event)"></product-item-view>
+      <ion-item *ngFor="let super of productList | groupBy:'supermarket.name' ">
+        <h1>{{super.key}}</h1>
+        <product-item-view *ngFor="let item of super.value" [product]="item" (productDelete)="deleteProduct($event)"></product-item-view>
+      </ion-item>
     </ion-list>
   </form>
 </ion-content>

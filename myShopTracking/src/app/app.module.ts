@@ -21,6 +21,7 @@ import { ListProductPage } from '../pages/list-product/list-product';
 import { ProductItemComponent } from '../components/product-item/product-item';
 import { ProductItemViewComponent } from '../components/product-item-view/product-item-view';
 import { ProductServiceProvider } from '../providers/product-service/product-service';
+import { GroupByPipe } from '../entities/groupBy.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ProductServiceProvider } from '../providers/product-service/product-ser
     EditProductPage,
     ProductItemComponent,
     ProductItemViewComponent,
-    ListProductPage
+    ListProductPage,
+    GroupByPipe
   ],
   imports: [
     BrowserModule,
