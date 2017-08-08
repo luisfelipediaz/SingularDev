@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from 'ionic-angular';
+import { GroupByPipe } from '../../entities/groupBy.pipe';
 
 import { Product } from '../../interfaces/product';
+import { Market } from '../../entities/market';
 import { ProductServiceProvider } from "../../providers/product-service/product-service";
 
 
 @Component({
     selector: 'page-list-product',
-    templateUrl: 'list-product.html',
+    templateUrl: 'list-product.html'
 })
 export class ListProductPage implements OnInit {
     private productList: Product[];
@@ -16,6 +18,9 @@ export class ListProductPage implements OnInit {
     }
     ngOnInit(): void {
         this.productServiceProvider.getProducts().then(result => {
+            result.forEach(function (productItem) {
+                productItem.supermarket = { name: "Alkosto", brand: "", city: "Bogotá" };
+            });
             this.productList = result;
         });
     }
