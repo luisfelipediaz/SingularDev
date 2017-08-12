@@ -22,7 +22,7 @@ import { ProductItemComponent } from '../components/product-item/product-item';
 import { ProductItemViewComponent } from '../components/product-item-view/product-item-view';
 import { ProductServiceProvider } from '../providers/product-service/product-service';
 import { GroupByPipe } from '../entities/groupBy.pipe';
-import { SupermarketProvider } from '../providers/supermarket/supermarket';
+import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
 
 @NgModule({
   declarations: [
@@ -59,7 +59,7 @@ import { SupermarketProvider } from '../providers/supermarket/supermarket';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProductServiceProvider,
-    SupermarketProvider
+    SupermarketServiceProvider
   ]
 })
 export class AppModule {}

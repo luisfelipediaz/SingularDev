@@ -34,6 +34,5 @@ export class SupermarketServiceProvider {
     return this.storage.get("shopsupermarket")
       .then(response=>response as Supermarket[]);
   }
-  
-  
+    
 }
