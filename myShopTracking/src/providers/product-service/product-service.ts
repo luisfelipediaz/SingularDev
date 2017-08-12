@@ -25,18 +25,18 @@ export class ProductServiceProvider {
   }
 
   public getProducts(): Promise<Product[]> {
-    return this.storage.get("products")
+    return this.storage.get("shopproducts")
       .then(response => response as Product[]);
   }
 
   public getProduct(id: string, supermarket?: string): Promise<Product> {
-    return this.storage.get("products").then(response => {
+    return this.storage.get("shopproducts").then(response => {
       return (response as Product[] || []).find(item => item.id === id && (!supermarket || item.supermarket.brand === supermarket));
     });
   }
   
   public deleteProduct(product: Product): Promise<any> {
-    return this.storage.get("products")
+    return this.storage.get("shopproducts")
       .then(response => {
         let products = ((response as Product[]) || []);
         var indexDel = -1;
@@ -51,12 +51,12 @@ export class ProductServiceProvider {
         if (indexDel > -1)
           products.splice(indexDel, 1);
 
-        return this.storage.set("products", products);
+        return this.storage.set("shopproducts", products);
       });
   }
 
   public pushProduct(product: Product): Promise<any> {
-    return this.storage.get("products").then(response => {
+    return this.storage.get("shopproducts").then(response => {
       let products = ((response as Product[]) || []);
       let productExist = products.find(item => item.id === product.id && item.supermarket.brand === product.supermarket.brand);
       if (!productExist) {
@@ -68,7 +68,7 @@ export class ProductServiceProvider {
         productExist.supermarket = product.supermarket;
       }
 
-      return this.storage.set("products", products);
+      return this.storage.set("shopproducts", products);
     })
   }
 

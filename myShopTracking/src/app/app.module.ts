@@ -22,6 +22,7 @@ import { ProductItemComponent } from '../components/product-item/product-item';
 import { ProductItemViewComponent } from '../components/product-item-view/product-item-view';
 import { ProductServiceProvider } from '../providers/product-service/product-service';
 import { GroupByPipe } from '../entities/groupBy.pipe';
+import { SupermarketProvider } from '../providers/supermarket/supermarket';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { GroupByPipe } from '../entities/groupBy.pipe';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ProductServiceProvider
+    ProductServiceProvider,
+    SupermarketProvider
   ]
 })
 export class AppModule {}
