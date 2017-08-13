@@ -30,9 +30,9 @@ export class SupermarketServiceProvider {
     });
   }
 
-  public getSupermarket(): Promise<Supermarket[]>{
+  public getSupermarket(): Promise<Supermarket[]> {
     return this.storage.get("supermarket")
-      .then(response=>response as Supermarket[]);
+      .then(response => response as Supermarket[]);
   }
-    
+
 }
