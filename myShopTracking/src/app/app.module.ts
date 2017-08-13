@@ -23,6 +23,8 @@ import { ProductItemViewComponent } from '../components/product-item-view/produc
 import { ProductServiceProvider } from '../providers/product-service/product-service';
 import { GroupByPipe } from '../entities/groupBy.pipe';
 import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
+import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
+import { SupermarketListComponent } from '../components/supermarket-list/supermarket-list';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { SupermarketServiceProvider } from '../providers/supermarket-service/sup
     ProductItemComponent,
     ProductItemViewComponent,
     ListProductPage,
-    GroupByPipe
+    GroupByPipe,
+    SupermarketCardComponent,
+    SupermarketListComponent
   ],
   imports: [
     BrowserModule,

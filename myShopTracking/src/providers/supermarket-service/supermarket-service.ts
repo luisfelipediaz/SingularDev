@@ -31,7 +31,7 @@ export class SupermarketServiceProvider {
   }
 
   public getSupermarket(): Promise<Supermarket[]>{
-    return this.storage.get("shopsupermarket")
+    return this.storage.get("supermarket")
       .then(response=>response as Supermarket[]);
   }
     
