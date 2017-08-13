@@ -7,6 +7,7 @@ import { ProductServiceProvider } from '../../providers/product-service/product-
 import { EditProductPage } from '../edit-product/edit-product';
 import { Market } from "../../entities/market";
 
+
 @Component({
   selector: 'page-shopping',
   templateUrl: 'shopping.html',
@@ -18,6 +19,7 @@ export class ShoppingPage implements OnInit {
   constructor(
     public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
     private barcodeScanner: BarcodeScanner, private productServiceProvider: ProductServiceProvider) {
+
   }
 
   public deleteProduct(item: any): void {
