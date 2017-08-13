@@ -6,6 +6,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ProductServiceProvider } from '../../providers/product-service/product-service';
 import { EditProductPage } from '../edit-product/edit-product';
 import { Market } from "../../entities/market";
+import { Supermarket } from "../../interfaces/supermarket";
 
 
 @Component({
@@ -83,5 +84,9 @@ export class ShoppingPage implements OnInit {
       city: "Bogotá",
       name: "Alkosto 170"
     }
+  }
+
+  marketSelect(supermarket:Supermarket):void{
+    
   }
 }

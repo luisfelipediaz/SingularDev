@@ -25,7 +25,12 @@ import { ProductItemViewComponent } from '../components/product-item-view/produc
 import { ProductServiceProvider } from '../providers/product-service/product-service';
 import { GroupByPipe } from '../entities/groupBy.pipe';
 import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
+<<<<<<< HEAD
 import { AppConfig } from "./app.config";
+=======
+import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
+import { SupermarketListComponent } from '../components/supermarket-list/supermarket-list';
+>>>>>>> origin/master
 
 @NgModule({
   declarations: [
@@ -37,7 +42,9 @@ import { AppConfig } from "./app.config";
     ProductItemComponent,
     ProductItemViewComponent,
     ListProductPage,
-    GroupByPipe
+    GroupByPipe,
+    SupermarketCardComponent,
+    SupermarketListComponent
   ],
   imports: [
     BrowserModule,
