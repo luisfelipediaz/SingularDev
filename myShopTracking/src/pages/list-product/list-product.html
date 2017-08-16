@@ -9,10 +9,9 @@
 <ion-content padding>
   <form #listProduct="ngForm">
     <ion-list>
-      <ion-item *ngFor="let super of productList | groupBy:'supermarket.name' ">
-        <h1>{{super.key}}</h1>
-        <product-item-view *ngFor="let item of super.value" [product]="item" (productDelete)="deleteProduct($event)"></product-item-view>
-      </ion-item>
+        <!-- <h1>{{super.key}}</h1> -->
+        <!-- <product-item-view *ngFor="let item of super.value" [product]="item" (productDelete)="deleteProduct($event)"></product-item-view> -->
+        <product-item-view [product]="item" (productDelete)="deleteProduct($event)" *ngFor="let item of productList | async"></product-item-view>
     </ion-list>
   </form>
 </ion-content>

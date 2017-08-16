@@ -13,15 +13,6 @@
   <ion-list>
     <product-item *ngFor="let item of market.products" [item]="item" (productChangeCount)="market.calculateTotal()" (productDelete)="deleteProduct($event)"></product-item>
   </ion-list>
-  <!-- <ion-fab center bottom>
-    <button ion-fab color="secondary"><ion-icon name="add"></ion-icon></button>
-    <ion-fab-list side="left">
-      <button ion-fab color="primary" (click)="escanerCodigo()"><ion-icon name="camera"></ion-icon></button>
-    </ion-fab-list>
-    <ion-fab-list side="right">
-      <button ion-fab color="primary" (click)="escanerCodigo()"><ion-icon name="md-create"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab> -->
   <ion-fab left bottom>
     <button ion-fab color="primary" (click)="escanerCodigo()"><ion-icon name="camera"></ion-icon></button>
   </ion-fab>

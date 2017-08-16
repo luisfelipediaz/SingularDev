@@ -25,11 +25,10 @@ export class EditProductPage implements OnInit {
       this.edit.id = this.edit.name;
     }
 
-    this.productServiceProvider.pushProduct(this.edit).then(() => {
-      if (callBack) {
-        callBack(this.edit).then(() => { this.navCtrl.pop() });
-      }
-    });
+    this.productServiceProvider.pushProduct(this.edit)
+    if (callBack) {
+      callBack(this.edit).then(() => { this.navCtrl.pop() });
+    }
   }
 
   ngOnInit(): void {

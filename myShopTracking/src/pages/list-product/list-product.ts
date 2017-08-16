@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from 'ionic-angular';
-import { GroupByPipe } from '../../entities/groupBy.pipe';
 
 import { Product } from '../../interfaces/product';
-import { Market } from '../../entities/market';
 import { ProductServiceProvider } from "../../providers/product-service/product-service";
+import { FirebaseListObservable } from "angularfire2/database";
 
 
 @Component({
@@ -12,20 +11,14 @@ import { ProductServiceProvider } from "../../providers/product-service/product-
     templateUrl: 'list-product.html'
 })
 export class ListProductPage implements OnInit {
-    private productList: Product[];
+    private productList: FirebaseListObservable<Product[]>;
     constructor(private productServiceProvider: ProductServiceProvider, private alertCtrl: AlertController) {
 
     }
     ngOnInit(): void {
-        this.productServiceProvider.getProducts().then(result => {
-            result.forEach(function (productItem) {
-                productItem.supermarket = { name: "Alkosto", brand: "", city: "Bogotá" };
-            });
-            this.productList = result;
-        });
+        this.productList = this.productServiceProvider.getProducts();
     }
     public deleteProduct(item: any): void {
-        var vm = this;
         let alert = this.alertCtrl.create({
             title: 'Confirmar',
             message: '¿Está seguro de quitar el producto de la lista?',
@@ -37,9 +30,7 @@ export class ListProductPage implements OnInit {
                 {
                     text: 'Aceptar',
                     handler: () => {
-                        this.productServiceProvider.deleteProduct(item).then(result => {
-                            vm.productList = result;
-                        });
+                        this.productServiceProvider.deleteProduct(item.$key);
                     }
                 }
             ]

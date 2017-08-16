@@ -4,14 +4,12 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { Network } from '@ionic-native/network';
-
-import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -25,12 +23,9 @@ import { ProductItemViewComponent } from '../components/product-item-view/produc
 import { ProductServiceProvider } from '../providers/product-service/product-service';
 import { GroupByPipe } from '../entities/groupBy.pipe';
 import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
-<<<<<<< HEAD
 import { AppConfig } from "./app.config";
-=======
 import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
 import { SupermarketListComponent } from '../components/supermarket-list/supermarket-list';
->>>>>>> origin/master
 
 @NgModule({
   declarations: [
@@ -51,9 +46,9 @@ import { SupermarketListComponent } from '../components/supermarket-list/superma
     HttpModule,
     FormsModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(AppConfig.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -65,7 +60,6 @@ import { SupermarketListComponent } from '../components/supermarket-list/superma
     ListProductPage
   ],
   providers: [
-    Network,
     BarcodeScanner,
     StatusBar,
     SplashScreen,

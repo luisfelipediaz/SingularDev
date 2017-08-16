@@ -46,10 +46,10 @@ export class ShoppingPage implements OnInit {
   public escanerCodigo(): void {
     this.barcodeScanner.scan().then((barcodeData) => {
       if (!barcodeData.cancelled) {
-        this.productServiceProvider.getProduct(barcodeData.text, this.market.supermarket.brand).then(product => {
-          if (product) {
-            product.price = +product.price;
-            this.market.add(product);
+        this.productServiceProvider.getProduct(barcodeData.text, this.market.supermarket.brand).subscribe(products => {
+          if (products.length > 0) {
+            products[0].price = +products[0].price;
+            this.market.add(products[0]);
           } else {
             this.navCtrl.push(EditProductPage, {
               new: barcodeData.text,
