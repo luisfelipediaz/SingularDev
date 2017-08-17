@@ -17,6 +17,7 @@ import { ListPage } from '../pages/list/list';
 import { ShoppingPage } from '../pages/shopping/shopping';
 import { EditProductPage } from '../pages/edit-product/edit-product';
 import { ListProductPage } from '../pages/list-product/list-product';
+import { SupermarketPage } from "../pages/supermarket/supermarket";
 
 import { ProductItemComponent } from '../components/product-item/product-item';
 import { ProductItemViewComponent } from '../components/product-item-view/product-item-view';
@@ -26,6 +27,7 @@ import { SupermarketServiceProvider } from '../providers/supermarket-service/sup
 import { AppConfig } from "./app.config";
 import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
 import { SupermarketListComponent } from '../components/supermarket-list/supermarket-list';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { SupermarketListComponent } from '../components/supermarket-list/superma
     ProductItemComponent,
     ProductItemViewComponent,
     ListProductPage,
+    SupermarketPage,
     GroupByPipe,
     SupermarketCardComponent,
     SupermarketListComponent
