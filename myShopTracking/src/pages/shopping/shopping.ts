@@ -46,29 +46,48 @@ export class ShoppingPage implements OnInit {
   public escanerCodigo(): void {
     this.barcodeScanner.scan().then((barcodeData) => {
       if (!barcodeData.cancelled) {
-        this.productServiceProvider.getProduct(barcodeData.text, this.market.supermarket.brand).subscribe(products => {
-          if (products.length > 0) {
-            products[0].price = +products[0].price;
-            this.market.add(products[0]);
-          } else {
-            this.navCtrl.push(EditProductPage, {
-              new: barcodeData.text,
-              callback: (product) => new Promise((resolve, reject) => {
-                this.market.add(product);
-                resolve();
-              })
-            });
-          }
-        });
+        this.agregarProducto(barcodeData.text)
       }
     }, (err) => {
-      console.log(err);
+      this.agregarProducto(prompt("Codigo de barras del producto"));
+    });
+
+  }
+
+  public agregarProducto(text: string): void {
+    this.productServiceProvider.getProduct(text, this.market.supermarket.id).subscribe(product => {
+      if (product) {
+        this.market.add(product);
+      } else {
+
+        var newProduct = {
+          id: text,
+          supermarkets: {}
+        };
+
+        newProduct.supermarkets[this.market.supermarket.id] = true;
+
+        this.navCtrl.push(EditProductPage, {
+          new: newProduct,
+          callback: (product) => new Promise((resolve, reject) => {
+            this.market.add(product);
+            resolve();
+          })
+        });
+      }
     });
   }
 
   public customProduct(): void {
+    var newProduct = {
+      supermarkets: {}
+    };
+
+    newProduct.supermarkets[this.market.supermarket.id] = true;
+
     this.navCtrl.push(EditProductPage, {
       custom: true,
+      new: newProduct,
       callback: (product) => new Promise((resolve, reject) => {
         this.market.add(product);
         resolve();
@@ -79,14 +98,16 @@ export class ShoppingPage implements OnInit {
   ngOnInit(): void {
     this.market = new Market();
 
+
     this.market.supermarket = {
+      id: "dd252afe3bdb0a59828166e128016445",
       brand: "Alkosto",
       city: "Bogotá",
       name: "Alkosto 170"
     }
   }
 
-  marketSelect(supermarket:Supermarket):void{
-    
+  marketSelect(supermarket: Supermarket): void {
+
   }
 }

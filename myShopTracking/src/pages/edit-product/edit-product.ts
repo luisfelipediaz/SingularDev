@@ -9,7 +9,7 @@ import { ProductServiceProvider } from "../../providers/product-service/product-
   templateUrl: 'edit-product.html',
 })
 export class EditProductPage implements OnInit {
-  private new: string;
+  private new: Product;
   private edit: Product;
   private custom: boolean = false;
 
@@ -23,9 +23,11 @@ export class EditProductPage implements OnInit {
 
     if (this.custom) {
       this.edit.id = this.edit.name;
+    } else {
+      this.productServiceProvider.pushProduct(this.edit)
     }
 
-    this.productServiceProvider.pushProduct(this.edit)
+
     if (callBack) {
       callBack(this.edit).then(() => { this.navCtrl.pop() });
     }
@@ -36,27 +38,18 @@ export class EditProductPage implements OnInit {
     this.edit = this.navParams.get("edit");
     this.custom = this.navParams.get("custom");
 
-    if (this.new) {
+    if (!this.custom && this.new) {
       this.edit = {
-        id: this.new,
-        price: 100,
-        supermarket: {
-          brand: "Alkosto",
-          city: "Bogotá",
-          name: "Alkosto 170"
-        },
+        id: this.new.id,
+        supermarkets: this.new.supermarkets,
         name: "",
         brand: ""
       };
+      
     } else if (this.custom && !this.edit) {
       this.edit = {
         id: null,
-        price: 100,
-        supermarket: {
-          brand: "Alkosto",
-          city: "Bogotá",
-          name: "Alkosto 170"
-        },
+        supermarkets: this.new.supermarkets,
         name: "",
         brand: ""
       };

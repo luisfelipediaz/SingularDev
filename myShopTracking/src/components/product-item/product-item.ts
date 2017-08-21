@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from "../../interfaces/product";
 import { NavController, ItemSliding } from "ionic-angular";
 import { EditProductPage } from "../../pages/edit-product/edit-product";
+import { Supermarket } from "../../interfaces/supermarket";
 
 @Component({
   selector: 'product-item',
@@ -16,6 +17,9 @@ export class ProductItemComponent {
     count: number;
   };
 
+  @Input()
+  supermarket: Supermarket;
+
   @Output()
   public productChangeCount: EventEmitter<any> = new EventEmitter();
 
@@ -27,14 +31,14 @@ export class ProductItemComponent {
 
   public minus(): void {
     this.item.count--;
-    this.item.price = this.item.count * this.item.product.price;
+    this.item.price = this.item.count * this.item.product.supermarkets[this.supermarket.id];
 
     this.productChangeCount.emit(this.item);
   }
 
   public more(): void {
     this.item.count++;
-    this.item.price = this.item.count * this.item.product.price;
+    this.item.price = this.item.count * this.item.product.supermarkets[this.supermarket.id];
 
     this.productChangeCount.emit(this.item);
   }

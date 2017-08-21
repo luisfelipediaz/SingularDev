@@ -22,12 +22,12 @@ export class Market {
         if (index === -1) {
             this.products.push({
                 product: product,
-                price: product.price,
+                price: product.supermarkets[this.supermarket.id],
                 count: 1
             });
         } else {
             this.products[index].count++;
-            this.products[index].price = this.products[index].count * this.products[index].product.price;
+            this.products[index].price = this.products[index].count * this.products[index].product.supermarkets[this.supermarket.id];
         }
         this.calculateTotal();
     }

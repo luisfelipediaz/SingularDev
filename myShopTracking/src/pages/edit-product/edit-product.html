@@ -22,10 +22,14 @@
         <ion-label floating>Brand</ion-label>
         <ion-input type="text" [(ngModel)]="edit.brand" name="brand"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label floating>Price</ion-label>
-        <ion-input type="number" required [ngModel]="edit.price" (ngModelChange)="edit.price = convertToNumber($event)" name="price"></ion-input>
-      </ion-item>
+      <ion-item-group *ngFor="let supermarket of edit.supermarkets">
+        <ion-item-divider color="light">{{supermarket}}</ion-item-divider>
+        <ion-item>
+          <ion-label floating>Price</ion-label>
+          <ion-input type="number" required [ngModel]="edit.supermarkets[supermarket]" (ngModelChange)="edit.supermarkets[supermarket] = convertToNumber($event)" name="price"></ion-input>
+        </ion-item>
+      </ion-item-group>
+
     </ion-list>
 
     <div padding>
