@@ -15,4 +15,8 @@ export class SupermarketServiceProvider {
     return this.afDB.list("/supermarkets");
   }
 
+  public pushSupermarket(supermarket: Supermarket) {
+    this.afDB.object(`/supermarkets/${supermarket.id}`).set(supermarket);
+  }
+
 }

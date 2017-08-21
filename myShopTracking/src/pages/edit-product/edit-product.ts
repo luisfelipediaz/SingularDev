@@ -11,6 +11,7 @@ import { ProductServiceProvider } from "../../providers/product-service/product-
 export class EditProductPage implements OnInit {
   private new: Product;
   private edit: Product;
+  private supermarket: string;
   private custom: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private productServiceProvider: ProductServiceProvider) {
@@ -35,6 +36,8 @@ export class EditProductPage implements OnInit {
 
   ngOnInit(): void {
     this.new = this.navParams.get("new");
+    this.supermarket = this.navParams.get("supermarket");
+    
     this.edit = this.navParams.get("edit");
     this.custom = this.navParams.get("custom");
 

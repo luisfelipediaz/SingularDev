@@ -15,11 +15,8 @@ export class ProductServiceProvider {
     return this.afDB.list("/products");
   }
 
-  public getProduct(id: string, supermarket?: string): FirebaseObjectObservable<Product> {
-    if (supermarket)
-      return this.afDB.object(`/supermarkets/${supermarket}/products/${id}`);
-    else
-      return this.afDB.object(`/products/${id}`);
+  public getProduct(id: string): FirebaseObjectObservable<Product> {
+    return this.afDB.object(`/products/${id}`);
   }
 
   public deleteProduct(key: string): void {
@@ -30,11 +27,12 @@ export class ProductServiceProvider {
     this.afDB.object(`/products/${product.id}`).update({
       id: product.id,
       name: product.name,
-      brand: product.brand
+      brand: product.brand,
+      supermarkets: {}
     });
     for (let supermarket in product.supermarkets) {
       this.afDB.object(`/products/${product.id}/supermarkets/${supermarket}`).set(product.supermarkets[supermarket]);
-      this.afDB.object(`/supermarkets/${supermarket}/products/${product.id}`).update(product);
+      this.afDB.object(`/supermarkets/${supermarket}/products/${product.id}`).set(true);
     }
   }
 
