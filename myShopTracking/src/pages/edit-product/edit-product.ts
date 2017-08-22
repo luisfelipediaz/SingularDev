@@ -28,7 +28,6 @@ export class EditProductPage implements OnInit {
       this.productServiceProvider.pushProduct(this.edit)
     }
 
-
     if (callBack) {
       callBack(this.edit).then(() => { this.navCtrl.pop() });
     }
@@ -45,16 +44,16 @@ export class EditProductPage implements OnInit {
       this.edit = {
         id: this.new.id,
         supermarkets: this.new.supermarkets,
-        name: "",
-        brand: ""
+        name: this.new.name,
+        brand: this.new.brand
       };
       
     } else if (this.custom && !this.edit) {
       this.edit = {
         id: null,
         supermarkets: this.new.supermarkets,
-        name: "",
-        brand: ""
+        name: this.new.name,
+        brand: this.new.brand
       };
     } else if (!this.edit) {
       throw new ReferenceError("La página EditProduct esperaba por lo menos un parametro ('new' or 'edit' or 'custom')");

@@ -15,16 +15,11 @@ export class SupermarketServiceProvider {
     return this.afDB.list("/supermarkets");
   }
 
-<<<<<<< HEAD
   public pushSupermarket(supermarket:Supermarket):void{
     var supermarketKey = this.afDB.list(`/supermarkets`).push(supermarket).key;
     this.afDB.object(`/supermarkets/${supermarketKey}`).update({
       id: supermarketKey
     })
-=======
-  public pushSupermarket(supermarket: Supermarket) {
-    this.afDB.object(`/supermarkets/${supermarket.id}`).set(supermarket);
->>>>>>> a5e31c8ebd28d59565c5c2a3891f87972f0545b1
   }
 
 }

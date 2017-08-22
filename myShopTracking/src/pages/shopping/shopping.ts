@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
+import { AlertController, ModalController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { ProductServiceProvider } from '../../providers/product-service/product-service';
@@ -8,7 +8,7 @@ import { EditProductPage } from '../edit-product/edit-product';
 import { Market } from "../../entities/market";
 import { Supermarket } from "../../interfaces/supermarket";
 import { Product } from "../../interfaces/product";
-import { SupermarketServiceProvider } from "../../providers/supermarket-service/supermarket-service";
+import { ListSupermarketPage } from "../lit-supermarket/list-supermarket";
 
 
 @Component({
@@ -20,9 +20,12 @@ export class ShoppingPage implements OnInit {
   private market: Market;
 
   constructor(
-    public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
-    private barcodeScanner: BarcodeScanner, private productServiceProvider: ProductServiceProvider,
-    private supermarketService: SupermarketServiceProvider) {
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private alertCtrl: AlertController,
+    private barcodeScanner: BarcodeScanner,
+    private productServiceProvider: ProductServiceProvider,
+    public modalCtrl: ModalController) {
 
   }
 
@@ -77,7 +80,7 @@ export class ShoppingPage implements OnInit {
           supermarket: this.market.supermarket.id,
           callback: (product) => new Promise((resolve, reject) => {
             this.market.add(product);
-            
+
             resolve();
           })
         });
@@ -104,24 +107,19 @@ export class ShoppingPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.market = new Market();
-
-    this.supermarketService.pushSupermarket({
-      id: "dd252afe3bdb0a59828166e128016445",
-      brand: "Alkosto",
-      city: "Bogotá",
-      name: "Alkosto 170"
-    });
-
-    this.market.supermarket = {
-      id: "dd252afe3bdb0a59828166e128016445",
-      brand: "Alkosto",
-      city: "Bogotá",
-      name: "Alkosto 170"
+    if (!this.market) {
+      this.market = new Market();
+      this.openSelectSupermarket();
     }
   }
 
-  marketSelect(supermarket: Supermarket): void {
-
+  openSelectSupermarket(): void {
+    let modal = this.modalCtrl.create(ListSupermarketPage, this.market.supermarket);
+    modal.present();
+    modal.onWillDismiss((supermarket: Supermarket) => {
+      if (supermarket) {
+        this.market.supermarket = supermarket;
+      }
+    });
   }
 }

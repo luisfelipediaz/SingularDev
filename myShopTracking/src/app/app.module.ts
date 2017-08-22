@@ -26,7 +26,7 @@ import { GroupByPipe } from '../entities/groupBy.pipe';
 import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
 import { AppConfig } from "./app.config";
 import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
-import { SupermarketListComponent } from '../components/supermarket-list/supermarket-list';
+import { ListSupermarketPage } from "../pages/lit-supermarket/list-supermarket";
 
 
 @NgModule({
@@ -42,7 +42,7 @@ import { SupermarketListComponent } from '../components/supermarket-list/superma
     SupermarketPage,
     GroupByPipe,
     SupermarketCardComponent,
-    SupermarketListComponent
+    ListSupermarketPage
   ],
   imports: [
     BrowserModule,
@@ -61,7 +61,8 @@ import { SupermarketListComponent } from '../components/supermarket-list/superma
     EditProductPage,
     ShoppingPage,
     ListProductPage,
-    SupermarketPage
+    SupermarketPage,
+    ListSupermarketPage
   ],
   providers: [
     BarcodeScanner,

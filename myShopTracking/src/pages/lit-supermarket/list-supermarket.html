@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Cancel</button>
+    </ion-buttons>
+
+    <ion-title>
+      Select supermarket
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="outer-content">
+  <ion-list radio-group *ngFor="let supermarket of supermarketList | async" (ionChange)="marketSelect(supermarket)">
+    <ion-list-header>
+      {{supermarket.brand}}
+    </ion-list-header>
+    <ion-item>
+      <ion-label>{{supermarket.name}}</ion-label>
+      <ion-radio [checked]="supermarket.id === supermarketSelect.id"></ion-radio>
+    </ion-item>
+  </ion-list>
+</ion-content>
