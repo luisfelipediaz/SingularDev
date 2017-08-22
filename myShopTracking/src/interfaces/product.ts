@@ -4,5 +4,5 @@ export interface Product {
     id: string;
     name: string;
     brand: string;
-    supermarkets: Map<string, number>;
+    supermarkets: { [id: string]: number };
 }

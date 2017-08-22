@@ -7,6 +7,8 @@ import { ProductServiceProvider } from '../../providers/product-service/product-
 import { EditProductPage } from '../edit-product/edit-product';
 import { Market } from "../../entities/market";
 import { Supermarket } from "../../interfaces/supermarket";
+import { Product } from "../../interfaces/product";
+import { SupermarketServiceProvider } from "../../providers/supermarket-service/supermarket-service";
 
 
 @Component({
@@ -19,7 +21,8 @@ export class ShoppingPage implements OnInit {
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
-    private barcodeScanner: BarcodeScanner, private productServiceProvider: ProductServiceProvider) {
+    private barcodeScanner: BarcodeScanner, private productServiceProvider: ProductServiceProvider,
+    private supermarketService: SupermarketServiceProvider) {
 
   }
 
@@ -55,22 +58,26 @@ export class ShoppingPage implements OnInit {
   }
 
   public agregarProducto(text: string): void {
-    this.productServiceProvider.getProduct(text, this.market.supermarket.id).subscribe(product => {
-      if (product) {
+    let subscribeProduct = this.productServiceProvider.getProduct(text).subscribe(product => {
+      subscribeProduct.unsubscribe();
+      if (product.supermarkets && product.supermarkets[this.market.supermarket.id]) {
         this.market.add(product);
       } else {
-
-        var newProduct = {
+        let newProduct: Product = {
           id: text,
-          supermarkets: {}
+          supermarkets: {},
+          brand: product.brand || "",
+          name: product.name || ""
         };
 
-        newProduct.supermarkets[this.market.supermarket.id] = true;
+        newProduct.supermarkets[this.market.supermarket.id] = 0;
 
         this.navCtrl.push(EditProductPage, {
           new: newProduct,
+          supermarket: this.market.supermarket.id,
           callback: (product) => new Promise((resolve, reject) => {
             this.market.add(product);
+            
             resolve();
           })
         });
@@ -83,11 +90,12 @@ export class ShoppingPage implements OnInit {
       supermarkets: {}
     };
 
-    newProduct.supermarkets[this.market.supermarket.id] = true;
+    newProduct.supermarkets[this.market.supermarket.id] = 0;
 
     this.navCtrl.push(EditProductPage, {
       custom: true,
       new: newProduct,
+      supermarket: this.market.supermarket.id,
       callback: (product) => new Promise((resolve, reject) => {
         this.market.add(product);
         resolve();
@@ -98,6 +106,12 @@ export class ShoppingPage implements OnInit {
   ngOnInit(): void {
     this.market = new Market();
 
+    this.supermarketService.pushSupermarket({
+      id: "dd252afe3bdb0a59828166e128016445",
+      brand: "Alkosto",
+      city: "Bogotá",
+      name: "Alkosto 170"
+    });
 
     this.market.supermarket = {
       id: "dd252afe3bdb0a59828166e128016445",
