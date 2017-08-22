@@ -18,6 +18,7 @@ import { ShoppingPage } from '../pages/shopping/shopping';
 import { EditProductPage } from '../pages/edit-product/edit-product';
 import { ListProductPage } from '../pages/list-product/list-product';
 import { SupermarketPage } from "../pages/supermarket/supermarket";
+import { ListSupermarketPage } from "../pages/lit-supermarket/list-supermarket";
 
 import { ProductItemComponent } from '../components/product-item/product-item';
 import { ProductItemViewComponent } from '../components/product-item-view/product-item-view';
@@ -26,8 +27,7 @@ import { GroupByPipe } from '../entities/groupBy.pipe';
 import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
 import { AppConfig } from "./app.config";
 import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
-import { ListSupermarketPage } from "../pages/lit-supermarket/list-supermarket";
-
+import { LoginPage } from "../pages/login/login";
 
 @NgModule({
   declarations: [
@@ -42,7 +42,8 @@ import { ListSupermarketPage } from "../pages/lit-supermarket/list-supermarket";
     SupermarketPage,
     GroupByPipe,
     SupermarketCardComponent,
-    ListSupermarketPage
+    ListSupermarketPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -62,7 +63,8 @@ import { ListSupermarketPage } from "../pages/lit-supermarket/list-supermarket";
     ShoppingPage,
     ListProductPage,
     SupermarketPage,
-    ListSupermarketPage
+    ListSupermarketPage,
+    LoginPage
   ],
   providers: [
     BarcodeScanner,

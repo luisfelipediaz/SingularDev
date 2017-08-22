@@ -31,14 +31,14 @@ export class ProductItemComponent {
 
   public minus(): void {
     this.item.count--;
-    this.item.price = this.item.count * this.item.product.supermarkets[this.supermarket.id];
+    this.item.price = this.item.count * this.item.product.supermarkets[this.supermarket.$key];
 
     this.productChangeCount.emit(this.item);
   }
 
   public more(): void {
     this.item.count++;
-    this.item.price = this.item.count * this.item.product.supermarkets[this.supermarket.id];
+    this.item.price = this.item.count * this.item.product.supermarkets[this.supermarket.$key];
 
     this.productChangeCount.emit(this.item);
   }
@@ -47,10 +47,10 @@ export class ProductItemComponent {
     slidingItem.close();
     this.navCtrl.push(EditProductPage, {
       edit: this.item.product,
-      supermarket: this.supermarket.id,
-      custom: this.item.product.id === this.item.product.name,
+      supermarket: this.supermarket.$key,
+      custom: this.item.product.$key === this.item.product.name,
       callback: (product) => new Promise((resolve, reject) => {
-        this.item.price = this.item.count * product.supermarkets[this.supermarket.id];
+        this.item.price = this.item.count * product.supermarkets[this.supermarket.$key];
         this.productChangeCount.emit(this.item);
         resolve();
       })

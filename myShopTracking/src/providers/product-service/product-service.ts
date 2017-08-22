@@ -24,15 +24,15 @@ export class ProductServiceProvider {
   }
 
   public pushProduct(product: Product): void {
-    this.afDB.object(`/products/${product.id}`).update({
-      id: product.id,
+    this.afDB.object(`/products/${product.$key}`).update({
+      id: product.$key,
       name: product.name,
       brand: product.brand
     });
-    
+
     for (let supermarket in product.supermarkets) {
-      this.afDB.object(`/products/${product.id}/supermarkets/${supermarket}`).set(product.supermarkets[supermarket]);
-      this.afDB.object(`/supermarkets/${supermarket}/products/${product.id}`).set(true);
+      this.afDB.object(`/products/${product.$key}/supermarkets/${supermarket}`).set(product.supermarkets[supermarket]);
+      this.afDB.object(`/supermarkets/${supermarket}/products/${product.$key}`).set(true);
     }
   }
 

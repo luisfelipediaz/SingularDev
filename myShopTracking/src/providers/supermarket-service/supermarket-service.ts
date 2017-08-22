@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Supermarket } from "../../interfaces/supermarket";
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from "angularfire2/database";
+import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 
 @Injectable()
 export class SupermarketServiceProvider {
@@ -15,11 +15,10 @@ export class SupermarketServiceProvider {
     return this.afDB.list("/supermarkets");
   }
 
-  public pushSupermarket(supermarket:Supermarket):void{
+  public pushSupermarket(supermarket: Supermarket): void {
     var supermarketKey = this.afDB.list(`/supermarkets`).push(supermarket).key;
-    this.afDB.object(`/supermarkets/${supermarketKey}`).update({
-      id: supermarketKey
-    })
+    supermarket.$key = supermarketKey;
+    this.afDB.object(`/supermarketchain/${supermarket.brand}/${supermarketKey}`).set(true);
   }
 
 }

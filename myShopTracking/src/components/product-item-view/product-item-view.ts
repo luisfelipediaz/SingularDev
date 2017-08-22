@@ -24,7 +24,7 @@ export class ProductItemViewComponent {
     slidingItem.close();
     this.navCtrl.push(EditProductPage, {
       edit: this.product,
-      custom: this.product.id === this.product.name,
+      custom: this.product.$key === this.product.name,
       callback: (product) => new Promise((resolve, reject) => {
         resolve();
       })

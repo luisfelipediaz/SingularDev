@@ -18,16 +18,16 @@ export class Market {
     }
 
     public add(product: Product): void {
-        let index = this.products.findIndex(item => item.product.id === product.id);
+        let index = this.products.findIndex(item => item.product.$key === product.$key);
         if (index === -1) {
             this.products.push({
                 product: product,
-                price: product.supermarkets[this.supermarket.id],
+                price: product.supermarkets[this.supermarket.$key],
                 count: 1
             });
         } else {
             this.products[index].count++;
-            this.products[index].price = this.products[index].count * this.products[index].product.supermarkets[this.supermarket.id];
+            this.products[index].price = this.products[index].count * this.products[index].product.supermarkets[this.supermarket.$key];
         }
         this.calculateTotal();
     }
@@ -35,7 +35,7 @@ export class Market {
     public delete(product: Product): void {
         var indexDel = -1;
         for (var index = 0; index < this.products.length; index++) {
-            if (product.id === this.products[index].product.id) {
+            if (product.$key === this.products[index].product.$key) {
                 indexDel = index;
                 break;
             }

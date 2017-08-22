@@ -1,5 +1,5 @@
 export interface Supermarket{
-    id: string;
+    $key?: string;
     brand: string;
     name: string;
     city: string;

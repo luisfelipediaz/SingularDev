@@ -10,7 +10,6 @@ import { SupermarketServiceProvider } from '../../providers/supermarket-service/
 })
 export class SupermarketPage implements OnInit {
   private new: Supermarket;
-  private edit: Supermarket;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private supermarketServiceProvider: SupermarketServiceProvider) {
   }
@@ -21,7 +20,6 @@ export class SupermarketPage implements OnInit {
 
   ngOnInit(): void {
     this.new = {
-      id: '',
       brand: '',
       name: '',
       city: ''

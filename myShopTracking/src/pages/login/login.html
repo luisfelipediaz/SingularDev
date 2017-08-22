@@ -1,0 +1,19 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <button ion-button icon-left block color="danger" (click)="loginUserGoogle()" *ngIf="!userProfile">
+    <ion-icon name="logo-googleplus"></ion-icon>
+    Continue with Google
+  </button>
+  <button ion-button icon-left block color="facebook" (click)="loginUserFacebook()" *ngIf="!userProfile">
+    <ion-icon name="logo-facebook"></ion-icon>
+    Continue with Facebook
+  </button>
+</ion-content>

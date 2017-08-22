@@ -28,8 +28,7 @@ export class ListSupermarketPage {
     this.viewCtrl.dismiss();
   }
 
-  marketSelect(select: Supermarket): void {    
+  marketSelect(select: Supermarket): void {
     this.viewCtrl.dismiss(select);
   }
-
 }

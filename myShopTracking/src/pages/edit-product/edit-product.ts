@@ -23,7 +23,7 @@ export class EditProductPage implements OnInit {
     const callBack = this.navParams.get("callback");
 
     if (this.custom) {
-      this.edit.id = this.edit.name;
+      this.edit.$key = this.edit.name;
     } else {
       this.productServiceProvider.pushProduct(this.edit)
     }
@@ -42,7 +42,7 @@ export class EditProductPage implements OnInit {
 
     if (!this.custom && this.new) {
       this.edit = {
-        id: this.new.id,
+        $key: this.new.$key,
         supermarkets: this.new.supermarkets,
         name: this.new.name,
         brand: this.new.brand
@@ -50,7 +50,7 @@ export class EditProductPage implements OnInit {
       
     } else if (this.custom && !this.edit) {
       this.edit = {
-        id: null,
+        $key: null,
         supermarkets: this.new.supermarkets,
         name: this.new.name,
         brand: this.new.brand
