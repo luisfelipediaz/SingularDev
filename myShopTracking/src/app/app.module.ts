@@ -60,7 +60,8 @@ import { SupermarketListComponent } from '../components/supermarket-list/superma
     ListPage,
     EditProductPage,
     ShoppingPage,
-    ListProductPage
+    ListProductPage,
+    SupermarketPage
   ],
   providers: [
     BarcodeScanner,
