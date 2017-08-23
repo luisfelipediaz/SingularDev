@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 
 import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from "@ionic-native/google-plus";
 
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
+
 import * as firebase from 'firebase/app';
 
 @Component({
@@ -13,15 +15,24 @@ import * as firebase from 'firebase/app';
 export class LoginPage {
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams,
     public afAuth: AngularFireAuth,
     private platform: Platform,
-    private fb: Facebook) {
+    private fb: Facebook,
+    private go: GooglePlus) {
   }
 
   loginUserGoogle(): void {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    if (this.platform.is('cordova')) {
+      this.go.login({
+        
+      }).then(res => {
+        const googleCredential = firebase.auth.GoogleAuthProvider.credential(res.idToken);
+        return firebase.auth().signInWithCredential(googleCredential);
+      })
+    } else {
+      this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    }
+
   }
 
   loginUserFacebook(): void {
@@ -32,8 +43,8 @@ export class LoginPage {
       })
     }
     else {
-      this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());    
+      this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
     }
-    
+
   }
 }

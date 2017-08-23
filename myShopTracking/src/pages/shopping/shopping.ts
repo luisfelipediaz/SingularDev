@@ -7,7 +7,6 @@ import { ProductServiceProvider } from '../../providers/product-service/product-
 import { EditProductPage } from '../edit-product/edit-product';
 import { Market } from "../../entities/market";
 import { Supermarket } from "../../interfaces/supermarket";
-import { Product } from "../../interfaces/product";
 import { ListSupermarketPage } from "../lit-supermarket/list-supermarket";
 
 
@@ -61,25 +60,18 @@ export class ShoppingPage implements OnInit {
   }
 
   public agregarProducto(text: string): void {
-    this.productServiceProvider.getProduct(text).$ref.once('value').then(productSnapshot => {
-
-      let product = productSnapshot.val();
-
-      if (!!product && product.supermarkets[this.market.supermarket.$key]) {
+    let subscribeProduct = this.productServiceProvider.getProduct(text).subscribe(product => {
+      subscribeProduct.unsubscribe();
+      if (!!product.supermarkets && product.supermarkets[this.market.supermarket.$key]) {
         this.market.add(product);
       } else {
-
-        let newProduct: Product = {
-          $key: text,
-          brand: product ? product.brand : null,
-          name: product ? product.name : null,
-          supermarkets: {}
-        };
-
-        newProduct.supermarkets[this.market.supermarket.$key] = null;
+        product.name = product.name || '';
+        product.brand = product.brand || '';
+        product.supermarkets = product.supermarkets || {};
+        product.supermarkets[this.market.supermarket.$key] = null;
 
         this.navCtrl.push(EditProductPage, {
-          new: newProduct,
+          edit: product,
           supermarket: this.market.supermarket.$key,
           callback: (product) => new Promise((resolve, reject) => {
             this.market.add(product);
@@ -99,7 +91,7 @@ export class ShoppingPage implements OnInit {
 
     this.navCtrl.push(EditProductPage, {
       custom: true,
-      new: newProduct,
+      edit: newProduct,
       supermarket: this.market.supermarket.$key,
       callback: (product) => new Promise((resolve, reject) => {
         this.market.add(product);
