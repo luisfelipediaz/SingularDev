@@ -24,7 +24,8 @@ export class LoginPage {
   loginUserGoogle(): void {
     if (this.platform.is('cordova')) {
       this.go.login({
-        'webClientId': 'AIzaSyBlabEzswLpwtmtR4Wqz8m13Egf-H-hr9E'
+        'webClientId': 'AIzaSyBlabEzswLpwtmtR4Wqz8m13Egf-H-hr9E',
+        'offline': true
       }).then(res => {
         const googleCredential = firebase.auth.GoogleAuthProvider.credential(res.idToken);
         return firebase.auth().signInWithCredential(googleCredential);
