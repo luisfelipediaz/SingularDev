@@ -24,12 +24,18 @@ export class LoginPage {
   loginUserGoogle(): void {
     if (this.platform.is('cordova')) {
       this.go.login({
-        'webClientId': '35947451087-l862tc5tg4m4tirf3g9a60q5oik4l7la.apps.googleusercontent.com',
+        'webClientId': '35947451087-h602pupoqq1m4ak3ssiqdg85k532bge5.apps.googleusercontent.com',
         'offline': true
       }).then(res => {
+        alert(res);
         const googleCredential = firebase.auth.GoogleAuthProvider.credential(res.idToken);
-        return firebase.auth().signInWithCredential(googleCredential);
-      })
+        firebase.auth().signInWithCredential(googleCredential).catch(error => {
+          alert(error);
+        });
+      }).catch(err => {
+        alert(err);
+
+      });
     } else {
       this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     }
