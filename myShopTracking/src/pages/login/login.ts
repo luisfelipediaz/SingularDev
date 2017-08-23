@@ -15,10 +15,10 @@ export class LoginPage {
   }
 
   loginUserGoogle(): void {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    this.afAuth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
   }
 
   loginUserFacebook(): void {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
+    this.afAuth.auth.signInWithRedirect(new firebase.auth.FacebookAuthProvider());
   }
 }
