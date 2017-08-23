@@ -1,6 +1,6 @@
 {
-  "name": "myShoppTrackingWeb",
-  "short_name": "ShopTrack",
+  "name": "Ionic",
+  "short_name": "Ionic",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
