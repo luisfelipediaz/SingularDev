@@ -47,10 +47,10 @@ import { LoginPage } from "../pages/login/login";
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(AppConfig.firebaseConfig),
+    IonicModule.forRoot(MyApp),
     HttpModule,
     FormsModule,
-    IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(AppConfig.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule
   ],
@@ -70,9 +70,9 @@ import { LoginPage } from "../pages/login/login";
     BarcodeScanner,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     ProductServiceProvider,
     SupermarketServiceProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }

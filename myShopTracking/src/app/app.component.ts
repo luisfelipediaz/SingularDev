@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ListProductPage } from '../pages/list-product/list-product';
 import { ShoppingPage } from '../pages/shopping/shopping';
 import { SupermarketPage } from '../pages/supermarket/supermarket';
-import { LoginPage } from "../pages/login/login";
+//import { LoginPage } from "../pages/login/login";
 import { AngularFireAuth } from "angularfire2/auth";
 import * as firebase from 'firebase/app';
 
@@ -38,15 +38,18 @@ export class MyApp {
       { title: 'Supermarket', component: SupermarketPage }
     ];
 
-    afAuth.authState.subscribe(user => {
-      if (!user) {
-        this.user = null;
-        this.rootPage = LoginPage;
-        return;
-      }
-      this.user = user;
-      this.rootPage = ShoppingPage;
-    });
+    this.rootPage = ShoppingPage;
+
+    //Se comentarea provisionalmente mientras el equipo de ionic soluciona los inconvenientes con el login
+    // afAuth.authState.subscribe(user => {
+    //   if (!user) {
+    //     this.user = null;
+    //     this.rootPage = LoginPage;
+    //     return;
+    //   }
+    //   this.user = user;
+    //   this.rootPage = ShoppingPage;
+    // });
   }
 
   initializeApp() {
