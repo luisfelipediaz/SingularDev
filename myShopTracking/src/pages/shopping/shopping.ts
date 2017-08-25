@@ -9,6 +9,7 @@ import { Market } from "../../entities/market";
 import { Supermarket } from "../../interfaces/supermarket";
 import { ListSupermarketPage } from "../lit-supermarket/list-supermarket";
 
+var globalMarketTemp: Market;
 
 @Component({
   selector: 'page-shopping',
@@ -16,7 +17,10 @@ import { ListSupermarketPage } from "../lit-supermarket/list-supermarket";
 })
 export class ShoppingPage implements OnInit {
 
-  private market: Market;
+  private get market(): Market {
+    globalMarketTemp = globalMarketTemp || new Market();
+    return globalMarketTemp;
+  };
 
   constructor(
     public navCtrl: NavController,
@@ -101,8 +105,7 @@ export class ShoppingPage implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.market) {
-      this.market = new Market();
+    if (!this.market.supermarket) {
       this.openSelectSupermarket();
     }
   }
