@@ -11,11 +11,11 @@
 </ion-header>
 
 <ion-content class="outer-content">
-  <ion-list radio-group *ngFor="let supermarket of supermarketList | async">
+  <ion-list radio-group *ngFor="let brand of supermarketBrands | async">
     <ion-list-header>
-      {{ supermarket.brand }}      
+      {{ verificarLista(brand.$key) }}
     </ion-list-header>
-    <ion-item>
+    <ion-item *ngFor="let supermarket of supermarketLists[brand.$key] | async">
       <ion-label>{{supermarket.name}}</ion-label>
       <ion-radio [checked]="supermarket.$key === supermarketSelect.$key" (ionSelect)="marketSelect(supermarket)"></ion-radio>
     </ion-item>
