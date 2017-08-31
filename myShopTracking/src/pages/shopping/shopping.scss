@@ -1,0 +1,8 @@
+div[empty-screen]{
+    opacity: 0.3;
+    height: 100%;
+}
+
+div[empty-screen] > div > ion-icon{
+    font-size: 15rem;
+}

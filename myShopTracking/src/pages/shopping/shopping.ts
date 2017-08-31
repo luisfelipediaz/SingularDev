@@ -13,7 +13,7 @@ var globalMarketTemp: Market;
 
 @Component({
   selector: 'page-shopping',
-  templateUrl: 'shopping.html',
+  templateUrl: 'shopping.html'
 })
 export class ShoppingPage implements OnInit {
 
@@ -34,15 +34,15 @@ export class ShoppingPage implements OnInit {
 
   public deleteProduct(item: any): void {
     let alert = this.alertCtrl.create({
-      title: 'Confirmar',
-      message: '¿Está seguro de quitar el producto de la compra?',
+      title: 'Confirm',
+      message: 'Are you sure to remove the product?',
       buttons: [
         {
-          text: 'Cancelar',
+          text: 'Cancel',
           role: 'cancel'
         },
         {
-          text: 'Aceptar',
+          text: 'Yes!',
           handler: () => {
             this.market.delete(item.product);
           }
