@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
 
 import { Product } from '../../interfaces/product';
 import { ProductServiceProvider } from "../../providers/product-service/product-service";
@@ -8,47 +7,62 @@ import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from "../../providers/supermarket-service/supermarket-service";
 import { FirebaseListObservable } from "angularfire2/database";
 
+var globalProductList: FirebaseListObservable<Product[]>;
+var globalSupermarketList: FirebaseListObservable<Supermarket[]>;
+var globalProductListSuperMarket: { [id: string]: FirebaseListObservable<Product[]> };
+var globalSupermarkekListProduct: { [id: string]: FirebaseListObservable<Supermarket[]> };
+
 @Component({
     selector: 'page-list-product',
     templateUrl: 'list-product.html'
 })
 export class ListProductPage implements OnInit {
-    private productList: FirebaseListObservable<Product[]>;
-    private supermarketList: FirebaseListObservable<Supermarket[]>;
-    private productListSuperMarket: { [id: string]: FirebaseListObservable<Product[]> };
-    private supermarkekListProduct: { [id: string]: FirebaseListObservable<Supermarket[]> };
-    // @Input()
-    // @Output()
     public agrupacionSeleccion: boolean;
+
+    get productList(): FirebaseListObservable<Product[]> {
+        return globalProductList;
+    }
+
+    get supermarketList(): FirebaseListObservable<Supermarket[]> {
+        return globalSupermarketList;
+    }
+
+    get productListSuperMarket(): { [id: string]: FirebaseListObservable<Product[]> } {
+        return globalProductListSuperMarket;
+    }
+
+    get supermarkekListProduct(): { [id: string]: FirebaseListObservable<Supermarket[]> } {
+        return globalSupermarkekListProduct;
+    }
 
     constructor(private productServiceProvider: ProductServiceProvider, private supermarketService: SupermarketServiceProvider, private alertCtrl: AlertController) {
         this.agrupacionSeleccion = true;
     }
+
     ngOnInit(): void {
         this.Load();
     }
 
     public GetProductsBySupermarket(supermarket: string): any {
-        if (!this.productListSuperMarket[supermarket])
-            this.productListSuperMarket[supermarket] = this.productServiceProvider.getProductsBySupermarket(supermarket);
+        if (!globalProductListSuperMarket[supermarket])
+            globalProductListSuperMarket[supermarket] = this.productServiceProvider.getProductsBySupermarket(supermarket);
     }
 
     public GetSupermarketByProduct(product: string): void {
-        if (!this.supermarkekListProduct[product])
-            this.supermarkekListProduct[product] = this.supermarketService.getSupermarketByProduct(product);
-        // this.supermarkekListProduct[product].push(observableSupermaket);
+        if (!globalSupermarkekListProduct[product])
+            globalSupermarkekListProduct[product] = this.supermarketService.getSupermarketByProduct(product);
     }
 
     public Load(): void {
-        this.productListSuperMarket = this.productListSuperMarket || {};
-        this.supermarkekListProduct = this.supermarkekListProduct || {};
-        this.productList = null;
-        this.supermarketList = null;
-        
-        if (!this.agrupacionSeleccion)
-            this.supermarketList = this.supermarketService.getSupermarket();
-        else
-            this.productList = this.productServiceProvider.getProducts();
+        globalProductListSuperMarket = globalProductListSuperMarket || {};
+        globalSupermarkekListProduct = globalSupermarkekListProduct || {};
+
+        if (!this.agrupacionSeleccion) {
+            globalSupermarketList = globalSupermarketList || this.supermarketService.getSupermarket();
+        }
+        else {
+            globalProductList = globalProductList || this.productServiceProvider.getProducts();
+        }
     }
 
     public deleteProduct(item: any): void {

@@ -14,7 +14,7 @@ export class SupermarketServiceProvider {
   public getSupermarket(brand?: string): FirebaseListObservable<Supermarket[]> {
     return this.afDB.list(`/supermarkets`, {
       query: {
-        orderByChild: 'brand',
+        orderByChild: "brand",
         equalTo: brand
       }
     });
@@ -23,7 +23,7 @@ export class SupermarketServiceProvider {
   public getSupermarketByProduct(product?: string): FirebaseListObservable<Supermarket[]> {
     return this.afDB.list(`/supermarkets`, {
       query: {
-        orderByChild: 'products/'+product,
+        orderByChild: `products/${product}`,
         equalTo: true
       }
     });

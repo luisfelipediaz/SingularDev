@@ -5,14 +5,24 @@ import { SupermarketServiceProvider } from '../../providers/supermarket-service/
 import { FirebaseListObservable } from "angularfire2/database";
 import { ViewController } from "ionic-angular";
 
+var globalSupermarketLists: { [id: string]: FirebaseListObservable<Supermarket[]> };
+var globalSupermarketBrands: FirebaseListObservable<any>;
+
 @Component({
   selector: 'list-supermarket',
   templateUrl: 'list-supermarket.html'
 })
 export class ListSupermarketPage {
-  private supermarketLists: { [id: string]: FirebaseListObservable<Supermarket[]> };
-  private supermarketSelect: Supermarket;
-  private supermarketBrands: FirebaseListObservable<any>;
+
+  supermarketSelect: Supermarket;
+
+  get supermarketLists(): { [id: string]: FirebaseListObservable<Supermarket[]> } {
+    return globalSupermarketLists;
+  }
+
+  get supermarketBrands(): FirebaseListObservable<any> {
+    return globalSupermarketBrands;
+  }
 
   constructor(
     private supermarketServiceProvider: SupermarketServiceProvider,
@@ -21,8 +31,8 @@ export class ListSupermarketPage {
   }
 
   ngOnInit(): void {
-    this.supermarketLists = this.supermarketLists || {};
-    this.supermarketBrands = this.supermarketServiceProvider.getSupermarketBrands();
+    globalSupermarketLists = globalSupermarketLists || {};
+    globalSupermarketBrands = globalSupermarketBrands || this.supermarketServiceProvider.getSupermarketBrands();
     this.supermarketSelect = this.viewCtrl.data;
   }
 
@@ -35,9 +45,13 @@ export class ListSupermarketPage {
   }
 
   verificarLista(brand: string): string {
-    if (!this.supermarketLists[brand]) {
-      this.supermarketLists[brand] = this.supermarketServiceProvider.getSupermarket(brand);
+    if (!globalSupermarketLists[brand]) {      
+      globalSupermarketLists[brand] = this.supermarketServiceProvider.getSupermarket(brand);
     }
     return brand;
+  }
+
+  filterSupermarkets(ev: any) {
+
   }
 }

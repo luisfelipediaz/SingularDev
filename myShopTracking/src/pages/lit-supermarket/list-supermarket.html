@@ -1,12 +1,14 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-navbar color="primary">
     <ion-buttons start>
       <button ion-button (click)="dismiss()">Cancel</button>
     </ion-buttons>
-
     <ion-title>
       Select supermarket
     </ion-title>
+  </ion-navbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar (input)="filterSupermarkets($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 

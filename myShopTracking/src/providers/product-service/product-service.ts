@@ -20,7 +20,7 @@ export class ProductServiceProvider {
     return this.afDB.list(`/products`,
       {
         query: {
-          orderByChild: 'supermarkets/' + supermarket,
+          orderByChild: `supermarkets/${supermarket}`,
           startAt: 0
         }
       }

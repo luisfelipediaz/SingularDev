@@ -14,21 +14,24 @@
     </ion-item>
   </ion-list>
   <br/>
-  <ion-list *ngFor="let product of productList | async" ng-if="agrupacionSeleccion">
-    <ion-list-header>
-      {{product.name}}{{GetSupermarketByProduct(product.$key)}}
-    </ion-list-header>
-    <div *ngFor="let supermarket of supermarkekListProduct[product.$key] | async">
-      <product-item-view [product]="product" [supermarket]="supermarket" (productDelete)="deleteProduct($event)">
-      </product-item-view>
-    </div>
-  </ion-list>
-    <ion-list *ngFor="let item of supermarketList | async" ng-if="!agrupacionSeleccion">
-      <ion-list-header>
+  <ng-container *ngIf="agrupacionSeleccion">
+    <ion-list *ngFor="let product of productList | async">
+      <ion-list-header color="primary">
+        {{product.name}}{{GetSupermarketByProduct(product.$key)}}
+      </ion-list-header>
+      <div *ngFor="let supermarket of supermarkekListProduct[product.$key] | async">
+        <product-item-view [product]="product" [supermarket]="supermarket" (productDelete)="deleteProduct($event)">
+        </product-item-view>
+      </div>
+    </ion-list>
+  </ng-container>
+  <ng-container *ngIf="!agrupacionSeleccion">
+    <ion-list *ngFor="let item of supermarketList | async">
+      <ion-list-header color="primary">
         {{item.name}} {{GetProductsBySupermarket(item.$key)}}
       </ion-list-header>
       <product-item-view [product]="product" [supermarketKey]="item.$key" (productDelete)="deleteProduct($event)" *ngFor="let product of productListSuperMarket[item.$key] | async">
-
       </product-item-view>
     </ion-list>
+  </ng-container>
 </ion-content>

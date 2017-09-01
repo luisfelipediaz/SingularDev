@@ -15,8 +15,8 @@
 
 
 <ion-content padding>
-  <div *ngIf="market.products.length === 0" class="row row-center" empty-screen>
-    <div text-center align-self-center class="col">
+  <div *ngIf="market.products.length === 0" empty-screen>
+    <div text-center>
       <ion-icon name="cart"></ion-icon>
       <h2 class="slide-title">
         Welcome to <b>My Shop Tracking</b>
@@ -31,10 +31,22 @@
       (productDelete)="deleteProduct($event)"></product-item>
   </ion-list>
   <ion-fab left bottom>
-    <button ion-fab color="primary" (click)="escanerCodigo()"><ion-icon name="camera"></ion-icon></button>
+    <button
+      ion-fab
+      color="primary"
+      (click)="escanerCodigo()"
+      [disabled]="!market.supermarket">
+        <ion-icon name="camera"></ion-icon>
+    </button>
   </ion-fab>
   <ion-fab right bottom>
-    <button ion-fab color="secondary" (click)="customProduct()"><ion-icon name="clipboard"></ion-icon></button>
+    <button
+      ion-fab
+      color="secondary"
+      (click)="customProduct()"
+      [disabled]="!market.supermarket">
+        <ion-icon name="clipboard"></ion-icon>
+    </button>
   </ion-fab>
 </ion-content>
 
