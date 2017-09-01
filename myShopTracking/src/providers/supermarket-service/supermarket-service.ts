@@ -20,6 +20,15 @@ export class SupermarketServiceProvider {
     });
   }
 
+  public getSupermarketByProduct(product?: string): FirebaseListObservable<Supermarket[]> {
+    return this.afDB.list(`/supermarkets`, {
+      query: {
+        orderByChild: 'products/'+product,
+        equalTo: true
+      }
+    });
+  }
+
   public getSupermarketBrands(): FirebaseListObservable<any> {
     return this.afDB.list(`/supermarketbrands`);
   }

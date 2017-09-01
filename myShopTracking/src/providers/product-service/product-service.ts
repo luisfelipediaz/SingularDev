@@ -12,7 +12,19 @@ export class ProductServiceProvider {
   }
 
   public getProducts(): FirebaseListObservable<Product[]> {
-    return this.afDB.list("/products");
+    return this.afDB.list(`/products`);
+  }
+
+  public getProductsBySupermarket(supermarket: string): FirebaseListObservable<Product[]> {
+
+    return this.afDB.list(`/products`,
+      {
+        query: {
+          orderByChild: 'supermarkets/' + supermarket,
+          startAt: 0
+        }
+      }
+    );
   }
 
   public getProduct(id: string): FirebaseObjectObservable<Product> {

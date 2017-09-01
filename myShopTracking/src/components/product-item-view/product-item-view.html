@@ -1,8 +1,8 @@
 <ion-item-sliding #slidingItem>
     <ion-item (click)="edit(slidingItem)">
-        <h2>{{ product.name }}</h2>
-        <h4>{{ product.price | currency:'USD':true:'1.0-2' }} c/unidad</h4>
-        <h3>{{ product.brand }} </h3>
+        <h4>{{ !supermarket?product.name:supermarket.name }}</h4>
+        <h6>{{ product.supermarkets[supermarketKey] | currency:'USD':true:'1.0-2' }} c/unidad</h6>
+        <h6>{{ product.brand }} </h6>
     </ion-item>
     <!-- <ion-item-options side="left"> -->
     <!-- <button ion-button color="secondary" (click)="edit(slidingItem)">
@@ -10,8 +10,8 @@
     </button> -->
     <!-- </ion-item-options> -->
     <ion-item-options side="right">
-    <button ion-button color="danger" (click)="delete()">
+        <!-- <button ion-button color="danger" (click)="delete()">
         Eliminar
-    </button>
+    </button> -->
     </ion-item-options>
 </ion-item-sliding>
