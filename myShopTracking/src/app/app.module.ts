@@ -10,6 +10,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Push } from '@ionic-native/push'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -28,6 +29,7 @@ import { SupermarketServiceProvider } from '../providers/supermarket-service/sup
 import { AppConfig } from "./app.config";
 import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
 import { LoginPage } from "../pages/login/login";
+import { MessagingService } from "../providers/messagin/messagin-service";
 
 @NgModule({
   declarations: [
@@ -68,11 +70,13 @@ import { LoginPage } from "../pages/login/login";
   ],
   providers: [
     BarcodeScanner,
+    Push,
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ProductServiceProvider,
-    SupermarketServiceProvider
+    SupermarketServiceProvider,
+    MessagingService
   ]
 })
 export class AppModule { }
