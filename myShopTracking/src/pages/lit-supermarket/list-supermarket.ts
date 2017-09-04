@@ -45,8 +45,9 @@ export class ListSupermarketPage {
   }
 
   verificarLista(brand: string): string {
-    if (!globalSupermarketLists[brand]) {      
+    if (!globalSupermarketLists[brand]) {
       globalSupermarketLists[brand] = this.supermarketServiceProvider.getSupermarket(brand);
+      
     }
     return brand;
   }

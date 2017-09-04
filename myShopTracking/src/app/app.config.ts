@@ -6,5 +6,5 @@ export class AppConfig {
         projectId: "shoptracking-90587",
         storageBucket: "shoptracking-90587.appspot.com",
         messagingSenderId: "35947451087"
-    }
+      };    
 }
