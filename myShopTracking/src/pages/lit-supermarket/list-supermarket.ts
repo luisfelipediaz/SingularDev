@@ -4,8 +4,9 @@ import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
 import { FirebaseListObservable } from "angularfire2/database";
 import { ViewController } from "ionic-angular";
+import * as _ from 'lodash';
 
-var globalSupermarketLists: { [id: string]: FirebaseListObservable<Supermarket[]> };
+var globalSupermarketLists: { [id: string]: Supermarket[] };
 var globalSupermarketBrands: FirebaseListObservable<any>;
 
 @Component({
@@ -15,8 +16,9 @@ var globalSupermarketBrands: FirebaseListObservable<any>;
 export class ListSupermarketPage {
 
   supermarketSelect: Supermarket;
+  filters: any = {};
 
-  get supermarketLists(): { [id: string]: FirebaseListObservable<Supermarket[]> } {
+  get supermarketLists(): { [id: string]: Supermarket[] } {
     return globalSupermarketLists;
   }
 
@@ -46,13 +48,22 @@ export class ListSupermarketPage {
 
   verificarLista(brand: string): string {
     if (!globalSupermarketLists[brand]) {
-      globalSupermarketLists[brand] = this.supermarketServiceProvider.getSupermarket(brand);
-      
+      //globalSupermarketLists[brand] = 
+      this.supermarketServiceProvider.getSupermarket(brand).subscribe(supermarkets => {
+        globalSupermarketLists[brand] = _.filter(supermarkets, _.conforms(this.filters))
+      })
+      this.supermarketServiceProvider.getSupermarket(brand);
+
     }
     return brand;
   }
 
   filterSupermarkets(ev: any) {
-
+    this.filters["name"] = value => {
+      debugger;
+      return value.indexOf(ev.target.value) > -1;
+    }
+    debugger;
+    globalSupermarketLists["Alkosto"] = _.filter(globalSupermarketLists["Alkosto"], _.conforms(this.filters));
   }
 }
