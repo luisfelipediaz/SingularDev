@@ -15,10 +15,11 @@ export class MessagingService {
 
     init() {
         if (this.platform.is('cordova')) {
-            const pushObject: PushObject = this.push.init(AppConfig.pushOptions);
-
             this.push.hasPermission().then((res: any) => {
                 if (res.isEnabled) {
+
+                    const pushObject: PushObject = this.push.init(AppConfig.pushOptions);
+
                     console.log('We have permission to send push notifications');
 
                     pushObject.on('notification').subscribe((notification: any) => console.log('LFD: Received a notification', notification));
