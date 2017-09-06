@@ -8,7 +8,6 @@ import * as firebase from 'firebase';
 @Injectable()
 export class MessagingService {
     private messaging: firebase.messaging.Messaging;
-
     constructor(private push: Push, public platform: Platform) {
 
     }
