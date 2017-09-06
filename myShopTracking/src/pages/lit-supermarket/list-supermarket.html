@@ -8,7 +8,7 @@
     </ion-title>
   </ion-navbar>
   <ion-toolbar color="primary">
-    <ion-searchbar (ionInput)="filterSupermarkets($event)"></ion-searchbar>
+    <ion-searchbar (input)="filterSupermarkets($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -17,7 +17,7 @@
     <ion-list-header>
       {{ verificarLista(brand.$key) }}
     </ion-list-header>
-    <ion-item *ngFor="let supermarket of supermarketLists[brand.$key]">
+    <ion-item *ngFor="let supermarket of supermarketLists[brand.$key] | async">
       <ion-label>{{supermarket.name}}</ion-label>
       <ion-radio [checked]="supermarket.$key === supermarketSelect.$key" (ionSelect)="marketSelect(supermarket)"></ion-radio>
     </ion-item>
