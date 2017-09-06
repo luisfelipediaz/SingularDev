@@ -35,16 +35,15 @@ export class MessagingService {
         } else {
             this.messaging = firebase.messaging(firebase.apps[0]);
             this.messaging.requestPermission().then(() => {
-                console.log('Permissions are available Notifications')
-            }).catch(err => {
-                console.log('Error in permissions');
-            });
-
-            this.messaging.getToken().then((token) => {
+                console.log('Permissions are available Notifications');
+                return this.messaging.getToken()
+            }).then((token) => {
                 console.log(token);
             }).catch(err => {
                 console.log(err)
             });
+
+
         }
     }
 }

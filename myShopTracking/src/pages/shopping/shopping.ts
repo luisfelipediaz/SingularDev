@@ -8,7 +8,6 @@ import { EditProductPage } from '../edit-product/edit-product';
 import { Market } from "../../entities/market";
 import { Supermarket } from "../../interfaces/supermarket";
 import { ListSupermarketPage } from "../lit-supermarket/list-supermarket";
-import { MessagingService } from "../../providers/messagin/messagin-service";
 
 var globalMarketTemp: Market;
 
@@ -30,9 +29,7 @@ export class ShoppingPage implements OnInit {
     private alertCtrl: AlertController,
     private barcodeScanner: BarcodeScanner,
     private productServiceProvider: ProductServiceProvider,
-    public modalCtrl: ModalController,
-    public messagingService: MessagingService) {
-    messagingService.init();
+    public modalCtrl: ModalController) {
   }
 
   public deleteProduct(item: any): void {

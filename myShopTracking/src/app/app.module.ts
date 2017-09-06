@@ -11,25 +11,27 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Push } from '@ionic-native/push'
+import { Autostart } from '@ionic-native/autostart'
+
+import { AppConfig } from "./app.config";
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { ShoppingPage } from '../pages/shopping/shopping';
-import { EditProductPage } from '../pages/edit-product/edit-product';
-import { ListProductPage } from '../pages/list-product/list-product';
-import { SupermarketPage } from "../pages/supermarket/supermarket";
-import { ListSupermarketPage } from "../pages/lit-supermarket/list-supermarket";
-
 import { ProductItemComponent } from '../components/product-item/product-item';
 import { ProductItemViewComponent } from '../components/product-item-view/product-item-view';
-import { ProductServiceProvider } from '../providers/product-service/product-service';
-import { GroupByPipe } from '../entities/groupBy.pipe';
-import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
-import { AppConfig } from "./app.config";
 import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
+
+import { EditProductPage } from '../pages/edit-product/edit-product';
+import { HomePage } from '../pages/home/home';
+import { ListPage } from '../pages/list/list';
+import { ListProductPage } from '../pages/list-product/list-product';
+import { ListSupermarketPage } from "../pages/lit-supermarket/list-supermarket";
 import { LoginPage } from "../pages/login/login";
+import { ShoppingPage } from '../pages/shopping/shopping';
+import { SupermarketPage } from "../pages/supermarket/supermarket";
+
 import { MessagingService } from "../providers/messagin/messagin-service";
+import { ProductServiceProvider } from '../providers/product-service/product-service';
+import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,6 @@ import { MessagingService } from "../providers/messagin/messagin-service";
     ProductItemViewComponent,
     ListProductPage,
     SupermarketPage,
-    GroupByPipe,
     SupermarketCardComponent,
     ListSupermarketPage,
     LoginPage
@@ -73,6 +74,7 @@ import { MessagingService } from "../providers/messagin/messagin-service";
     Push,
     StatusBar,
     SplashScreen,
+    Autostart,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ProductServiceProvider,
     SupermarketServiceProvider,

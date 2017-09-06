@@ -2,14 +2,16 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Autostart } from "@ionic-native/autostart";
 
-// import { HomePage } from '../pages/home/home';
+import { AngularFireAuth } from "angularfire2/auth";
+import * as firebase from 'firebase/app';
+
 import { ListProductPage } from '../pages/list-product/list-product';
 import { ShoppingPage } from '../pages/shopping/shopping';
 import { SupermarketPage } from '../pages/supermarket/supermarket';
-//import { LoginPage } from "../pages/login/login";
-import { AngularFireAuth } from "angularfire2/auth";
-import * as firebase from 'firebase/app';
+import { MessagingService } from "../providers/messagin/messagin-service";
+
 
 @Component({
   templateUrl: 'app.html'
@@ -26,7 +28,9 @@ export class MyApp {
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    private afAuth: AngularFireAuth) {
+    private afAuth: AngularFireAuth,
+    private messagingService: MessagingService,
+    private autostart: Autostart ) {
 
     this.initializeApp();
 
@@ -59,7 +63,8 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-
+      this.autostart.enable();
+      this.messagingService.init();
     });
   }
 
