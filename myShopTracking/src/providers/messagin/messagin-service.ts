@@ -3,17 +3,19 @@ import { PushObject, Push } from "@ionic-native/push";
 import { AppConfig } from "../../app/app.config";
 import { Platform } from "ionic-angular";
 
+
 import * as firebase from 'firebase';
 
 @Injectable()
 export class MessagingService {
     private messaging: firebase.messaging.Messaging;
-    constructor(private push: Push, public platform: Platform) {
-
+    constructor(
+        private push: Push,
+        public platform: Platform) {
     }
 
     init() {
-        if (!this.platform.is('core')) {
+        if (this.platform.is('cordova') && !this.platform.is('core')) {
             this.push.hasPermission().then((res: any) => {
                 if (res.isEnabled) {
 
@@ -31,11 +33,17 @@ export class MessagingService {
                 }
             });
         } else {
-            this.messaging = firebase.messaging();
+            this.messaging = firebase.messaging(firebase.apps[0]);
             this.messaging.requestPermission().then(() => {
-                this.messaging.getToken().then((token) => {
-                    console.log(`Token desde el typescript: ${token}`);
-                });
+                console.log('Permissions are available Notifications')
+            }).catch(err => {
+                console.log('Error in permissions');
+            });
+
+            this.messaging.getToken().then((token) => {
+                console.log(token);
+            }).catch(err => {
+                console.log(err)
             });
         }
     }
