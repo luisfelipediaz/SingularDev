@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 
 import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
-import { FirebaseListObservable } from "angularfire2/database";
+import { Subscription } from "rxjs/Subscription";
 import { ViewController } from "ionic-angular";
 import * as _ from 'lodash';
+import { Subject } from "rxjs/Subject";
 
-var globalSupermarketLists: { [id: string]: Supermarket[] };
-var globalSupermarketBrands: FirebaseListObservable<any>;
+var supermarketSubscription: Subscription;
+var globalSupermarkets: Supermarket[];
+var globalBrands: string[];
 
 @Component({
   selector: 'list-supermarket',
@@ -16,26 +18,34 @@ var globalSupermarketBrands: FirebaseListObservable<any>;
 export class ListSupermarketPage {
 
   supermarketSelect: Supermarket;
-  filters: any = {};
+  name: Subject<string>;
 
-  get supermarketLists(): { [id: string]: Supermarket[] } {
-    return globalSupermarketLists;
+  get brands(): string[] {
+    return globalBrands;
   }
 
-  get supermarketBrands(): FirebaseListObservable<any> {
-    return globalSupermarketBrands;
-  }
+  supermarkets: Supermarket[];
 
   constructor(
     private supermarketServiceProvider: SupermarketServiceProvider,
     public viewCtrl: ViewController) {
-
+    this.name = new Subject();
   }
 
   ngOnInit(): void {
-    globalSupermarketLists = globalSupermarketLists || {};
-    globalSupermarketBrands = globalSupermarketBrands || this.supermarketServiceProvider.getSupermarketBrands();
     this.supermarketSelect = this.viewCtrl.data;
+
+    supermarketSubscription = supermarketSubscription || this.supermarketServiceProvider.getSupermarket().subscribe(supermarkets => {
+      globalSupermarkets = supermarkets;
+      this.supermarkets = globalSupermarkets;
+      globalBrands = _.uniq(_.map(this.supermarkets, 'brand'));
+    });
+
+    this.name.subscribe(value => {
+      
+      this.supermarkets = globalSupermarkets.filter(supermarket => supermarket.name.match(new RegExp(value, "gi")));
+      globalBrands = _.uniq(_.map(this.supermarkets, 'brand'));
+    });
   }
 
   dismiss(): void {
@@ -46,24 +56,11 @@ export class ListSupermarketPage {
     this.viewCtrl.dismiss(select);
   }
 
-  verificarLista(brand: string): string {
-    if (!globalSupermarketLists[brand]) {
-      //globalSupermarketLists[brand] = 
-      this.supermarketServiceProvider.getSupermarket(brand).subscribe(supermarkets => {
-        globalSupermarketLists[brand] = _.filter(supermarkets, _.conforms(this.filters))
-      })
-      this.supermarketServiceProvider.getSupermarket(brand);
-
-    }
-    return brand;
+  getSupermarketsByBrand(brand: string) {
+    return this.supermarkets.filter(supermarket => supermarket.brand === brand);
   }
 
   filterSupermarkets(ev: any) {
-    this.filters["name"] = value => {
-      debugger;
-      return value.indexOf(ev.target.value) > -1;
-    }
-    debugger;
-    globalSupermarketLists["Alkosto"] = _.filter(globalSupermarketLists["Alkosto"], _.conforms(this.filters));
+    this.name.next(ev.target.value);
   }
 }
