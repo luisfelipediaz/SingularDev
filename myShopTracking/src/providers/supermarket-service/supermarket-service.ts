@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 
 import { Supermarket } from "../../interfaces/supermarket";
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
-import { Subject } from "rxjs/Subject";
+import { Query } from "angularfire2/interfaces";
 
 @Injectable()
 export class SupermarketServiceProvider {
@@ -12,8 +12,17 @@ export class SupermarketServiceProvider {
   constructor(public http: Http, private afDB: AngularFireDatabase) {
   }
 
-  public getSupermarket(): FirebaseListObservable<Supermarket[]> {
-    return this.afDB.list(`/supermarkets`);
+  public getSupermarket(batch?: number, lastName?: string): FirebaseListObservable<Supermarket[]> {
+    let query: Query = {
+      orderByChild: "name",
+      limitToFirst: batch
+    };
+
+    if (!!lastName) query.startAt = lastName;
+
+    return this.afDB.list(`/supermarkets`, {
+      query
+    });
   }
 
   public getSupermarketByProduct(product?: string): FirebaseListObservable<Supermarket[]> {

@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
+import { ViewController } from "ionic-angular";
 
 import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
 import { Subscription } from "rxjs/Subscription";
-import { ViewController } from "ionic-angular";
+
 import * as _ from 'lodash';
-import { Subject } from "rxjs/Subject";
 
 var supermarketSubscription: Subscription;
 var globalSupermarkets: Supermarket[];
-var globalBrands: string[];
 
 @Component({
   selector: 'list-supermarket',
@@ -18,34 +17,22 @@ var globalBrands: string[];
 export class ListSupermarketPage {
 
   supermarketSelect: Supermarket;
-  name: Subject<string>;
+  name: string;
 
-  get brands(): string[] {
-    return globalBrands;
-  }
-
-  supermarkets: Supermarket[];
+  batch: number = 10;
+  lastKey: string = '';
+  finished: boolean = false;
+  supermarkets: Supermarket[] = [];
+  brands: string[];
 
   constructor(
     private supermarketServiceProvider: SupermarketServiceProvider,
     public viewCtrl: ViewController) {
-    this.name = new Subject();
   }
 
   ngOnInit(): void {
     this.supermarketSelect = this.viewCtrl.data;
-
-    supermarketSubscription = supermarketSubscription || this.supermarketServiceProvider.getSupermarket().subscribe(supermarkets => {
-      globalSupermarkets = supermarkets;
-      this.supermarkets = globalSupermarkets;
-      globalBrands = _.uniq(_.map(this.supermarkets, 'brand'));
-    });
-
-    this.name.subscribe(value => {
-      
-      this.supermarkets = globalSupermarkets.filter(supermarket => supermarket.name.match(new RegExp(value, "gi")));
-      globalBrands = _.uniq(_.map(this.supermarkets, 'brand'));
-    });
+    this.loadSupermarkets();
   }
 
   dismiss(): void {
@@ -61,6 +48,48 @@ export class ListSupermarketPage {
   }
 
   filterSupermarkets(ev: any) {
-    this.name.next(ev.target.value);
+    this.applyFilter(ev.target.value);
+    //while(this.supermarkets.length < this.batch && !this.finished)
+  }
+
+  applyFilter(value: string) {
+    this.supermarkets = globalSupermarkets.filter(supermarket => supermarket.name.match(new RegExp(value, "gi")));
+    this.getUniqueBrands();
+
+    if (this.supermarkets.length < this.batch && !this.finished)
+      this.loadSupermarkets(null, value);
+  }
+
+  doInfinite(infinityScroll) {
+    this.loadSupermarkets(infinityScroll);
+  }
+
+  loadSupermarkets(infinityScroll?, filter?: string) {
+    if (!this.finished) {
+      supermarketSubscription = this.supermarketServiceProvider.getSupermarket(this.batch + 1, this.lastKey).subscribe(supermarkets => {
+        supermarketSubscription.unsubscribe();
+
+        this.lastKey = _.last(supermarkets).name
+        const newSupermarkets = _.slice(supermarkets, 0, this.batch);
+
+        globalSupermarkets = _.concat(globalSupermarkets || [], newSupermarkets);
+        this.supermarkets = globalSupermarkets;
+
+        this.getUniqueBrands();
+
+        if (this.lastKey === _.last(newSupermarkets).name) {
+          this.finished = true;
+          if (!!infinityScroll) infinityScroll.enable(false);
+        }
+
+        if (!!filter) this.applyFilter(filter);
+      });
+    } else if (!!infinityScroll) {
+      infinityScroll.enable(false);
+    }
+  }
+
+  getUniqueBrands(): void {
+    this.brands = _.uniq(_.map(this.supermarkets, 'brand'));
   }
 }
