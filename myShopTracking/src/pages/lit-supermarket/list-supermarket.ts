@@ -7,14 +7,16 @@ import { Subscription } from "rxjs/Subscription";
 
 import * as _ from 'lodash';
 
-var supermarketSubscription: Subscription;
-var globalSupermarkets: Supermarket[];
-
 @Component({
   selector: 'list-supermarket',
   templateUrl: 'list-supermarket.html'
 })
 export class ListSupermarketPage {
+
+  supermarketSubscription: Subscription;
+
+  supermarkets: Supermarket[] = [];
+  globalSupermarkets: Supermarket[];
 
   supermarketSelect: Supermarket;
   name: string;
@@ -22,7 +24,6 @@ export class ListSupermarketPage {
   batch: number = 10;
   lastKey: string = '';
   finished: boolean = false;
-  supermarkets: Supermarket[] = [];
   brands: string[];
 
   constructor(
@@ -49,15 +50,13 @@ export class ListSupermarketPage {
 
   filterSupermarkets(ev: any) {
     this.applyFilter(ev.target.value);
-    //while(this.supermarkets.length < this.batch && !this.finished)
   }
 
   applyFilter(value: string) {
-    this.supermarkets = globalSupermarkets.filter(supermarket => supermarket.name.match(new RegExp(value, "gi")));
+    this.supermarkets = this.globalSupermarkets.filter(supermarket => supermarket.name.match(new RegExp(value, "gi")));
     this.getUniqueBrands();
 
-    if (this.supermarkets.length < this.batch && !this.finished)
-      this.loadSupermarkets(null, value);
+    if (this.supermarkets.length < this.batch && !this.finished) this.loadSupermarkets(null, value);
   }
 
   doInfinite(infinityScroll) {
@@ -66,14 +65,14 @@ export class ListSupermarketPage {
 
   loadSupermarkets(infinityScroll?, filter?: string) {
     if (!this.finished) {
-      supermarketSubscription = this.supermarketServiceProvider.getSupermarket(this.batch + 1, this.lastKey).subscribe(supermarkets => {
-        supermarketSubscription.unsubscribe();
+      this.supermarketSubscription = this.supermarketServiceProvider.getSupermarket(this.batch + 1, this.lastKey).subscribe(supermarkets => {
+        this.supermarketSubscription.unsubscribe();
 
         this.lastKey = _.last(supermarkets).name
         const newSupermarkets = _.slice(supermarkets, 0, this.batch);
 
-        globalSupermarkets = _.concat(globalSupermarkets || [], newSupermarkets);
-        this.supermarkets = globalSupermarkets;
+        this.globalSupermarkets = _.concat(this.globalSupermarkets || [], newSupermarkets);
+        this.supermarkets = this.globalSupermarkets;
 
         this.getUniqueBrands();
 
@@ -84,9 +83,8 @@ export class ListSupermarketPage {
 
         if (!!filter) this.applyFilter(filter);
       });
-    } else if (!!infinityScroll) {
+    } else if (!!infinityScroll)
       infinityScroll.enable(false);
-    }
   }
 
   getUniqueBrands(): void {
