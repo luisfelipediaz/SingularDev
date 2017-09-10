@@ -7,7 +7,7 @@ import { ProductServiceProvider } from '../../providers/product-service/product-
 import { EditProductPage } from '../edit-product/edit-product';
 import { Market } from "../../entities/market";
 import { Supermarket } from "../../interfaces/supermarket";
-import { ListSupermarketPage } from "../lit-supermarket/list-supermarket";
+import { ListSupermarketPage } from "../list-supermarket/list-supermarket";
 
 var globalMarketTemp: Market;
 

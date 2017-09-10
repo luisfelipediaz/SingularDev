@@ -21,10 +21,8 @@ import { ProductItemViewComponent } from '../components/product-item-view/produc
 import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
 
 import { EditProductPage } from '../pages/edit-product/edit-product';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { ListProductPage } from '../pages/list-product/list-product';
-import { ListSupermarketPage } from "../pages/lit-supermarket/list-supermarket";
+import { ListSupermarketPage } from "../pages/list-supermarket/list-supermarket";
 import { LoginPage } from "../pages/login/login";
 import { ShoppingPage } from '../pages/shopping/shopping';
 import { SupermarketPage } from "../pages/supermarket/supermarket";
@@ -36,8 +34,6 @@ import { SupermarketServiceProvider } from '../providers/supermarket-service/sup
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage,
     ShoppingPage,
     EditProductPage,
     ProductItemComponent,
@@ -60,8 +56,6 @@ import { SupermarketServiceProvider } from '../providers/supermarket-service/sup
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage,
     EditProductPage,
     ShoppingPage,
     ListProductPage,
