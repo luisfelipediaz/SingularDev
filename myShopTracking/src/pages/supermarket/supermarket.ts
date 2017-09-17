@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
+import { ShoppingPage } from '../shopping/shopping';
 
 @Component({
   selector: 'page-supermarket',
@@ -12,8 +13,8 @@ export class SupermarketPage implements OnInit {
   private new: Supermarket;
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
+    public navCtrl: NavController,
+    public navParams: NavParams,
     private supermarketServiceProvider: SupermarketServiceProvider,
     private alertCtrl: AlertController) {
   }
@@ -25,9 +26,17 @@ export class SupermarketPage implements OnInit {
       message: "Supermarket saved",
       buttons: [
         {
-          text: "Gracias!",
+          text: "Go to shop!",
           handler: () => {
-            this.navCtrl.popToRoot();
+            this.navCtrl.setRoot(ShoppingPage, {
+              supermarket: this.new
+            });
+          }
+        },
+        {
+          text: "More supermarkets",
+          handler: () => {
+            this.initNew();
           }
         }]
     });
@@ -35,6 +44,10 @@ export class SupermarketPage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initNew();
+  }
+
+  private initNew() {
     this.new = {
       brand: '',
       name: '',

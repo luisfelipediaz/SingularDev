@@ -38,9 +38,10 @@ export class SupermarketServiceProvider {
     return this.afDB.list(`/supermarketbrands`);
   }
 
-  public pushSupermarket(supermarket: Supermarket): void {
-    this.afDB.list(`/supermarkets`).push(supermarket).key;
+  public pushSupermarket(supermarket: Supermarket): Supermarket {
+    supermarket.$key = this.afDB.list(`/supermarkets`).push(supermarket).key;
     this.afDB.object(`/supermarketbrands/${supermarket.brand}`).set(true);
+    return supermarket;
   }
 
 }
