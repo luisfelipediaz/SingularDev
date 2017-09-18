@@ -64,17 +64,15 @@ export class ListSupermarketPage {
     if (!this.finished) {
       this.supermarketServiceProvider.getSupermarket(this.batch + 1, this.lastKey).subscribe(supermarkets => {
         this.finished = false;
-        this.lastKey = _.last(supermarkets).name
-        const newSupermarkets = _.slice(supermarkets, 0, this.batch);
+        this.lastKey = supermarkets[supermarkets.length - 1].name;
 
-        this.globalSupermarkets = _.unionWith(this.globalSupermarkets || [], newSupermarkets, _.isEqual);
+        this.globalSupermarkets = _.unionWith(this.globalSupermarkets || [], supermarkets, _.isEqual);
         this.supermarkets = this.globalSupermarkets;
 
         this.getUniqueBrands();
 
         if (!!infinityScroll) infinityScroll.complete();
-
-        if (this.lastKey === _.last(newSupermarkets).name) {
+        if (supermarkets.length < this.batch + 1) {
           this.finished = true;
           if (!!infinityScroll) infinityScroll.enable(false);
         }
