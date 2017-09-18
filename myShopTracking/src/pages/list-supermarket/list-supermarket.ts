@@ -3,7 +3,6 @@ import { ViewController } from "ionic-angular";
 
 import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
-import { Subscription } from "rxjs/Subscription";
 
 import * as _ from 'lodash';
 
@@ -12,8 +11,6 @@ import * as _ from 'lodash';
   templateUrl: 'list-supermarket.html'
 })
 export class ListSupermarketPage {
-
-  supermarketSubscription: Subscription;
 
   supermarkets: Supermarket[] = [];
   globalSupermarkets: Supermarket[];
@@ -65,16 +62,17 @@ export class ListSupermarketPage {
 
   loadSupermarkets(infinityScroll?, filter?: string) {
     if (!this.finished) {
-      this.supermarketSubscription = this.supermarketServiceProvider.getSupermarket(this.batch + 1, this.lastKey).subscribe(supermarkets => {
-        this.supermarketSubscription.unsubscribe();
-
+      this.supermarketServiceProvider.getSupermarket(this.batch + 1, this.lastKey).subscribe(supermarkets => {
+        this.finished = false;
         this.lastKey = _.last(supermarkets).name
         const newSupermarkets = _.slice(supermarkets, 0, this.batch);
 
-        this.globalSupermarkets = _.concat(this.globalSupermarkets || [], newSupermarkets);
+        this.globalSupermarkets = _.unionWith(this.globalSupermarkets || [], newSupermarkets, _.isEqual);
         this.supermarkets = this.globalSupermarkets;
 
         this.getUniqueBrands();
+
+        if (!!infinityScroll) infinityScroll.complete();
 
         if (this.lastKey === _.last(newSupermarkets).name) {
           this.finished = true;
