@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from 'ionic-angular';
-import { FirebaseListObservable } from "angularfire2/database";
 import { Subscription } from "rxjs/Subscription";
 import * as _ from 'lodash';
 
@@ -9,10 +7,6 @@ import { ProductServiceProvider } from "../../providers/product-service/product-
 import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from "../../providers/supermarket-service/supermarket-service";
 
-// var globalProductList: FirebaseListObservable<Product[]>;
-// var globalSupermarketList: FirebaseListObservable<Supermarket[]>;
-// var globalProductListSuperMarket: { [id: string]: FirebaseListObservable<Product[]> };
-// var globalSupermarkekListProduct: { [id: string]: FirebaseListObservable<Supermarket[]> };
 
 @Component({
     selector: 'page-list-product',
@@ -32,12 +26,11 @@ export class ListProductPage implements OnInit {
     topSubitem: number;
     topDefault: number = 5;
 
-    constructor(private productServiceProvider: ProductServiceProvider, private supermarketService: SupermarketServiceProvider, private alertCtrl: AlertController) {
+    constructor(private productServiceProvider: ProductServiceProvider, private supermarketService: SupermarketServiceProvider) {
         this.agrupacionSeleccion = false;
     }
 
     ngOnInit(): void {
-        // this.supermarketProductSubscription = {};
         this.supermarketProductList = {};
         this.supermarketProductTop = {};
         this.top = 1;
