@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from 'ionic-angular';
+import { Subscription } from "rxjs/Subscription";
+import * as _ from 'lodash';
 
 import { Product } from '../../interfaces/product';
 import { ProductServiceProvider } from "../../providers/product-service/product-service";
 import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from "../../providers/supermarket-service/supermarket-service";
-import { FirebaseListObservable } from "angularfire2/database";
 
-var globalProductList: FirebaseListObservable<Product[]>;
-var globalSupermarketList: FirebaseListObservable<Supermarket[]>;
-var globalProductListSuperMarket: { [id: string]: FirebaseListObservable<Product[]> };
-var globalSupermarkekListProduct: { [id: string]: FirebaseListObservable<Supermarket[]> };
 
 @Component({
     selector: 'page-list-product',
@@ -19,73 +15,76 @@ var globalSupermarkekListProduct: { [id: string]: FirebaseListObservable<Superma
 export class ListProductPage implements OnInit {
     public agrupacionSeleccion: boolean;
 
-    get productList(): FirebaseListObservable<Product[]> {
-        return globalProductList;
-    }
+    supermarketList: Supermarket[];
+    supermarketSubscription: Subscription;
 
-    get supermarketList(): FirebaseListObservable<Supermarket[]> {
-        return globalSupermarketList;
-    }
+    supermarketProductList: { [id: string]: Product[] }
 
-    get productListSuperMarket(): { [id: string]: FirebaseListObservable<Product[]> } {
-        return globalProductListSuperMarket;
-    }
+    supermarketProductTop: { [id: string]: number };
+    top: number;
+    topSubitem: number;
+    topDefault: number = 5;
 
-    get supermarkekListProduct(): { [id: string]: FirebaseListObservable<Supermarket[]> } {
-        return globalSupermarkekListProduct;
-    }
-
-    constructor(private productServiceProvider: ProductServiceProvider, private supermarketService: SupermarketServiceProvider, private alertCtrl: AlertController) {
-        this.agrupacionSeleccion = true;
+    constructor(private productServiceProvider: ProductServiceProvider, private supermarketService: SupermarketServiceProvider) {
+        this.agrupacionSeleccion = false;
     }
 
     ngOnInit(): void {
-        this.Load();
+        this.supermarketProductList = {};
+        this.supermarketProductTop = {};
+        this.top = 1;
+        this.topSubitem = this.topDefault;
+        this.loadSupermarket(null, true);
     }
 
-    public GetProductsBySupermarket(supermarket: string): any {
-        if (!globalProductListSuperMarket[supermarket])
-            globalProductListSuperMarket[supermarket] = this.productServiceProvider.getProductsBySupermarket(supermarket);
+    doInfinite(infinityScroll) {
+        this.loadSupermarket(infinityScroll, false);
     }
 
-    public GetSupermarketByProduct(product: string): void {
-        if (!globalSupermarkekListProduct[product])
-            globalSupermarkekListProduct[product] = this.supermarketService.getSupermarketByProduct(product);
-    }
-
-    public Load(): void {
-        globalProductListSuperMarket = globalProductListSuperMarket || {};
-        globalSupermarkekListProduct = globalSupermarkekListProduct || {};
-
+    loadSupermarket(infiniteScroll?, loadService?: boolean) {
         if (!this.agrupacionSeleccion) {
-            globalSupermarketList = globalSupermarketList || this.supermarketService.getSupermarket();
-        }
-        else {
-            globalProductList = globalProductList || this.productServiceProvider.getProducts();
+            if (loadService) {
+                this.supermarketSubscription = this.supermarketService.getSupermarket(this.top).subscribe(supermarkerts => {
+                    this.supermarketSubscription.unsubscribe();
+                    this.supermarketList = supermarkerts;
+                    let lastSupermarket = supermarkerts[supermarkerts.length - 1];
+                    this.loadProducts(lastSupermarket, infiniteScroll);
+                });
+            } else {
+                let lastSupermarket = this.supermarketList[this.supermarketList.length - 1];
+                this.loadProducts(lastSupermarket, infiniteScroll);
+            }
         }
     }
 
-    public deleteProduct(item: any): void {
-        let alert = this.alertCtrl.create({
-            title: 'Confirmar',
-            message: '¿Está seguro de quitar el producto de la lista?',
-            buttons: [
-                {
-                    text: 'Cancelar',
-                    role: 'cancel'
-                },
-                {
-                    text: 'Aceptar',
-                    handler: () => {
-                        this.productServiceProvider.deleteProduct(item.$key);
-                    }
-                }
-            ]
+    loadProducts(supermarket: Supermarket, infiniteScroll?) {
+        let key = supermarket.$key;
+        this.productServiceProvider.getProductsBySupermarket(this.topSubitem, key).subscribe(products => {
+            if (!this.supermarketProductList[key])
+                this.supermarketProductList[key] = [];
+
+            let productsOld = this.supermarketProductList[key];
+            let lengthOld = productsOld.length;
+            let productsNews = _.slice(products, this.topSubitem - this.topDefault, this.topSubitem);
+
+            if (productsNews.length > 0)
+                this.supermarketProductList[key] = _.concat(productsOld, productsNews);
+
+
+            if (lengthOld == products.length) {
+                this.top++;
+                this.topSubitem = this.topDefault;
+                this.loadSupermarket(infiniteScroll, true);
+            }
+            else {
+                this.topSubitem = this.topSubitem + this.topDefault;
+                if (infiniteScroll)
+                    infiniteScroll.complete();
+            }
         });
-        alert.present();
     }
 
     public changeToggle() {
-        this.Load();
+        
     }
 }

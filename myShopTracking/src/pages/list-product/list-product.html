@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>ListProduct</ion-title>
+    <ion-title>ListProduct gola</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content class="outer-content">
@@ -14,7 +14,7 @@
     </ion-item>
   </ion-list>
   <br/>
-  <ng-container *ngIf="agrupacionSeleccion">
+  <!-- <ng-container *ngIf="agrupacionSeleccion">
     <ion-list *ngFor="let product of productList | async">
       <ion-list-header color="primary">
         {{product.name}}{{GetSupermarketByProduct(product.$key)}}
@@ -24,14 +24,19 @@
         </product-item-view>
       </div>
     </ion-list>
-  </ng-container>
+  </ng-container> -->
   <ng-container *ngIf="!agrupacionSeleccion">
-    <ion-list *ngFor="let item of supermarketList | async">
+    <ion-list *ngFor="let item of supermarketList">
       <ion-list-header color="primary">
-        {{item.name}} {{GetProductsBySupermarket(item.$key)}}
+        {{item.name}}
       </ion-list-header>
-      <product-item-view [product]="product" [supermarketKey]="item.$key" (productDelete)="deleteProduct($event)" *ngFor="let product of productListSuperMarket[item.$key] | async">
+      <product-item-view [product]="product" [supermarketKey]="item.$key" *ngFor="let product of supermarketProductList[item.$key]">
       </product-item-view>
     </ion-list>
   </ng-container>
+
+  <ion-infinite-scroll  (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

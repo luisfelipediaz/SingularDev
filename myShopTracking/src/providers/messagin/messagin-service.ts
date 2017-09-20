@@ -32,7 +32,7 @@ export class MessagingService {
                     console.log('We do not have permission to send push notifications');
                 }
             });
-        } else {
+        } else if ("Notification" in window) {
             this.messaging = firebase.messaging(firebase.apps[0]);
             this.messaging.requestPermission().then(() => {
                 console.log('Permissions are available Notifications');

@@ -30,9 +30,7 @@ export class MyApp {
     public splashScreen: SplashScreen,
     private afAuth: AngularFireAuth,
     private messagingService: MessagingService,
-    private autostart: Autostart) {
-
-    this.rootPage = ShoppingPage;
+    private autostart: Autostart ) {
 
     this.initializeApp();
 
@@ -43,7 +41,7 @@ export class MyApp {
       { title: 'Supermarket', component: SupermarketPage }
     ];
 
-
+    this.rootPage = ShoppingPage;
 
     //Se comentarea provisionalmente mientras el equipo de ionic soluciona los inconvenientes con el login
     // afAuth.authState.subscribe(user => {
