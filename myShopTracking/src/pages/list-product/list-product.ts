@@ -18,7 +18,6 @@ export class ListProductPage implements OnInit {
     supermarketList: Supermarket[];
     supermarketSubscription: Subscription;
 
-    // supermarketProductSubscription: { [id: string]: Subscription };
     supermarketProductList: { [id: string]: Product[] }
 
     supermarketProductTop: { [id: string]: number };
@@ -59,77 +58,33 @@ export class ListProductPage implements OnInit {
     }
 
     loadProducts(supermarket: Supermarket, infiniteScroll?) {
-        // this.supermarketProductSubscription[supermarket.$key] =
         let key = supermarket.$key;
-        let vm = this;
         this.productServiceProvider.getProductsBySupermarket(this.topSubitem, key).subscribe(products => {
-            if (!vm.supermarketProductList[key])
-                vm.supermarketProductList[key] = [];
+            if (!this.supermarketProductList[key])
+                this.supermarketProductList[key] = [];
 
-            let productsOld = vm.supermarketProductList[key];
+            let productsOld = this.supermarketProductList[key];
             let lengthOld = productsOld.length;
-            let productsNews = _.slice(products, vm.topSubitem - vm.topDefault, vm.topSubitem);
+            let productsNews = _.slice(products, this.topSubitem - this.topDefault, this.topSubitem);
 
             if (productsNews.length > 0)
-                vm.supermarketProductList[key] = _.concat(productsOld, productsNews);
+                this.supermarketProductList[key] = _.concat(productsOld, productsNews);
 
 
             if (lengthOld == products.length) {
-                vm.top++;
-                vm.topSubitem = vm.topDefault;
-                vm.loadSupermarket(infiniteScroll, true);
+                this.top++;
+                this.topSubitem = this.topDefault;
+                this.loadSupermarket(infiniteScroll, true);
             }
             else {
-                vm.topSubitem = vm.topSubitem + vm.topDefault;
+                this.topSubitem = this.topSubitem + this.topDefault;
                 if (infiniteScroll)
                     infiniteScroll.complete();
             }
         });
     }
 
-    // public GetProductsBySupermarket(supermarket: string): any {
-    //     if (!globalProductListSuperMarket[supermarket])
-    //         globalProductListSuperMarket[supermarket] = this.productServiceProvider.getProductsBySupermarket(supermarket);
-    // }
-
-    // public GetSupermarketByProduct(product: string): void {
-    //     if (!globalSupermarkekListProduct[product])
-    //         globalSupermarkekListProduct[product] = this.supermarketService.getSupermarketByProduct(product);
-    // }
-
-    // public Load(): void {
-    //     globalProductListSuperMarket = globalProductListSuperMarket || {};
-    //     globalSupermarkekListProduct = globalSupermarkekListProduct || {};
-
-    //     if (!this.agrupacionSeleccion) {
-    //         globalSupermarketList = globalSupermarketList || this.supermarketService.getSupermarket();
-    //     }
-    //     else {
-    //         globalProductList = globalProductList || this.productServiceProvider.getProducts();
-    //     }
-    // }
-
-    // public deleteProduct(item: any): void {
-    //     let alert = this.alertCtrl.create({
-    //         title: 'Confirmar',
-    //         message: '¿Está seguro de quitar el producto de la lista?',
-    //         buttons: [
-    //             {
-    //                 text: 'Cancelar',
-    //                 role: 'cancel'
-    //             },
-    //             {
-    //                 text: 'Aceptar',
-    //                 handler: () => {
-    //                     this.productServiceProvider.deleteProduct(item.$key);
-    //                 }
-    //             }
-    //         ]
-    //     });
-    //     alert.present();
-    // }
-
-    // public changeToggle() {
-    //     this.Load();
-    // }
+    public changeToggle() {
+        
+    }
 }
