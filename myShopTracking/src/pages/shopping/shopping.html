@@ -3,7 +3,9 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Shopping</ion-title>
+    <ion-title>Shopping
+      <p class="subtitle">{{market.supermarket?.name}}</p>
+    </ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="openSelectSupermarket()">

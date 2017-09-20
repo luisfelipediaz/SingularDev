@@ -1,22 +1,29 @@
-div[empty-screen]{
-    opacity: 0.3;
-    height: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
+div[empty-screen] {
+  opacity: 0.3;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
-div[empty-screen] > div {
-    width: 100%;
-    -webkit-align-self: center;
-    -ms-flex-item-align: center;
-    align-self: center;
+div[empty-screen]>div {
+  width: 100%;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
 }
 
-div[empty-screen] > div > ion-icon{
-    font-size: 15rem;
+div[empty-screen]>div>ion-icon {
+  font-size: 15rem;
+}
+
+.subtitle {
+  top: 8px;
+  font-size: 66%;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
