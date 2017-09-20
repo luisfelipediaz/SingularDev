@@ -67,6 +67,12 @@ export class ShoppingPage implements OnInit {
     let subscribeProduct = this.productServiceProvider.getProduct(text).subscribe(product => {
       subscribeProduct.unsubscribe();
       if (!!product.supermarkets && product.supermarkets[this.market.supermarket.$key]) {
+        let menor = product.supermarkets[this.market.supermarket.$key];
+        for (let key in product.supermarkets) {
+          if (product.supermarkets[key] < menor) {
+            menor = product.supermarkets[key];
+          }
+        }
         this.market.add(product);
       } else {
         product.name = product.name || '';
