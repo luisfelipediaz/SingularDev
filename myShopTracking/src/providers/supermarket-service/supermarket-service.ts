@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Supermarket } from "../../interfaces/supermarket";
-import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from "angularfire2/database";
 import { Query } from "angularfire2/interfaces";
 
 @Injectable()
@@ -12,7 +12,7 @@ export class SupermarketServiceProvider {
   constructor(public http: Http, private afDB: AngularFireDatabase) {
   }
 
-  public getSupermarket(batch?: number, lastName?: string): FirebaseListObservable<Supermarket[]> {
+  public getSupermarkets(batch?: number, lastName?: string): FirebaseListObservable<Supermarket[]> {
     let query: Query = {
       orderByChild: "name",
       limitToFirst: batch
@@ -25,14 +25,14 @@ export class SupermarketServiceProvider {
     });
   }
 
-  public getSupermarketByProduct(product?: string): FirebaseListObservable<Supermarket[]> {
-    return this.afDB.list(`/supermarkets`, {
-      query: {
-        orderByChild: `products/${product}`,
-        equalTo: true
-      }
-    });
+  public getSupermarket(key: string): FirebaseObjectObservable<Supermarket>{
+    return this.afDB.object(`/supermarkets/${key}`);
   }
+
+  public getSupermarketName(key: string): FirebaseObjectObservable<any> {
+    return this.afDB.object(`/supermarkets/${key}/name`);
+  }
+
 
   public getSupermarketBrands(): FirebaseListObservable<any> {
     return this.afDB.list(`/supermarketbrands`);

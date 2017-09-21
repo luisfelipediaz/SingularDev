@@ -44,7 +44,7 @@ export class ListProductPage implements OnInit {
     loadSupermarket(infiniteScroll?, loadService?: boolean) {
         if (!this.agrupacionSeleccion) {
             if (loadService) {
-                this.supermarketSubscription = this.supermarketService.getSupermarket(this.top).subscribe(supermarkerts => {
+                this.supermarketSubscription = this.supermarketService.getSupermarkets(this.top).subscribe(supermarkerts => {
                     this.supermarketSubscription.unsubscribe();
                     this.supermarketList = supermarkerts;
                     let lastSupermarket = supermarkerts[supermarkerts.length - 1];

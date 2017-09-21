@@ -45,7 +45,7 @@ export class ProductServiceProvider {
 
     for (let supermarket in product.supermarkets) {
       this.afDB.object(`/products/${product.$key}/supermarkets/${supermarket}`).set(product.supermarkets[supermarket]);
-      this.afDB.object(`/supermarkets/${supermarket}/products/${product.$key}`).set(true);
+      //this.afDB.object(`/supermarkets/${supermarket}/products/${product.$key}`).set(true);
     }
   }
 

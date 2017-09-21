@@ -62,7 +62,7 @@ export class ListSupermarketPage {
 
   loadSupermarkets(infinityScroll?, filter?: string) {
     if (!this.finished) {
-      this.supermarketServiceProvider.getSupermarket(this.batch, this.lastKey).subscribe(supermarkets => {
+      this.supermarketServiceProvider.getSupermarkets(this.batch, this.lastKey).subscribe(supermarkets => {
         this.finished = false;
         this.lastKey = supermarkets[supermarkets.length - 1].name;
 
