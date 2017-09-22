@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { AlertController, ModalController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
@@ -29,6 +29,7 @@ export class ShoppingPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     private alertCtrl: AlertController,
+    private navParams: NavParams,
     private barcodeScanner: BarcodeScanner,
     private productServiceProvider: ProductServiceProvider,
     public modalCtrl: ModalController,
