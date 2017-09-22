@@ -9,6 +9,7 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable }
 export class ProductServiceProvider {
 
   constructor(public http: Http, private afDB: AngularFireDatabase) {
+    
   }
 
   public getProducts(): FirebaseListObservable<Product[]> {
@@ -32,10 +33,6 @@ export class ProductServiceProvider {
     return this.afDB.object(`/products/${id}`);
   }
 
-  public deleteProduct(key: string): void {
-    this.afDB.list("/products").remove(key);
-  }
-
   public pushProduct(product: Product): void {
     this.afDB.object(`/products/${product.$key}`).update({
       id: product.$key,
@@ -45,7 +42,6 @@ export class ProductServiceProvider {
 
     for (let supermarket in product.supermarkets) {
       this.afDB.object(`/products/${product.$key}/supermarkets/${supermarket}`).set(product.supermarkets[supermarket]);
-      //this.afDB.object(`/supermarkets/${supermarket}/products/${product.$key}`).set(true);
     }
   }
 

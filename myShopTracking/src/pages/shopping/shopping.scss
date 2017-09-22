@@ -27,3 +27,11 @@ div[empty-screen]>div>ion-icon {
   margin-top: 0px;
   margin-bottom: 0px;
 }
+
+.alert-more-economic{
+  width: 100%;
+}
+
+.alert-more-economic>tbody>tr>td:last-child{
+  text-align: left;
+}

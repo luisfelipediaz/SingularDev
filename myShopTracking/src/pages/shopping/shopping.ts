@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { AlertController, ModalController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
@@ -10,6 +10,7 @@ import { Supermarket } from "../../interfaces/supermarket";
 import { ListSupermarketPage } from "../list-supermarket/list-supermarket";
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
 import { Product } from '../../interfaces/product';
+import { CommonProvider } from '../../providers/common/common';
 
 var globalMarketTemp: Market;
 
@@ -27,12 +28,12 @@ export class ShoppingPage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     private alertCtrl: AlertController,
     private barcodeScanner: BarcodeScanner,
     private productServiceProvider: ProductServiceProvider,
     public modalCtrl: ModalController,
-    public supermarketService: SupermarketServiceProvider) {
+    public supermarketService: SupermarketServiceProvider,
+    public commonProvider: CommonProvider) {
   }
 
   ngOnInit(): void {
@@ -66,10 +67,11 @@ export class ShoppingPage implements OnInit {
 
   public agregarProducto(text: string): void {
     let subscribeProduct = this.productServiceProvider.getProduct(text).subscribe(product => {
-      subscribeProduct.unsubscribe();
+
+      if (!!subscribeProduct) subscribeProduct.unsubscribe();
+      
       if (!!product.supermarkets && product.supermarkets[this.market.supermarket.$key]) {
         this.econtrarPreciosMenores(product);
-
         this.market.add(product);
       } else {
         product.name = product.name || '';
@@ -131,13 +133,19 @@ export class ShoppingPage implements OnInit {
       let menoresNombres: string[] = [];
       for (let key in menores) {
         let subscripcion = this.supermarketService.getSupermarketName(key).subscribe((name) => {
-          subscripcion.unsubscribe();
-          menoresNombres.push(`<tr><td>${name.$value}</td><td>${menores[key]}</td></tr>`);
+
+          if (!!subscripcion) subscripcion.unsubscribe();
+
+          menoresNombres.push(`
+              <tr>
+                <td>${name.$value}</td>
+                <td>${this.commonProvider.numberWithCommas(menores[key])}</td>
+              </tr>`);
           if (menoresNombres.length == Object.keys(menores).length) {
             let alert = this.alertCtrl.create({
-              title: "This product is more economic in",
+              title: "This product is more economic in:",
               buttons: ['OK'],
-              message: `<table style="width: 100%">${menoresNombres.join()}</table>`
+              message: `<table class="alert-more-economic">${menoresNombres.join('')}</table>`
             });
             alert.present();
           }
