@@ -25,7 +25,7 @@ export class SupermarketServiceProvider {
     });
   }
 
-  public getSupermarket(key: string): FirebaseObjectObservable<Supermarket>{
+  public getSupermarket(key: string): FirebaseObjectObservable<Supermarket> {
     return this.afDB.object(`/supermarkets/${key}`);
   }
 
@@ -38,8 +38,8 @@ export class SupermarketServiceProvider {
     return this.afDB.list(`/supermarketbrands`);
   }
 
-  public pushSupermarket(supermarket: Supermarket): void {
-    this.afDB.list(`/supermarkets`).push(supermarket).key;
+  public pushSupermarket(supermarket: Supermarket) {
+    supermarket.$key = this.afDB.list(`/supermarkets`).push(supermarket).key;
     this.afDB.object(`/supermarketbrands/${supermarket.brand}`).set(true);
   }
 

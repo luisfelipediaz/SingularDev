@@ -37,7 +37,8 @@ export class ShoppingPage implements OnInit {
 
   ngOnInit(): void {
     if (!this.market.supermarket) {
-      this.openSelectSupermarket();
+      if (!!this.navParams.data.supermarket) this.market.supermarket = this.navParams.data.supermarket
+      else this.openSelectSupermarket();
     }
   }
 
