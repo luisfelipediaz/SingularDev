@@ -69,7 +69,6 @@ export class ShoppingPage implements OnInit {
       subscribeProduct.unsubscribe();
       if (!!product.supermarkets && product.supermarkets[this.market.supermarket.$key]) {
         this.econtrarPreciosMenores(product);
-
         this.market.add(product);
       } else {
         product.name = product.name || '';
