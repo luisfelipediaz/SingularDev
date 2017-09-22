@@ -30,6 +30,7 @@ import { SupermarketPage } from "../pages/supermarket/supermarket";
 import { MessagingService } from "../providers/messagin/messagin-service";
 import { ProductServiceProvider } from '../providers/product-service/product-service';
 import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
+import { CommonProvider } from '../providers/common/common';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { SupermarketServiceProvider } from '../providers/supermarket-service/sup
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ProductServiceProvider,
     SupermarketServiceProvider,
-    MessagingService
+    MessagingService,
+    CommonProvider
   ]
 })
 export class AppModule { }
