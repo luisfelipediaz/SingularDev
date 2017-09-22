@@ -66,7 +66,9 @@ export class ShoppingPage implements OnInit {
 
   public agregarProducto(text: string): void {
     let subscribeProduct = this.productServiceProvider.getProduct(text).subscribe(product => {
-      subscribeProduct.unsubscribe();
+
+      if (!!subscribeProduct) subscribeProduct.unsubscribe();
+      
       if (!!product.supermarkets && product.supermarkets[this.market.supermarket.$key]) {
         this.econtrarPreciosMenores(product);
         this.market.add(product);
@@ -130,7 +132,9 @@ export class ShoppingPage implements OnInit {
       let menoresNombres: string[] = [];
       for (let key in menores) {
         let subscripcion = this.supermarketService.getSupermarketName(key).subscribe((name) => {
-          subscripcion.unsubscribe();
+
+          if (!!subscripcion) subscripcion.unsubscribe();
+
           menoresNombres.push(`
               <tr>
                 <td>${name.$value}</td>
