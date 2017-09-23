@@ -9,7 +9,6 @@ import { ProductServiceProvider } from "../../providers/product-service/product-
   templateUrl: 'edit-product.html',
 })
 export class EditProductPage implements OnInit {
-  private new: Product;
   private edit: Product;
   private supermarket: string;
   private custom: boolean = false;
@@ -23,11 +22,10 @@ export class EditProductPage implements OnInit {
     const callBack = this.navParams.get("callback");
 
     if (this.custom) {
-      this.edit.id = this.edit.name;
+      this.edit.$key = this.edit.name;
     } else {
       this.productServiceProvider.pushProduct(this.edit)
     }
-
 
     if (callBack) {
       callBack(this.edit).then(() => { this.navCtrl.pop() });
@@ -35,30 +33,9 @@ export class EditProductPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.new = this.navParams.get("new");
     this.supermarket = this.navParams.get("supermarket");
     
     this.edit = this.navParams.get("edit");
     this.custom = this.navParams.get("custom");
-
-    if (!this.custom && this.new) {
-      this.edit = {
-        id: this.new.id,
-        supermarkets: this.new.supermarkets,
-        name: "",
-        brand: ""
-      };
-      
-    } else if (this.custom && !this.edit) {
-      this.edit = {
-        id: null,
-        supermarkets: this.new.supermarkets,
-        name: "",
-        brand: ""
-      };
-    } else if (!this.edit) {
-      throw new ReferenceError("La página EditProduct esperaba por lo menos un parametro ('new' or 'edit' or 'custom')");
-    }
-
   }
 }

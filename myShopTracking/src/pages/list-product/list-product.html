@@ -3,15 +3,40 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>ListProduct</ion-title>
+    <ion-title>ListProduct gola</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-  <form #listProduct="ngForm">
-    <ion-list>
-        <!-- <h1>{{super.key}}</h1> -->
-        <!-- <product-item-view *ngFor="let item of super.value" [product]="item" (productDelete)="deleteProduct($event)"></product-item-view> -->
-        <product-item-view [product]="item" (productDelete)="deleteProduct($event)" *ngFor="let item of productList | async"></product-item-view>
+<ion-content class="outer-content">
+  <ion-list>
+    <ion-item>
+      <ion-label>Agrupar por {{agrupacionSeleccion?'producto':'supermercado'}}</ion-label>
+      <ion-toggle [(ngModel)]="agrupacionSeleccion" (ionChange)="changeToggle()"></ion-toggle>
+    </ion-item>
+  </ion-list>
+  <br/>
+  <!-- <ng-container *ngIf="agrupacionSeleccion">
+    <ion-list *ngFor="let product of productList | async">
+      <ion-list-header color="primary">
+        {{product.name}}{{GetSupermarketByProduct(product.$key)}}
+      </ion-list-header>
+      <div *ngFor="let supermarket of supermarkekListProduct[product.$key] | async">
+        <product-item-view [product]="product" [supermarket]="supermarket" (productDelete)="deleteProduct($event)">
+        </product-item-view>
+      </div>
     </ion-list>
-  </form>
+  </ng-container> -->
+  <ng-container *ngIf="!agrupacionSeleccion">
+    <ion-list *ngFor="let item of supermarketList">
+      <ion-list-header color="primary">
+        {{item.name}}
+      </ion-list-header>
+      <product-item-view [product]="product" [supermarketKey]="item.$key" *ngFor="let product of supermarketProductList[item.$key]">
+      </product-item-view>
+    </ion-list>
+  </ng-container>
+
+  <ion-infinite-scroll  (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

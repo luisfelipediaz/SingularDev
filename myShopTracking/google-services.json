@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "35947451087",
+    "firebase_url": "https://shoptracking-90587.firebaseio.com",
+    "project_id": "shoptracking-90587",
+    "storage_bucket": "shoptracking-90587.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35947451087:android:1036d9b138dfef06",
+        "android_client_info": {
+          "package_name": "com.myshoptracking.cordova"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "35947451087-4c0470q7mg39ubpjkavtecqnhovulved.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myshoptracking.cordova",
+            "certificate_hash": "b4d20b2e952322192caffb49bf102927f7084387"
+          }
+        },
+        {
+          "client_id": "35947451087-l862tc5tg4m4tirf3g9a60q5oik4l7la.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI6HvnZW9h8UCWksoNSgriYM7HtlAeXSE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "35947451087-l862tc5tg4m4tirf3g9a60q5oik4l7la.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "35947451087-6li6lug8d5e1bd5jd73vsshfer2b0rab.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.myshoptracking.cordova",
+                "app_store_id": "12345"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

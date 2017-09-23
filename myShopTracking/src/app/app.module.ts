@@ -10,66 +10,71 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Push } from '@ionic-native/push'
+import { Autostart } from '@ionic-native/autostart'
+
+import { AppConfig } from "./app.config";
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { ShoppingPage } from '../pages/shopping/shopping';
-import { EditProductPage } from '../pages/edit-product/edit-product';
-import { ListProductPage } from '../pages/list-product/list-product';
-import { SupermarketPage } from "../pages/supermarket/supermarket";
-
 import { ProductItemComponent } from '../components/product-item/product-item';
 import { ProductItemViewComponent } from '../components/product-item-view/product-item-view';
-import { ProductServiceProvider } from '../providers/product-service/product-service';
-import { GroupByPipe } from '../entities/groupBy.pipe';
-import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
-import { AppConfig } from "./app.config";
 import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
-import { SupermarketListComponent } from '../components/supermarket-list/supermarket-list';
 
+import { EditProductPage } from '../pages/edit-product/edit-product';
+import { ListProductPage } from '../pages/list-product/list-product';
+import { ListSupermarketPage } from "../pages/list-supermarket/list-supermarket";
+import { LoginPage } from "../pages/login/login";
+import { ShoppingPage } from '../pages/shopping/shopping';
+import { SupermarketPage } from "../pages/supermarket/supermarket";
+
+import { MessagingService } from "../providers/messagin/messagin-service";
+import { ProductServiceProvider } from '../providers/product-service/product-service';
+import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
+import { CommonProvider } from '../providers/common/common';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage,
     ShoppingPage,
     EditProductPage,
     ProductItemComponent,
     ProductItemViewComponent,
     ListProductPage,
     SupermarketPage,
-    GroupByPipe,
     SupermarketCardComponent,
-    SupermarketListComponent
+    ListSupermarketPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(AppConfig.firebaseConfig),
+    IonicModule.forRoot(MyApp),
     HttpModule,
     FormsModule,
-    IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(AppConfig.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage,
     EditProductPage,
     ShoppingPage,
     ListProductPage,
-    SupermarketPage
+    SupermarketPage,
+    ListSupermarketPage,
+    LoginPage
   ],
   providers: [
     BarcodeScanner,
+    Push,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Autostart,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     ProductServiceProvider,
-    SupermarketServiceProvider
+    SupermarketServiceProvider,
+    MessagingService,
+    CommonProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }

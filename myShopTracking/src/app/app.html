@@ -10,7 +10,11 @@
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
+      <button ion-button block menuClose color="danger" (click)="logout()" *ngIf="user">
+          Logout
+        </button>
     </ion-list>
+
   </ion-content>
 
 </ion-menu>

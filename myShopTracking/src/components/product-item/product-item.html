@@ -14,7 +14,7 @@
       </button>
     </div>
     <h2>{{ item.product.name }}</h2>
-    <h4>{{ item.product.supermarkets[supermarket.id] | currency:'USD':true:'1.0-2' }} c/unidad</h4>
+    <h4>{{ item.product.supermarkets[supermarket.$key] | currency:'USD':true:'1.0-2' }} c/unidad</h4>
     <div class="item-note" item-right>
       {{ item.price | currency:'USD':true:'1.0-2' }}
     </div>

@@ -3,21 +3,52 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Shopping</ion-title>
+    <ion-title>Shopping
+      <p class="subtitle">{{market.supermarket?.name}}</p>
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openSelectSupermarket()">
+          <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <supermarket-list (selectSupermarket)="marketSelect($event)"></supermarket-list>
-  <ion-list>
-    <product-item *ngFor="let item of market.products" [item]="item" [supermarket]="market.supermarket" (productChangeCount)="market.calculateTotal()" (productDelete)="deleteProduct($event)"></product-item>
+  <div *ngIf="market.products.length === 0" empty-screen>
+    <div text-center>
+      <ion-icon name="cart"></ion-icon>
+      <h2 class="slide-title">
+        Welcome to <b>My Shop Tracking</b>
+      </h2>
+      <p>
+        Here we go!
+      </p>
+    </div>
+  </div>
+  <ion-list *ngIf="market.products.length > 0">
+    <product-item *ngFor="let item of market.products" [item]="item" [supermarket]="market.supermarket" (productChangeCount)="market.calculateTotal()"
+      (productDelete)="deleteProduct($event)"></product-item>
   </ion-list>
   <ion-fab left bottom>
-    <button ion-fab color="primary" (click)="escanerCodigo()"><ion-icon name="camera"></ion-icon></button>
+    <button
+      ion-fab
+      color="primary"
+      (click)="escanerCodigo()"
+      [disabled]="!market.supermarket">
+        <ion-icon name="camera"></ion-icon>
+    </button>
   </ion-fab>
   <ion-fab right bottom>
-    <button ion-fab color="secondary" (click)="customProduct()"><ion-icon name="clipboard"></ion-icon></button>
+    <button
+      ion-fab
+      color="secondary"
+      (click)="customProduct()"
+      [disabled]="!market.supermarket">
+        <ion-icon name="clipboard"></ion-icon>
+    </button>
   </ion-fab>
 </ion-content>
 

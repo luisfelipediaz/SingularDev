@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Cancel</button>
+    </ion-buttons>
+    <ion-title>
+      Select supermarket
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar (ionInput)="filterSupermarkets($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="outer-content">
+  <ion-list radio-group *ngFor="let brand of brands">
+    <ion-list-header>
+      {{brand}}
+    </ion-list-header>
+    <ion-item *ngFor="let supermarket of getSupermarketsByBrand(brand)">
+      <ion-label>{{supermarket.name}}</ion-label>
+      <ion-radio [checked]="supermarket.$key === supermarketSelect.$key" (ionSelect)="marketSelect(supermarket)"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

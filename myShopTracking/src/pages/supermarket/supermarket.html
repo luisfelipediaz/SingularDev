@@ -1,5 +1,8 @@
 <ion-header>
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Edit supermarket</ion-title>
   </ion-navbar>
 </ion-header>
@@ -22,6 +25,6 @@
     </ion-list>
     <div padding>
       <button ion-button color="primary" [disabled]="!supermarketEdit.form.valid" block (click)="guardar()">Guardar</button>
-    </div>    
+    </div>
   </form>
 </ion-content>

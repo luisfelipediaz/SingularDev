@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Product } from "../../interfaces/product";
 import { NavController, ItemSliding } from "ionic-angular";
+
+import { Product } from "../../interfaces/product";
+import { Supermarket } from '../../interfaces/supermarket';
 import { EditProductPage } from "../../pages/edit-product/edit-product";
 
 @Component({
@@ -11,6 +13,12 @@ export class ProductItemViewComponent {
   @Input()
   public product: Product;
 
+  @Input()
+  public supermarketKey: string;
+
+  @Input()
+  public supermarket: Supermarket;
+
   @Output()
   public productDelete: EventEmitter<any> = new EventEmitter();
 
@@ -18,13 +26,16 @@ export class ProductItemViewComponent {
   }
 
   ngOnInit(): void {
+    if (this.supermarket)
+      this.supermarketKey = this.supermarket.$key;
   }
 
   public edit(slidingItem: ItemSliding): void {
     slidingItem.close();
     this.navCtrl.push(EditProductPage, {
       edit: this.product,
-      custom: this.product.id === this.product.name,
+      supermarket: this.supermarketKey,
+      custom: this.product.$key === this.product.name,
       callback: (product) => new Promise((resolve, reject) => {
         resolve();
       })
