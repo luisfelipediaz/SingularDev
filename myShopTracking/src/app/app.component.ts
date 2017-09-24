@@ -11,6 +11,7 @@ import { ListProductPage } from '../pages/list-product/list-product';
 import { ShoppingPage } from '../pages/shopping/shopping';
 import { SupermarketPage } from '../pages/supermarket/supermarket';
 import { MessagingService } from "../providers/messagin/messagin-service";
+import { MyMarketListPage } from '../pages/my-market-list/my-market-list'
 
 
 @Component({
@@ -38,7 +39,8 @@ export class MyApp {
     this.pages = [
       { title: 'Shopping', component: ShoppingPage },
       { title: 'ListProduct', component: ListProductPage },
-      { title: 'Supermarket', component: SupermarketPage }
+      { title: 'Supermarket', component: SupermarketPage },
+      { title: 'My List Market', component: MyMarketListPage }
     ];
 
     this.rootPage = ShoppingPage;
