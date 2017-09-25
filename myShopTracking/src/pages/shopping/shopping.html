@@ -29,8 +29,12 @@
     </div>
   </div>
   <ion-list *ngIf="market.products.length > 0">
-    <product-item *ngFor="let item of market.products" [item]="item" [supermarket]="market.supermarket" (productChangeCount)="market.calculateTotal()"
-      (productDelete)="deleteProduct($event)"></product-item>
+    <product-item *ngFor="let item of market.products"
+      [item]="item" [supermarket]="market.supermarket" 
+      (productChange)="market.calculateTotal()"
+      (productDelete)="deleteProduct($event)"
+      (productMore)="market.more($event)"
+      (productMinus)="market.minus($event)"></product-item>
   </ion-list>
   <ion-fab left bottom>
     <button

@@ -31,6 +31,7 @@ import { MessagingService } from "../providers/messagin/messagin-service";
 import { ProductServiceProvider } from '../providers/product-service/product-service';
 import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
 import { CommonProvider } from '../providers/common/common';
+import { MarketServiceProvider } from '../providers/market-service/market-service';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { CommonProvider } from '../providers/common/common';
     ProductServiceProvider,
     SupermarketServiceProvider,
     MessagingService,
-    CommonProvider
+    CommonProvider,
+    MarketServiceProvider
   ]
 })
 export class AppModule { }

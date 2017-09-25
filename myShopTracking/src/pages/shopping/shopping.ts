@@ -11,6 +11,7 @@ import { ListSupermarketPage } from "../list-supermarket/list-supermarket";
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
 import { Product } from '../../interfaces/product';
 import { CommonProvider } from '../../providers/common/common';
+import { MarketServiceProvider } from '../../providers/market-service/market-service';
 
 var globalMarketTemp: Market;
 
@@ -22,7 +23,7 @@ var globalMarketTemp: Market;
 export class ShoppingPage implements OnInit {
 
   private get market(): Market {
-    globalMarketTemp = globalMarketTemp || new Market();
+    globalMarketTemp = globalMarketTemp || new Market(this.marketServiceProvider);
     return globalMarketTemp;
   };
 
@@ -34,7 +35,8 @@ export class ShoppingPage implements OnInit {
     private productServiceProvider: ProductServiceProvider,
     public modalCtrl: ModalController,
     public supermarketService: SupermarketServiceProvider,
-    public commonProvider: CommonProvider) {
+    public commonProvider: CommonProvider,
+    private marketServiceProvider: MarketServiceProvider) {
   }
 
   ngOnInit(): void {
@@ -70,7 +72,7 @@ export class ShoppingPage implements OnInit {
     let subscribeProduct = this.productServiceProvider.getProduct(text).subscribe(product => {
 
       if (!!subscribeProduct) subscribeProduct.unsubscribe();
-      
+
       if (!!product.supermarkets && product.supermarkets[this.market.supermarket.$key]) {
         this.econtrarPreciosMenores(product);
         this.market.add(product);

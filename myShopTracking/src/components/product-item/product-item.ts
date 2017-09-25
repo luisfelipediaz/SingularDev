@@ -21,7 +21,13 @@ export class ProductItemComponent {
   supermarket: Supermarket;
 
   @Output()
-  public productChangeCount: EventEmitter<any> = new EventEmitter();
+  public productChange: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  public productMore: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  public productMinus: EventEmitter<any> = new EventEmitter();
 
   @Output()
   public productDelete: EventEmitter<any> = new EventEmitter();
@@ -30,17 +36,11 @@ export class ProductItemComponent {
   }
 
   public minus(): void {
-    this.item.count--;
-    this.item.price = this.item.count * this.item.product.supermarkets[this.supermarket.$key];
-
-    this.productChangeCount.emit(this.item);
+    this.productMinus.emit(this.item);
   }
 
   public more(): void {
-    this.item.count++;
-    this.item.price = this.item.count * this.item.product.supermarkets[this.supermarket.$key];
-
-    this.productChangeCount.emit(this.item);
+    this.productMore.emit(this.item);
   }
 
   public edit(slidingItem: ItemSliding): void {
@@ -51,11 +51,12 @@ export class ProductItemComponent {
       custom: this.item.product.$key === this.item.product.name,
       callback: (product) => new Promise((resolve, reject) => {
         this.item.price = this.item.count * product.supermarkets[this.supermarket.$key];
-        this.productChangeCount.emit(this.item);
+        this.productChange.emit(this.item);
         resolve();
       })
     });
   }
+
   public delete(): void {
     this.productDelete.emit(this.item);
   }

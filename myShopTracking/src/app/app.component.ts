@@ -5,12 +5,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Autostart } from "@ionic-native/autostart";
 
 import { AngularFireAuth } from "angularfire2/auth";
-import * as firebase from 'firebase/app';
 
 import { ListProductPage } from '../pages/list-product/list-product';
 import { ShoppingPage } from '../pages/shopping/shopping';
 import { SupermarketPage } from '../pages/supermarket/supermarket';
 import { MessagingService } from "../providers/messagin/messagin-service";
+import { LoginPage } from '../pages/login/login';
+import { AppConfig } from './app.config';
 
 
 @Component({
@@ -20,7 +21,6 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = null;
-  user: firebase.User;
 
   pages: Array<{ title: string, component: any }>;
 
@@ -30,29 +30,32 @@ export class MyApp {
     public splashScreen: SplashScreen,
     private afAuth: AngularFireAuth,
     private messagingService: MessagingService,
-    private autostart: Autostart ) {
+    private autostart: Autostart) {
 
     this.initializeApp();
+
+    afAuth.authState.subscribe(user => {
+
+      if (!user) {
+        AppConfig.user = null;
+        this.rootPage = LoginPage;
+        return;
+      }
+      AppConfig.user = user;
+      this.rootPage = ShoppingPage;
+    });
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Shopping', component: ShoppingPage },
       { title: 'ListProduct', component: ListProductPage },
-      { title: 'Supermarket', component: SupermarketPage }
+      { title: 'Supermarket', component: SupermarketPage },
+      { title: 'Login', component: LoginPage }
     ];
+  }
 
-    this.rootPage = ShoppingPage;
-
-    //Se comentarea provisionalmente mientras el equipo de ionic soluciona los inconvenientes con el login
-    // afAuth.authState.subscribe(user => {
-    //   if (!user) {
-    //     this.user = null;
-    //     this.rootPage = LoginPage;
-    //     return;
-    //   }
-    //   this.user = user;
-    //   this.rootPage = ShoppingPage;
-    // });
+  isAuthenticated(): boolean {
+    return !!AppConfig.user;
   }
 
   initializeApp() {
