@@ -45,7 +45,6 @@ import { MarketServiceProvider } from '../providers/market-service/market-servic
     SupermarketPage,
     SupermarketCardComponent,
     ListSupermarketPage,
-    LoginPage
     LoginPage,
     MyMarketListPage
   ],
@@ -66,7 +65,6 @@ import { MarketServiceProvider } from '../providers/market-service/market-servic
     ListProductPage,
     SupermarketPage,
     ListSupermarketPage,
-    LoginPage
     LoginPage,
     MyMarketListPage
   ],
