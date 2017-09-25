@@ -10,8 +10,12 @@ import { ListProductPage } from '../pages/list-product/list-product';
 import { ShoppingPage } from '../pages/shopping/shopping';
 import { SupermarketPage } from '../pages/supermarket/supermarket';
 import { MessagingService } from "../providers/messagin/messagin-service";
+<<<<<<< HEAD
 import { LoginPage } from '../pages/login/login';
 import { AppConfig } from './app.config';
+=======
+import { MyMarketListPage } from '../pages/my-market-list/my-market-list'
+>>>>>>> 79c2e36e74bdc44748f2626c494e1ce2f80ba06e
 
 
 @Component({
@@ -50,7 +54,11 @@ export class MyApp {
       { title: 'Shopping', component: ShoppingPage },
       { title: 'ListProduct', component: ListProductPage },
       { title: 'Supermarket', component: SupermarketPage },
+<<<<<<< HEAD
       { title: 'Login', component: LoginPage }
+=======
+      { title: 'My List Market', component: MyMarketListPage }
+>>>>>>> 79c2e36e74bdc44748f2626c494e1ce2f80ba06e
     ];
   }
 

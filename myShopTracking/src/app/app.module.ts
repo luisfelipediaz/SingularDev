@@ -26,6 +26,7 @@ import { ListSupermarketPage } from "../pages/list-supermarket/list-supermarket"
 import { LoginPage } from "../pages/login/login";
 import { ShoppingPage } from '../pages/shopping/shopping';
 import { SupermarketPage } from "../pages/supermarket/supermarket";
+import { MyMarketListPage } from "../pages/my-market-list/my-market-list";
 
 import { MessagingService } from "../providers/messagin/messagin-service";
 import { ProductServiceProvider } from '../providers/product-service/product-service';
@@ -45,6 +46,8 @@ import { MarketServiceProvider } from '../providers/market-service/market-servic
     SupermarketCardComponent,
     ListSupermarketPage,
     LoginPage
+    LoginPage,
+    MyMarketListPage
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,8 @@ import { MarketServiceProvider } from '../providers/market-service/market-servic
     SupermarketPage,
     ListSupermarketPage,
     LoginPage
+    LoginPage,
+    MyMarketListPage
   ],
   providers: [
     BarcodeScanner,
