@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, IonicPage } from 'ionic-angular';
 
 import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
-import { ShoppingPage } from '../shopping/shopping';
 
+@IonicPage()
 @Component({
   selector: 'page-supermarket',
   templateUrl: 'supermarket.html',
@@ -28,7 +28,7 @@ export class SupermarketPage implements OnInit {
         {
           text: "Go to shop!",
           handler: () => {
-            this.navCtrl.setRoot(ShoppingPage, {
+            this.navCtrl.setRoot('ShoppingPage', {
               supermarket: this.new
             });
           }

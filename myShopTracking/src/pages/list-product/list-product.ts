@@ -6,8 +6,9 @@ import { Product } from '../../interfaces/product';
 import { ProductServiceProvider } from "../../providers/product-service/product-service";
 import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from "../../providers/supermarket-service/supermarket-service";
+import { IonicPage } from 'ionic-angular';
 
-
+@IonicPage()
 @Component({
     selector: 'page-list-product',
     templateUrl: 'list-product.html'

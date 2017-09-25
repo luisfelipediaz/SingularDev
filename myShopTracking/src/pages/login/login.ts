@@ -3,8 +3,9 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from "angularfire2/auth";
 
 import * as firebase from 'firebase/app';
-import { Platform } from 'ionic-angular';
+import { Platform, IonicPage } from 'ionic-angular';
 
+@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'

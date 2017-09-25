@@ -6,13 +6,8 @@ import { Autostart } from "@ionic-native/autostart";
 
 import { AngularFireAuth } from "angularfire2/auth";
 
-import { ListProductPage } from '../pages/list-product/list-product';
-import { ShoppingPage } from '../pages/shopping/shopping';
-import { SupermarketPage } from '../pages/supermarket/supermarket';
 import { MessagingService } from "../providers/messagin/messagin-service";
-import { LoginPage } from '../pages/login/login';
 import { AppConfig } from './app.config';
-import { MyMarketListPage } from '../pages/my-market-list/my-market-list'
 
 
 @Component({
@@ -33,27 +28,29 @@ export class MyApp {
     private messagingService: MessagingService,
     private autostart: Autostart) {
 
+    // used for an example of ngFor and navigation
+    this.pages = [
+      { title: 'Login', component: 'LoginPage' },
+      { title: 'Shopping', component: 'ShoppingPage' },
+      { title: 'ListProduct', component: 'ListProductPage' },
+      { title: 'Supermarket', component: 'SupermarketPage' },
+      { title: 'My List Market', component: 'MyMarketListPage' }
+    ];
+
     this.initializeApp();
 
     afAuth.authState.subscribe(user => {
-
       if (!user) {
         AppConfig.user = null;
-        this.rootPage = LoginPage;
-        return;
+        this.rootPage = 'LoginPage';
+
+      } else {
+        AppConfig.user = user;
+        this.rootPage = 'ShoppingPage';
       }
-      AppConfig.user = user;
-      this.rootPage = ShoppingPage;
     });
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Shopping', component: ShoppingPage },
-      { title: 'ListProduct', component: ListProductPage },
-      { title: 'Supermarket', component: SupermarketPage },
-      { title: 'Login', component: LoginPage },
-      { title: 'My List Market', component: MyMarketListPage }
-    ];
+
   }
 
   isAuthenticated(): boolean {

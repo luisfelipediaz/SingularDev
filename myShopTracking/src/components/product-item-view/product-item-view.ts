@@ -3,7 +3,6 @@ import { NavController, ItemSliding } from "ionic-angular";
 
 import { Product } from "../../interfaces/product";
 import { Supermarket } from '../../interfaces/supermarket';
-import { EditProductPage } from "../../pages/edit-product/edit-product";
 
 @Component({
   selector: 'product-item-view',
@@ -32,7 +31,7 @@ export class ProductItemViewComponent {
 
   public edit(slidingItem: ItemSliding): void {
     slidingItem.close();
-    this.navCtrl.push(EditProductPage, {
+    this.navCtrl.push('EditProductPage', {
       edit: this.product,
       supermarket: this.supermarketKey,
       custom: this.product.$key === this.product.name,

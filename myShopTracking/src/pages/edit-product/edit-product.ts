@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, IonicPage } from 'ionic-angular';
 
 import { Product } from '../../interfaces/product';
 import { ProductServiceProvider } from "../../providers/product-service/product-service";
 
+@IonicPage()
 @Component({
   selector: 'page-edit-product',
   templateUrl: 'edit-product.html',

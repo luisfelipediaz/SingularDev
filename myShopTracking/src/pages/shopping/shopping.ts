@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { AlertController, ModalController } from 'ionic-angular';
+import { AlertController, ModalController, IonicPage } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { ProductServiceProvider } from '../../providers/product-service/product-service';
-import { EditProductPage } from '../edit-product/edit-product';
 import { Market } from "../../entities/market";
 import { Supermarket } from "../../interfaces/supermarket";
-import { ListSupermarketPage } from "../list-supermarket/list-supermarket";
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
 import { Product } from '../../interfaces/product';
 import { CommonProvider } from '../../providers/common/common';
 import { MarketServiceProvider } from '../../providers/market-service/market-service';
+import { ListSupermarketPage } from '../list-supermarket/list-supermarket';
 
 var globalMarketTemp: Market;
 
-
+@IonicPage()
 @Component({
   selector: 'page-shopping',
   templateUrl: 'shopping.html'
@@ -82,7 +81,7 @@ export class ShoppingPage implements OnInit {
         product.supermarkets = product.supermarkets || {};
         product.supermarkets[this.market.supermarket.$key] = null;
 
-        this.navCtrl.push(EditProductPage, {
+        this.navCtrl.push('EditProductPage', {
           edit: product,
           supermarket: this.market.supermarket.$key,
           callback: (product) => new Promise((resolve, reject) => {
@@ -101,7 +100,7 @@ export class ShoppingPage implements OnInit {
 
     newProduct.supermarkets[this.market.supermarket.$key] = null;
 
-    this.navCtrl.push(EditProductPage, {
+    this.navCtrl.push('EditProductPage', {
       custom: true,
       edit: newProduct,
       supermarket: this.market.supermarket.$key,

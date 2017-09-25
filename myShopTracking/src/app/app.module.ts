@@ -16,17 +16,10 @@ import { Autostart } from '@ionic-native/autostart'
 import { AppConfig } from "./app.config";
 
 import { MyApp } from './app.component';
-import { ProductItemComponent } from '../components/product-item/product-item';
-import { ProductItemViewComponent } from '../components/product-item-view/product-item-view';
+
 import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
 
-import { EditProductPage } from '../pages/edit-product/edit-product';
-import { ListProductPage } from '../pages/list-product/list-product';
 import { ListSupermarketPage } from "../pages/list-supermarket/list-supermarket";
-import { LoginPage } from "../pages/login/login";
-import { ShoppingPage } from '../pages/shopping/shopping';
-import { SupermarketPage } from "../pages/supermarket/supermarket";
-import { MyMarketListPage } from "../pages/my-market-list/my-market-list";
 
 import { MessagingService } from "../providers/messagin/messagin-service";
 import { ProductServiceProvider } from '../providers/product-service/product-service';
@@ -37,16 +30,8 @@ import { MarketServiceProvider } from '../providers/market-service/market-servic
 @NgModule({
   declarations: [
     MyApp,
-    ShoppingPage,
-    EditProductPage,
-    ProductItemComponent,
-    ProductItemViewComponent,
-    ListProductPage,
-    SupermarketPage,
     SupermarketCardComponent,
-    ListSupermarketPage,
-    LoginPage,
-    MyMarketListPage
+    ListSupermarketPage
   ],
   imports: [
     BrowserModule,
@@ -60,13 +45,7 @@ import { MarketServiceProvider } from '../providers/market-service/market-servic
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    EditProductPage,
-    ShoppingPage,
-    ListProductPage,
-    SupermarketPage,
-    ListSupermarketPage,
-    LoginPage,
-    MyMarketListPage
+    ListSupermarketPage
   ],
   providers: [
     BarcodeScanner,
