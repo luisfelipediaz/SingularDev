@@ -30,16 +30,19 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Login', component: 'LoginPage' },
       { title: 'Shopping', component: 'ShoppingPage' },
       { title: 'ListProduct', component: 'ListProductPage' },
       { title: 'Supermarket', component: 'SupermarketPage' },
-      { title: 'My List Market', component: 'MyMarketListPage' }
+      { title: 'My List Market', component: 'MyMarketListPage' },
+      { title: 'Login', component: 'LoginPage' }
     ];
 
     this.initializeApp();
 
-    afAuth.authState.subscribe(user => {
+    this.rootPage = 'ShoppingPage';
+
+    //EL plugin de dynamic links de cordova aun esta defectuoso
+    /*afAuth.authState.subscribe(user => {
       if (!user) {
         AppConfig.user = null;
         this.rootPage = 'LoginPage';
@@ -48,7 +51,7 @@ export class MyApp {
         AppConfig.user = user;
         this.rootPage = 'ShoppingPage';
       }
-    });
+    });*/
 
 
   }

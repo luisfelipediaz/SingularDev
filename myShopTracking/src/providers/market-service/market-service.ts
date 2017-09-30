@@ -11,6 +11,7 @@ export class MarketServiceProvider {
   }
 
   pushMarket(market: Market) {
+    if (!AppConfig.user) return;
     this.afDB.object(`/markets/${AppConfig.user.uid}/${market.date}`).set({
       date: market.date,
       supermarket: market.supermarket ? market.supermarket.$key : null,
@@ -18,12 +19,8 @@ export class MarketServiceProvider {
     });
   }
 
-  updateSupermarket(market: Market) {
-    this.afDB.object(`/markets/${AppConfig.user.uid}/${market.date}/supermarket`).set(market.supermarket.$key);
-  }
-
   pushProduct(market: Market, product: ProductMarket) {
-
+    if (!AppConfig.user) return;
     this.afDB.object(`/markets/${AppConfig.user.uid}/${market.date}/products/${product.product.$key}`).update({
       count: product.count,
       price: product.price,
@@ -32,13 +29,15 @@ export class MarketServiceProvider {
   }
 
   updateProduct(market: Market, product: ProductMarket) {
+    if (!AppConfig.user) return;    
     this.afDB.object(`/markets/${AppConfig.user.uid}/${market.date}/products/${product.product.$key}`).update({
       count: product.count,
       price: product.price
     });
   }
 
-  deleteProduct(market: Market, product: ProductMarket){
+  deleteProduct(market: Market, product: ProductMarket) {
+    if (!AppConfig.user) return;
     this.afDB.object(`/markets/${AppConfig.user.uid}/${market.date}/products/${product.product.$key}`).remove();
   }
 
