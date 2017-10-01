@@ -11,11 +11,12 @@ admin.initializeApp(functions.config().firebase);
 // });
 
 exports.historyPrice = functions.database.ref('/products/{barcode}/supermarkets/{supermarket}').onWrite((snapshot) => {
-    const time = new Date();
-    const obj = {
-        date: time,
-        price: snapshot.data.val()
-    };
+    if (!!snapshot.data.val()) {
+        const time = new Date();
+        const obj = {
+            price: snapshot.data.val()
+        };
 
-    return admin.database().ref(`/history/${snapshot.params.barcode}/${snapshot.params.supermarket}/${time.getTime()}`).update(obj);
+        return admin.database().ref(`/history/${snapshot.params.barcode}/${snapshot.params.supermarket}/${time.getTime()}`).update(obj);
+    }
 });
