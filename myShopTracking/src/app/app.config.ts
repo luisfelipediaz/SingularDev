@@ -11,9 +11,7 @@ export class AppConfig {
   };
 
   public static pushOptions: PushOptions = {
-    android: {
-      senderID: '35947451087'
-    },
+    android: {},
     ios: {
       alert: 'true',
       badge: true,
