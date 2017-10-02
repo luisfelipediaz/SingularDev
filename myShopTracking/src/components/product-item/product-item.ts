@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from "../../interfaces/product";
 import { NavController, ItemSliding } from "ionic-angular";
-import { EditProductPage } from "../../pages/edit-product/edit-product";
 import { Supermarket } from "../../interfaces/supermarket";
 
 @Component({
@@ -45,7 +44,7 @@ export class ProductItemComponent {
 
   public edit(slidingItem: ItemSliding): void {
     slidingItem.close();
-    this.navCtrl.push(EditProductPage, {
+    this.navCtrl.push('EditProductPage', {
       edit: this.item.product,
       supermarket: this.supermarket.$key,
       custom: this.item.product.$key === this.item.product.name,

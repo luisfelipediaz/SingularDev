@@ -17,7 +17,6 @@ export class ProductServiceProvider {
   }
 
   public getProductsBySupermarket(top: number, supermarket: string): FirebaseListObservable<Product[]> {
-
     return this.afDB.list(`/products`,
       {
         query: {
