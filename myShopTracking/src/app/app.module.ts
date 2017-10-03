@@ -19,8 +19,6 @@ import { MyApp } from './app.component';
 
 import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
 
-import { ListSupermarketPage } from "../pages/list-supermarket/list-supermarket";
-
 import { MessagingService } from "../providers/messagin/messagin-service";
 import { ProductServiceProvider } from '../providers/product-service/product-service';
 import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
@@ -30,8 +28,7 @@ import { MarketServiceProvider } from '../providers/market-service/market-servic
 @NgModule({
   declarations: [
     MyApp,
-    SupermarketCardComponent,
-    ListSupermarketPage
+    SupermarketCardComponent
   ],
   imports: [
     BrowserModule,
@@ -44,8 +41,7 @@ import { MarketServiceProvider } from '../providers/market-service/market-servic
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    ListSupermarketPage
+    MyApp
   ],
   providers: [
     BarcodeScanner,

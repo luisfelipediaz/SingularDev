@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ViewController } from "ionic-angular";
+import { ViewController, IonicPage } from "ionic-angular";
 
 import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
 
 import * as _ from 'lodash';
 
+@IonicPage()
 @Component({
   selector: 'list-supermarket',
   templateUrl: 'list-supermarket.html'

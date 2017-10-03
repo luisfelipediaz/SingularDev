@@ -10,7 +10,6 @@ import { SupermarketServiceProvider } from '../../providers/supermarket-service/
 import { Product } from '../../interfaces/product';
 import { CommonProvider } from '../../providers/common/common';
 import { MarketServiceProvider } from '../../providers/market-service/market-service';
-import { ListSupermarketPage } from '../list-supermarket/list-supermarket';
 
 var globalMarketTemp: Market;
 
@@ -112,7 +111,7 @@ export class ShoppingPage implements OnInit {
   }
 
   openSelectSupermarket(): void {
-    let modal = this.modalCtrl.create(ListSupermarketPage, this.market.supermarket);
+    let modal = this.modalCtrl.create('ListSupermarketPage', this.market.supermarket);
     modal.present();
     modal.onWillDismiss((supermarket: Supermarket) => {
       if (supermarket) {
