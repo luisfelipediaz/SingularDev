@@ -3,44 +3,51 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Supermarket } from "../../interfaces/supermarket";
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from "angularfire2/database";
-import { Query } from 'angularfire2/database/interfaces';
+import { AngularFirestore } from "angularfire2/firestore";
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class SupermarketServiceProvider {
 
-  constructor(public http: Http, private afDB: AngularFireDatabase) {
+  constructor(public http: Http, private afFS: AngularFirestore) {
   }
 
-  public getSupermarkets(batch?: number, lastName?: string): FirebaseListObservable<Supermarket[]> {
-    let query: Query = {
-      orderByChild: "name",
-      limitToFirst: batch
-    };
+  public getSupermarkets(batch?: number, lastName?: string): Observable<any> {
+    return this.afFS.collection(`/supermarkets`, ref => {
+      let query = ref.orderBy("name");
 
-    if (!!lastName) query.startAt = lastName;
+      if (!!lastName) query = query.startAt(lastName);
 
-    return this.afDB.list(`/supermarkets`, {
-      query
-    });
+      query = query.limit(batch);
+
+      return query;
+    }).valueChanges();
   }
 
-  public getSupermarket(key: string): FirebaseObjectObservable<Supermarket> {
-    return this.afDB.object(`/supermarkets/${key}`);
+  public getSupermarket(key: string): Observable<Supermarket> {
+    return this.afFS.doc<Supermarket>(`/supermarkets/${key}`).valueChanges();
   }
 
-  public getSupermarketName(key: string): FirebaseObjectObservable<any> {
-    return this.afDB.object(`/supermarkets/${key}/name`);
+  public getSupermarketsByKeys(keys: string[]): Observable<Supermarket[]> {
+    return this.afFS.collection<Supermarket>(`/supermarkets`, ref => {
+      let query = ref.orderBy("id");
+      keys.forEach(key => {
+        query = query.where("id", "==", key);
+      })
+      return query;
+    }).valueChanges();
   }
 
+  // public getSupermarketName(key: string): Observable<string> {
+  //   return this.afFS.doc<string>(`/supermarkets/${key}/name`).valueChanges();
+  // }
 
-  public getSupermarketBrands(): FirebaseListObservable<any> {
-    return this.afDB.list(`/supermarketbrands`);
+  public getSupermarketBrands(): Observable<any> {
+    return this.afFS.collection(`/supermarketbrands`).valueChanges();
   }
 
   public pushSupermarket(supermarket: Supermarket) {
-    supermarket.$key = this.afDB.list(`/supermarkets`).push(supermarket).key;
-    this.afDB.object(`/supermarketbrands/${supermarket.brand}`).set(true);
+    supermarket.id = this.afFS.createId();
+    this.afFS.doc(`/supermarkets/${supermarket.id}`).set(supermarket);
   }
-
 }

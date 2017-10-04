@@ -1,7 +1,9 @@
+import { ProductSupermarket } from "./product-supermarket";
+
 
 export interface Product {
-    $key: string;
+    id: string;
     name: string;
     brand: string;
-    supermarkets: { [id: string]: number };
+    supermarkets?: { [id: string]: ProductSupermarket };
 }

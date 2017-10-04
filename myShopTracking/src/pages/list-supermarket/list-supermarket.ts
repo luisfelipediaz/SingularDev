@@ -75,7 +75,6 @@ export class ListSupermarketPage {
         if (!!infinityScroll) infinityScroll.complete();
         if (supermarkets.length < this.batch) {
           this.finished = true;
-          if (!!infinityScroll) infinityScroll.enable(false);
         }
 
         if (!!filter) this.applyFilter(filter);
@@ -85,6 +84,6 @@ export class ListSupermarketPage {
   }
 
   getUniqueBrands(): void {
-    this.brands = _.uniq(_.map(this.supermarkets, 'brand'));
+    this.brands = _.uniq(this.supermarkets.map(supermarket => supermarket.brand));
   }
 }

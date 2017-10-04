@@ -46,10 +46,10 @@ export class ProductItemComponent {
     slidingItem.close();
     this.navCtrl.push('EditProductPage', {
       edit: this.item.product,
-      supermarket: this.supermarket.$key,
-      custom: this.item.product.$key === this.item.product.name,
+      supermarket: this.supermarket.id,
+      custom: this.item.product.id === this.item.product.name,
       callback: (product) => new Promise((resolve, reject) => {
-        this.item.price = this.item.count * product.supermarkets[this.supermarket.$key];
+        this.item.price = this.item.count * product.supermarkets[this.supermarket.id].price;
         this.productChange.emit(this.item);
         resolve();
       })

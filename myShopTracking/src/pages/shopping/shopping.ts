@@ -66,48 +66,63 @@ export class ShoppingPage implements OnInit {
     });
   }
 
+  public openEditProduct(product: Product, custom: boolean = false) {
+    this.navCtrl.push('EditProductPage', {
+      custom: custom,
+      edit: product,
+      supermarket: this.market.supermarket.id,
+      callback: (product) => new Promise((resolve, reject) => {
+        if (!custom)
+          this.econtrarPreciosMenores(product);
+        this.market.add(product);
+        resolve();
+      })
+    });
+  }
+
   public agregarProducto(text: string): void {
     let subscribeProduct = this.productServiceProvider.getProduct(text).subscribe(product => {
-
       if (!!subscribeProduct) subscribeProduct.unsubscribe();
 
-      if (!!product.supermarkets && product.supermarkets[this.market.supermarket.$key]) {
-        this.econtrarPreciosMenores(product);
-        this.market.add(product);
-      } else {
-        product.name = product.name || '';
-        product.brand = product.brand || '';
-        product.supermarkets = product.supermarkets || {};
-        product.supermarkets[this.market.supermarket.$key] = null;
+      if (product) {
+        product.supermarkets = {};
+        let priceObservable = this.productServiceProvider.getPrice(text, this.market.supermarket.id).subscribe(result => {
 
-        this.navCtrl.push('EditProductPage', {
-          edit: product,
-          supermarket: this.market.supermarket.$key,
-          callback: (product) => new Promise((resolve, reject) => {
+          if (!!priceObservable) priceObservable.unsubscribe();
+
+          if (!!result) {
+            product.supermarkets[this.market.supermarket.id] = result;
+            this.econtrarPreciosMenores(product);
             this.market.add(product);
-            resolve();
-          })
+          } else {
+            product.supermarkets[this.market.supermarket.id] = { price: null };
+            this.openEditProduct(product);
+          }
         });
+      } else {
+        product = {
+          id: text,
+          name: "",
+          brand: "",
+          supermarkets: {}
+        };
+        product.supermarkets[this.market.supermarket.id] = { price: null };
+        this.openEditProduct(product);
       }
     });
   }
 
   public customProduct(): void {
-    var newProduct = {
+    var newProduct: Product = {
+      id: null,
+      name: "",
+      brand: "",
       supermarkets: {}
     };
 
-    newProduct.supermarkets[this.market.supermarket.$key] = null;
+    newProduct.supermarkets[this.market.supermarket.id] = { price: null };
 
-    this.navCtrl.push('EditProductPage', {
-      custom: true,
-      edit: newProduct,
-      supermarket: this.market.supermarket.$key,
-      callback: (product) => new Promise((resolve, reject) => {
-        this.market.add(product);
-        resolve();
-      })
-    });
+    this.openEditProduct(newProduct, true);
   }
 
   openSelectSupermarket(): void {
@@ -121,37 +136,29 @@ export class ShoppingPage implements OnInit {
   }
 
   private econtrarPreciosMenores(product: Product) {
-    let menores: {
-      [id: string]: number;
-    } = {};
+    debugger;
+    const lowerPricesSubscription = this.productServiceProvider.getLowerPrices(product.id, product.supermarkets[this.market.supermarket.id].price).subscribe(menores => {
+      if (lowerPricesSubscription) lowerPricesSubscription.unsubscribe();
 
-    for (let key in product.supermarkets) {
-      if (product.supermarkets[key] < product.supermarkets[this.market.supermarket.$key]) {
-        menores[key] = product.supermarkets[key];
-      }
-    }
-    if (Object.keys(menores).length > 0) {
-      let menoresNombres: string[] = [];
-      for (let key in menores) {
-        let subscripcion = this.supermarketService.getSupermarketName(key).subscribe((name) => {
+      let keys: string[] = menores.map(menor => menor.id);
 
-          if (!!subscripcion) subscripcion.unsubscribe();
+      let supermarketsByKeysSubscription = this.supermarketService.getSupermarketsByKeys(keys).subscribe(supermarkets => {
 
-          menoresNombres.push(`
-              <tr>
-                <td>${name.$value}</td>
-                <td>${this.commonProvider.numberWithCommas(menores[key])}</td>
-              </tr>`);
-          if (menoresNombres.length == Object.keys(menores).length) {
-            let alert = this.alertCtrl.create({
-              title: "This product is more economic in:",
-              buttons: ['OK'],
-              message: `<table class="alert-more-economic">${menoresNombres.join('')}</table>`
-            });
-            alert.present();
-          }
+        if (!!supermarketsByKeysSubscription) supermarketsByKeysSubscription.unsubscribe();
+
+        let menoresNombres: string[] = supermarkets.map(supermarket => `
+        <tr>
+          <td>${supermarket.name}</td>
+          <td>${this.commonProvider.numberWithCommas(menores.find(menor => menor.id === supermarket.id).price)}</td>
+        </tr>`);
+
+        let alert = this.alertCtrl.create({
+          title: "This product is more economic in:",
+          buttons: ['OK'],
+          message: `<table class="alert-more-economic">${menoresNombres.join('')}</table>`
         });
-      }
-    }
+        alert.present();
+      });
+    });
   }
 }

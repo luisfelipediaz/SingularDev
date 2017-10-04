@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>ListProduct gola</ion-title>
+    <ion-title>ListProduct</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content class="outer-content">
@@ -17,9 +17,9 @@
   <!-- <ng-container *ngIf="agrupacionSeleccion">
     <ion-list *ngFor="let product of productList | async">
       <ion-list-header color="primary">
-        {{product.name}}{{GetSupermarketByProduct(product.$key)}}
+        {{product.name}}{{GetSupermarketByProduct(product.id)}}
       </ion-list-header>
-      <div *ngFor="let supermarket of supermarkekListProduct[product.$key] | async">
+      <div *ngFor="let supermarket of supermarkekListProduct[product.id] | async">
         <product-item-view [product]="product" [supermarket]="supermarket" (productDelete)="deleteProduct($event)">
         </product-item-view>
       </div>
@@ -30,7 +30,7 @@
       <ion-list-header color="primary">
         {{item.name}}
       </ion-list-header>
-      <product-item-view [product]="product" [supermarketKey]="item.$key" *ngFor="let product of supermarketProductList[item.$key]">
+      <product-item-view [product]="product" [supermarketKey]="item.id" *ngFor="let product of supermarketProductList[item.id]">
       </product-item-view>
     </ion-list>
   </ng-container>

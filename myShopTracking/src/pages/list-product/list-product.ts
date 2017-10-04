@@ -59,7 +59,7 @@ export class ListProductPage implements OnInit {
     }
 
     loadProducts(supermarket: Supermarket, infiniteScroll?) {
-        let key = supermarket.$key;
+        let key = supermarket.id;
         this.productServiceProvider.getProductsBySupermarket(this.topSubitem, key).subscribe(products => {
             if (!this.supermarketProductList[key])
                 this.supermarketProductList[key] = [];
