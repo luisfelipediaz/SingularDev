@@ -23,9 +23,10 @@ export class EditProductPage implements OnInit {
     const callBack = this.navParams.get("callback");
 
     if (this.custom) {
-      this.edit.$key = this.edit.name;
+      this.edit.id = this.edit.name;
     } else {
-      this.productServiceProvider.pushProduct(this.edit)
+      this.productServiceProvider.pushProduct(this.edit);
+      this.productServiceProvider.updatePrice(this.edit, this.supermarket)
     }
 
     if (callBack) {
@@ -37,6 +38,7 @@ export class EditProductPage implements OnInit {
     this.supermarket = this.navParams.get("supermarket");
     
     this.edit = this.navParams.get("edit");
+    
     this.custom = this.navParams.get("custom");
   }
 }

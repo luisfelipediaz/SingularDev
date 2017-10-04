@@ -26,7 +26,7 @@ export class ProductItemViewComponent {
 
   ngOnInit(): void {
     if (this.supermarket)
-      this.supermarketKey = this.supermarket.$key;
+      this.supermarketKey = this.supermarket.id;
   }
 
   public edit(slidingItem: ItemSliding): void {
@@ -34,7 +34,7 @@ export class ProductItemViewComponent {
     this.navCtrl.push('EditProductPage', {
       edit: this.product,
       supermarket: this.supermarketKey,
-      custom: this.product.$key === this.product.name,
+      custom: this.product.id === this.product.name,
       callback: (product) => new Promise((resolve, reject) => {
         resolve();
       })

@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -37,7 +37,7 @@ import { MarketServiceProvider } from '../providers/market-service/market-servic
     HttpModule,
     FormsModule,
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

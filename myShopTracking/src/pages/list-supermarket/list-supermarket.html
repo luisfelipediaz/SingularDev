@@ -19,7 +19,7 @@
     </ion-list-header>
     <ion-item *ngFor="let supermarket of getSupermarketsByBrand(brand)">
       <ion-label>{{supermarket.name}}</ion-label>
-      <ion-radio [checked]="supermarket.$key === supermarketSelect.$key" (ionSelect)="marketSelect(supermarket)"></ion-radio>
+      <ion-radio [checked]="supermarket.id === supermarketSelect.id" (ionSelect)="marketSelect(supermarket)"></ion-radio>
     </ion-item>
   </ion-list>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

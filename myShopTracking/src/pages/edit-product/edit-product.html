@@ -12,7 +12,7 @@
     <ion-list>
       <ion-item *ngIf="!custom">
         <ion-label floating>Id</ion-label>
-        <ion-input type="text" required [(ngModel)]="edit.$key" name="id"></ion-input>
+        <ion-input type="text" required [(ngModel)]="edit.id" name="id"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label floating>Name</ion-label>
@@ -27,8 +27,8 @@
         <ion-input
           type="number"
           required
-          [ngModel]="edit.supermarkets[supermarket]"
-          (ngModelChange)="edit.supermarkets[supermarket] = convertToNumber($event)"
+          [ngModel]="edit.supermarkets[supermarket].price"
+          (ngModelChange)="edit.supermarkets[supermarket].price = convertToNumber($event)"
           name="price">
         </ion-input>
       </ion-item>

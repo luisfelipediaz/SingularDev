@@ -17,18 +17,18 @@ export class Market {
 
     public add(product: Product): void {
         if (this.products.length === 0) this.marketServiceProvider.pushMarket(this);;
-        let index = this.products.findIndex(item => item.product.$key === product.$key);
+        let index = this.products.findIndex(item => item.product.id === product.id);
         if (index === -1) {
             let newProduct = {
                 product: product,
-                price: product.supermarkets[this.supermarket.$key],
+                price: product.supermarkets[this.supermarket.id].price,
                 count: 1
             };
             this.products.push(newProduct);
             this.marketServiceProvider.pushProduct(this, newProduct);
         } else {
             this.products[index].count++;
-            this.products[index].price = this.products[index].count * this.products[index].product.supermarkets[this.supermarket.$key];
+            this.products[index].price = this.products[index].count * this.products[index].product.supermarkets[this.supermarket.id].price;
             this.marketServiceProvider.updateProduct(this, this.products[index]);
         }
         this.calculateTotal();
@@ -36,14 +36,14 @@ export class Market {
 
     public more(product: ProductMarket): void {
         product.count++;
-        product.price = product.count * product.product.supermarkets[this.supermarket.$key];
+        product.price = product.count * product.product.supermarkets[this.supermarket.id].price;
         this.calculateTotal();
         this.marketServiceProvider.updateProduct(this, product);
     }
 
     public minus(product: ProductMarket): void {
         product.count--;
-        product.price = product.count * product.product.supermarkets[this.supermarket.$key];
+        product.price = product.count * product.product.supermarkets[this.supermarket.id].price;
         this.calculateTotal();
         this.marketServiceProvider.updateProduct(this, product);
     }
@@ -51,7 +51,7 @@ export class Market {
     public delete(product: Product): void {
         var indexDel = -1;
         for (var index = 0; index < this.products.length; index++) {
-            if (product.$key === this.products[index].product.$key) {
+            if (product.id === this.products[index].product.id) {
                 indexDel = index;
                 break;
             }
