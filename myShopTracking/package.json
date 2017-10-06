@@ -28,7 +28,7 @@
         "@ionic-native/splash-screen": "^4.3.0",
         "@ionic-native/status-bar": "^4.3.0",
         "@ionic/storage": "2.0.1",
-        "angularfire2": "^5.0.0-rc.1",
+        "angularfire2": "^5.0.0-rc.2",
         "cordova-android": "^6.3.0",
         "cordova-browser": "^5.0.0",
         "cordova-ios": "^4.4.0",
