@@ -37,7 +37,7 @@ import { MarketServiceProvider } from '../providers/market-service/market-servic
     HttpModule,
     FormsModule,
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule.enablePersistence()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
