@@ -136,7 +136,6 @@ export class ShoppingPage implements OnInit {
   }
 
   private econtrarPreciosMenores(product: Product) {
-    debugger;
     const lowerPricesSubscription = this.productServiceProvider.getLowerPrices(product.id, product.supermarkets[this.market.supermarket.id].price).subscribe(menores => {
       if (lowerPricesSubscription) lowerPricesSubscription.unsubscribe();
 
