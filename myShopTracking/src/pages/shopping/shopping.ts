@@ -139,6 +139,8 @@ export class ShoppingPage implements OnInit {
     const lowerPricesSubscription = this.productServiceProvider.getLowerPrices(product.id, product.supermarkets[this.market.supermarket.id].price).subscribe(menores => {
       if (lowerPricesSubscription) lowerPricesSubscription.unsubscribe();
 
+      if (menores.length === 0) return;
+
       let keys: string[] = menores.map(menor => menor.id);
 
       let supermarketsByKeysSubscription = this.supermarketService.getSupermarketsByKeys(keys).subscribe(supermarkets => {

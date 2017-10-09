@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Product } from '../../interfaces/product';
 import { AngularFirestore } from "angularfire2/firestore";
 import { Observable } from 'rxjs/Observable';
 import { ProductSupermarket } from '../../interfaces/product-supermarket';
+import { LoadingController } from 'ionic-angular';
 
 @Injectable()
 export class ProductServiceProvider {
 
-  constructor(public http: Http, private afFS: AngularFirestore) {
+  constructor(
+    private afFS: AngularFirestore,
+    public loadingCtrl: LoadingController) {
 
   }
 
@@ -28,7 +30,12 @@ export class ProductServiceProvider {
   }
 
   public getProduct(id: string): Observable<Product> {
-    return this.afFS.doc<Product>(`/products/${id}`).valueChanges();
+    let loader = this.loadingCtrl.create({ content: "Please wait..." });
+    loader.present();
+    return this.afFS.doc<Product>(`/products/${id}`).valueChanges().map(product => {
+      loader.dismiss();
+      return product;
+    });
   }
 
   public pushProduct(product: Product): void {

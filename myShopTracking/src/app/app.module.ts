@@ -17,18 +17,16 @@ import { AppConfig } from "./app.config";
 
 import { MyApp } from './app.component';
 
-import { SupermarketCardComponent } from '../components/supermarket-card/supermarket-card';
-
 import { MessagingService } from "../providers/messagin/messagin-service";
 import { ProductServiceProvider } from '../providers/product-service/product-service';
 import { SupermarketServiceProvider } from '../providers/supermarket-service/supermarket-service';
 import { CommonProvider } from '../providers/common/common';
 import { MarketServiceProvider } from '../providers/market-service/market-service';
+import { MyMarketListServiceProvider } from '../providers/my-market-list-service/my-market-list-service';
 
 @NgModule({
   declarations: [
-    MyApp,
-    SupermarketCardComponent
+    MyApp
   ],
   imports: [
     BrowserModule,
@@ -54,7 +52,8 @@ import { MarketServiceProvider } from '../providers/market-service/market-servic
     SupermarketServiceProvider,
     MessagingService,
     CommonProvider,
-    MarketServiceProvider
+    MarketServiceProvider,
+    MyMarketListServiceProvider
   ]
 })
 export class AppModule { }

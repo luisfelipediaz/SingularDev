@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
+import { IonicPage } from 'ionic-angular';
 
+import { PreProduct } from '../../interfaces/pre-product';
+import { MyMarketListServiceProvider } from '../../providers/my-market-list-service/my-market-list-service';
 /**
  * Generated class for the MyMarketListPage page.
  *
@@ -14,23 +16,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'my-market-list.html',
 })
 export class MyMarketListPage {
+  private preProduct:PreProduct;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private myMarketListServiceProvider: MyMarketListServiceProvider) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MyMarketListPage');
-  }
-
-  products:string[] = [];
-
-  productSelected(product: string){
+  
+  /*productSelected(product: string){
     console.log("Select product", product);
-  }
+  }*/
 
-  add(product:string){
-    this.products.push(product);
-    console.log("Producto para agregar", product);
+  add():void{
+    this.myMarketListServiceProvider.pushProduct(this.preProduct);
   }
 
 }

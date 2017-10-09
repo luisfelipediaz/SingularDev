@@ -26,7 +26,7 @@ export class EditProductPage implements OnInit {
       this.edit.id = this.edit.name;
     } else {
       this.productServiceProvider.pushProduct(this.edit);
-      this.productServiceProvider.updatePrice(this.edit, this.supermarket)
+      this.productServiceProvider.updatePrice(this.edit, this.supermarket);
     }
 
     if (callBack) {

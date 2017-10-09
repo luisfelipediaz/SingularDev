@@ -19,19 +19,19 @@
     <ion-list>
       <ion-item>
         <ion-label floating>Product</ion-label>
-        <ion-input type="text" required [(ngModel)]="product" name="product"></ion-input>
+        <ion-input type="text" required [(ngModel)]="preProduct" name="preProduct"></ion-input>
       </ion-item>
     </ion-list>
     <div padding>
-      <button ion-button color="primary" [disabled]="!productForm.form.valid" block (click)="add(product)"> Agregar </button>
+      <button ion-button color="primary" [disabled]="!productForm.form.valid" block (click)="add()"> Agregar </button>
     </div>
   </form>
 
-  <h1>My List market</h1>
+  <!--<h1>My List market</h1>
   <ion-list>
     <button ion-item *ngFor="let product of products" (click)="productSelected(product)">
       {{ product }}
     </button>
-  </ion-list>
+  </ion-list>-->
 
 </ion-content>
