@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -32,7 +31,6 @@ import { MyMarketListServiceProvider } from '../providers/my-market-list-service
     BrowserModule,
     AngularFireModule.initializeApp(AppConfig.firebaseConfig),
     IonicModule.forRoot(MyApp),
-    HttpModule,
     FormsModule,
     AngularFireAuthModule,
     AngularFirestoreModule.enablePersistence()
@@ -46,14 +44,14 @@ import { MyMarketListServiceProvider } from '../providers/my-market-list-service
     Push,
     StatusBar,
     SplashScreen,
-    Autostart,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    Autostart,    
     ProductServiceProvider,
     SupermarketServiceProvider,
     MessagingService,
     CommonProvider,
     MarketServiceProvider,
-    MyMarketListServiceProvider
+    MyMarketListServiceProvider,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 export class AppModule { }

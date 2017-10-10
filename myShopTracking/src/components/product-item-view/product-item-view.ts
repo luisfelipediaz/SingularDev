@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NavController, ItemSliding } from "ionic-angular";
 
-import { Product } from "../../interfaces/product";
-import { Supermarket } from '../../interfaces/supermarket';
+import { ProductSupermarket } from '../../interfaces/product-supermarket';
+import { Product } from '../../interfaces/product';
 
 @Component({
   selector: 'product-item-view',
@@ -10,13 +10,10 @@ import { Supermarket } from '../../interfaces/supermarket';
 })
 export class ProductItemViewComponent {
   @Input()
-  public product: Product;
+  public product: ProductSupermarket;
 
   @Input()
   public supermarketKey: string;
-
-  @Input()
-  public supermarket: Supermarket;
 
   @Output()
   public productDelete: EventEmitter<any> = new EventEmitter();
@@ -25,14 +22,20 @@ export class ProductItemViewComponent {
   }
 
   ngOnInit(): void {
-    if (this.supermarket)
-      this.supermarketKey = this.supermarket.id;
   }
 
   public edit(slidingItem: ItemSliding): void {
     slidingItem.close();
+    let product = this.product as Product;
+    product.supermarkets = {};
+    product.supermarkets[this.supermarketKey] = {
+      id: this.supermarketKey,
+      price: this.product.price,
+      discount: this.product.discount
+    };
+
     this.navCtrl.push('EditProductPage', {
-      edit: this.product,
+      edit: product,
       supermarket: this.supermarketKey,
       custom: this.product.id === this.product.name,
       callback: (product) => new Promise((resolve, reject) => {
@@ -40,6 +43,7 @@ export class ProductItemViewComponent {
       })
     });
   }
+
   public delete(): void {
     this.productDelete.emit(this.product);
   }

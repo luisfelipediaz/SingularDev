@@ -1,25 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Supermarket } from "../../interfaces/supermarket";
 import { AngularFirestore } from "angularfire2/firestore";
 import { Observable } from 'rxjs/Observable';
+import { Product } from '../../interfaces/product';
 
 @Injectable()
 export class SupermarketServiceProvider {
 
-  constructor(public http: Http, private afFS: AngularFirestore) {
+  constructor(private afFS: AngularFirestore) {
   }
 
-  public getSupermarkets(batch?: number, lastName?: string): Observable<any> {
+  public getSupermarkets(batch: number, lastName?: string): Observable<any> {
+
     return this.afFS.collection(`/supermarkets`, ref => {
       let query = ref.orderBy("name");
-
-      if (!!lastName) query = query.startAt(lastName);
-
+      if (!!lastName) query = query.startAfter(lastName);
       query = query.limit(batch);
-
       return query;
     }).valueChanges();
   }
@@ -36,14 +34,6 @@ export class SupermarketServiceProvider {
       })
       return query;
     }).valueChanges();
-  }
-
-  // public getSupermarketName(key: string): Observable<string> {
-  //   return this.afFS.doc<string>(`/supermarkets/${key}/name`).valueChanges();
-  // }
-
-  public getSupermarketBrands(): Observable<any> {
-    return this.afFS.collection(`/supermarketbrands`).valueChanges();
   }
 
   public pushSupermarket(supermarket: Supermarket) {

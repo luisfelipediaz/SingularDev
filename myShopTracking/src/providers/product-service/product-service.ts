@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
-import { Product } from '../../interfaces/product';
 import { AngularFirestore } from "angularfire2/firestore";
 import { Observable } from 'rxjs/Observable';
 import { ProductSupermarket } from '../../interfaces/product-supermarket';
 import { LoadingController } from 'ionic-angular';
+import { Product } from '../../interfaces/product';
 
 @Injectable()
 export class ProductServiceProvider {
@@ -20,12 +20,9 @@ export class ProductServiceProvider {
     return this.afFS.collection<Product>('/products').valueChanges();
   }
 
-  public getProductsBySupermarket(top: number, supermarket: string): Observable<Product[]> {
-    return this.afFS.collection<Product>(`/products`, ref => {
-      return ref
-        .orderBy(`supermarkets`)
-        .limit(top)
-        .startAt(supermarket);
+  public getProductsBySupermarket(supermarket: string, top?: number): Observable<ProductSupermarket[]> {
+    return this.afFS.collection<ProductSupermarket>(`/supermarkets/${supermarket}/products`, ref => {
+      return ref.limit(top)
     }).valueChanges();
   }
 

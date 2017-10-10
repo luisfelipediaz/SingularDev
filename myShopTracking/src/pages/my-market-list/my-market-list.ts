@@ -1,14 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 
 import { PreProduct } from '../../interfaces/pre-product';
 import { MyMarketListServiceProvider } from '../../providers/my-market-list-service/my-market-list-service';
-/**
- * Generated class for the MyMarketListPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({

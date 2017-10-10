@@ -1,7 +1,7 @@
 <ion-item-sliding #slidingItem>
     <ion-item (click)="edit(slidingItem)">
         <h4>{{ !supermarket?product.name:supermarket.name }}</h4>
-        <h6>{{ product.supermarkets[supermarketKey].price | currency:'USD':true:'1.0-2' }} c/unidad</h6>
+        <h6>{{ product.price | currency:'USD':true:'1.0-2' }} c/unidad</h6>
         <h6>{{ product.brand }} </h6>
     </ion-item>
     <!-- <ion-item-options side="left"> -->

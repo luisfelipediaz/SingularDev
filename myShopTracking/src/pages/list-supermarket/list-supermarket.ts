@@ -17,7 +17,6 @@ export class ListSupermarketPage {
   globalSupermarkets: Supermarket[];
 
   supermarketSelect: Supermarket;
-  name: string;
 
   batch: number = 10;
   lastKey: string = '';

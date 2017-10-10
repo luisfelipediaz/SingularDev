@@ -62,7 +62,7 @@ export class ShoppingPage implements OnInit {
         this.agregarProducto(barcodeData.text)
       }
     }, (err) => {
-      this.agregarProducto(prompt("Codigo de barras del producto"));
+      this.agregarProducto(prompt("Código de barras del producto"));
     });
   }
 
@@ -80,14 +80,13 @@ export class ShoppingPage implements OnInit {
     });
   }
 
-  public agregarProducto(text: string): void {
-    let subscribeProduct = this.productServiceProvider.getProduct(text).subscribe(product => {
+  public agregarProducto(barcode: string): void {
+    let subscribeProduct = this.productServiceProvider.getProduct(barcode).subscribe(product => {
       if (!!subscribeProduct) subscribeProduct.unsubscribe();
 
-      if (product) {
+      if (!!product) {
         product.supermarkets = {};
-        let priceObservable = this.productServiceProvider.getPrice(text, this.market.supermarket.id).subscribe(result => {
-
+        let priceObservable = this.productServiceProvider.getPrice(barcode, this.market.supermarket.id).subscribe(result => {
           if (!!priceObservable) priceObservable.unsubscribe();
 
           if (!!result) {
@@ -101,7 +100,7 @@ export class ShoppingPage implements OnInit {
         });
       } else {
         product = {
-          id: text,
+          id: barcode,
           name: "",
           brand: "",
           supermarkets: {}

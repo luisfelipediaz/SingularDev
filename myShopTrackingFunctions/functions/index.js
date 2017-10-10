@@ -10,40 +10,37 @@ admin.initializeApp(functions.config().firebase);
 //  response.send("Hello from Firebase!");
 // });
 
-exports.historyPrice = functions.database.ref('/products/{barcode}/supermarkets/{supermarket}').onWrite((snapshot) => {
-    if (!!snapshot.data.val()) {
-        const time = new Date();
-        const obj = {
-            date: time.getTime(),
-            price: snapshot.data.val()
-        };
+// exports.changeProduct = functions.firestore.document('/products/{barcode}').onWrite(snapshot => {
+//     if (snapshot.data.exists) {
+//         return admin.firestore().collection(`/products/${snapshot.params.barcode}/supermarkets`).get().then(supermarkets => {
+//             let product = snapshot.data.data();
+//             supermarkets.forEach(supermarket => {
+//                 let data = Object.assign({}, product);
+//                 data = Object.assign(data, supermarket.data());
+//                 data.id = null;
+//                 admin.firestore().doc(`/supermarkets/${supermarket.id}/products/${product.id}`).set(data).catch(err => {
+//                     console.log(err);
+//                 });
+//             });
+//         });
+//     }
+// });
 
-        admin.firestore().doc(`/products/${snapshot.params.barcode}/supermarkets/${snapshot.params.supermarket}/history/${time.getTime()}`).set(obj);
-
-        return admin.database().ref(`/history/${snapshot.params.barcode}/${snapshot.params.supermarket}/${time.getTime()}`).update(obj);
-    } else return null;
-});
 exports.historyPriceFS = functions.firestore.document('/products/{barcode}/supermarkets/{supermarket}').onWrite((snapshot) => {
     if (snapshot.data.exists) {
         const time = new Date();
 
-        const obj = __assign({
+        const obj = Object.assign({
             date: time.getTime()
         }, snapshot.data.data());
-
-        admin.database().ref(`/history/${snapshot.params.barcode}/${snapshot.params.supermarket}/${time.getTime()}`).update(obj);
+        
+        admin.firestore().doc(`/products/${snapshot.params.barcode}`).get().then(product => {
+            let data = product.data();
+            data = Object.assign(data, snapshot.data.data());
+            delete data.id;
+            admin.firestore().doc(`/supermarkets/${snapshot.params.supermarket}/products/${snapshot.params.barcode}`).set(data);
+        });
 
         return admin.firestore().doc(`/products/${snapshot.params.barcode}/supermarkets/${snapshot.params.supermarket}/history/${time.getTime()}`).set(obj);
     } else return null;
 });
-
-
-var __assign = (this && this.__assign) || Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s)
-            if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-    }
-    return t;
-};
