@@ -4,7 +4,6 @@ import 'rxjs/add/operator/map';
 import { Supermarket } from "../../interfaces/supermarket";
 import { AngularFirestore } from "angularfire2/firestore";
 import { Observable } from 'rxjs/Observable';
-import { Product } from '../../interfaces/product';
 
 @Injectable()
 export class SupermarketServiceProvider {

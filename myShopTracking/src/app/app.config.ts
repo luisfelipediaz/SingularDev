@@ -1,4 +1,5 @@
 import { PushOptions } from "@ionic-native/push";
+import { User } from "firebase";
 
 export class AppConfig {
   public static firebaseConfig = {
@@ -23,5 +24,5 @@ export class AppConfig {
     }
   };
 
-  public static user: firebase.User;
+  public static user: User;
 }
