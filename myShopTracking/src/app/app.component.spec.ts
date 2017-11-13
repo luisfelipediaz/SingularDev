@@ -7,12 +7,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Push } from '@ionic-native/push';
 import { Autostart } from '@ionic-native/autostart';
-import { PlatformMock, StatusBarMock, SplashScreenMock } from '../../test-config/mocks-ionic';
 import { AutostartMock } from '@ionic-native-mocks/autostart';
 import { PushMock } from '@ionic-native-mocks/push';
 import { MyApp } from './app.component';
 import { AppConfig } from './app.config';
 import { MessagingService } from '../providers/messagin/messagin-service';
+import { StatusBarMock, SplashScreenMock, PlatformMock } from 'ionic-mocks';
 
 describe('MyApp Component', () => {
     let fixture;
@@ -30,9 +30,9 @@ describe('MyApp Component', () => {
             providers: [
                 AngularFireAuth,
                 MessagingService,
-                { provide: StatusBar, useClass: StatusBarMock },
-                { provide: SplashScreen, useClass: SplashScreenMock },
-                { provide: Platform, useClass: PlatformMock },
+                { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
+                { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
+                { provide: Platform, useFactory: () => PlatformMock.instance() },
                 { provide: Push, useClass: PushMock },
                 { provide: Autostart, useClass: AutostartMock }
             ]

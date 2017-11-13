@@ -14,7 +14,6 @@ export class SupermarketPage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     private supermarketServiceProvider: SupermarketServiceProvider,
     private alertCtrl: AlertController) {
   }

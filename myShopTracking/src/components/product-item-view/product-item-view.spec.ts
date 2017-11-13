@@ -4,8 +4,8 @@ import { IonicModule, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
-import { NavMock } from '../../../test-config/mocks-ionic';
 import { ProductItemViewComponent } from './product-item-view';
+import { NavControllerMock } from 'ionic-mocks';
 
 describe('ProductItemView Component', () => {
     let fixture;
@@ -18,7 +18,7 @@ describe('ProductItemView Component', () => {
                 IonicModule.forRoot(ProductItemViewComponent)
             ],
             providers: [
-                { provide: NavController, useClasee: NavMock }
+                { provide: NavController, useFactory: () => NavControllerMock.instance() }
             ]
         })
     }));
