@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, AlertController, IonicPage } from 'ionic-angular';
+import { NavController, AlertController, IonicPage } from 'ionic-angular';
 
 import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';

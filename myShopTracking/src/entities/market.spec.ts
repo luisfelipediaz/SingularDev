@@ -1,5 +1,4 @@
 import { Market } from './market';
-import { MarketServiceProvider } from '../providers/market-service/market-service';
 
 
 describe('Market Entities', () => {

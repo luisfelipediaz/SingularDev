@@ -1,9 +1,7 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { IonicModule, NavController, AlertController } from 'ionic-angular';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { AngularFirestore, AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
 import { AppConfig } from '../../app/app.config';
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
