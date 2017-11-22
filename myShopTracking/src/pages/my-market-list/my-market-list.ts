@@ -15,10 +15,6 @@ export class MyMarketListPage {
   constructor(private myMarketListServiceProvider: MyMarketListServiceProvider) {
   }
   
-  /*productSelected(product: string){
-    console.log("Select product", product);
-  }*/
-
   add():void{
     this.myMarketListServiceProvider.pushProduct(this.preProduct);
   }
