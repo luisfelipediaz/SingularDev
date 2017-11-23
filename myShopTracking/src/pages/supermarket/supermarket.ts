@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, AlertController, IonicPage } from 'ionic-angular';
 
 import { Supermarket } from '../../interfaces/supermarket';
 import { SupermarketServiceProvider } from '../../providers/supermarket-service/supermarket-service';
@@ -14,6 +14,7 @@ export class SupermarketPage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
+    public navParams: NavParams,
     private supermarketServiceProvider: SupermarketServiceProvider,
     private alertCtrl: AlertController) {
   }
