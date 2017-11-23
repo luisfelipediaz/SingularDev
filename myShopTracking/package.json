@@ -29,7 +29,7 @@
     "@ionic-native/status-bar": "^4.4.2",
     "@ionic/storage": "2.0.1",
     "angularfire2": "^5.0.0-rc.4",
-    "cordova-android": "6.4.0",
+    "cordova-android": "6.3.0",
     "cordova-browser": "^5.0.1",
     "cordova-ios": "4.5.4",
     "cordova-plugin-autostart": "^2.0.1",
@@ -70,9 +70,9 @@
       }
     },
     "platforms": [
-      "android",
       "browser",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }
