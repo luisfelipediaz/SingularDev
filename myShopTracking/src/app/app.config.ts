@@ -12,7 +12,6 @@ export class AppConfig {
   };
 
   public static pushOptions: PushOptions = {
-    android: {},
     ios: {
       alert: 'true',
       badge: true,
