@@ -14,17 +14,6 @@
     </ion-item>
   </ion-list>
   <br/>
-  <!-- <ng-container *ngIf="agrupacionSeleccion">
-    <ion-list *ngFor="let product of productList | async">
-      <ion-list-header color="primary">
-        {{product.name}}{{GetSupermarketByProduct(product.id)}}
-      </ion-list-header>
-      <div *ngFor="let supermarket of supermarkekListProduct[product.id] | async">
-        <product-item-view [product]="product" [supermarket]="supermarket" (productDelete)="deleteProduct($event)">
-        </product-item-view>
-      </div>
-    </ion-list>
-  </ng-container> -->
   <ng-container *ngIf="!agrupacionSeleccion">
     <ion-list *ngFor="let item of supermarketList">
       <ion-list-header color="primary">
