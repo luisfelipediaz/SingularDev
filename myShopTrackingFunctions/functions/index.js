@@ -1,15 +1,10 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const algoliasearch = require('algoliasearch');
+const AlgoliaMyShopTracking = require('./algolia');
 
 admin.initializeApp(functions.config().firebase);
 
-const ALGOLIA_ID = functions.config().algolia.app_id;
-const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
-const ALGOLIA_SEARCH_KEY = functions.config().algolia.search_key;
-
-const ALGOLIA_INDEX_NAME = 'products';
-const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+const algoliaMyShopTracking = new AlgoliaMyShopTracking(functions.config().algolia);
 
 exports.historyPrice = functions.firestore.document('/products/{barcode}/supermarkets/{supermarket}')
     .onWrite(
@@ -34,22 +29,7 @@ exports.historyPrice = functions.firestore.document('/products/{barcode}/superma
         });
 
 exports.createIndexAlgolia = functions.firestore.document('/products/{barcode}')
-    .onCreate(
-        (snapshot) => {
-            const product = snapshot.data.data();
-            product.objectID = snapshot.params.barcode;
-
-            const index = client.initIndex(ALGOLIA_INDEX_NAME);
-
-            return index.saveObject(product);
-        }
-    );
+    .onCreate((snapshot) => algoliaMyShopTracking.saveObjectAlgolia(snapshot));
 
 exports.updateProductAlgolia = functions.firestore.document('/products/{barcode}')
-    .onUpdate((snapshot) => {
-        const index = client.initIndex(ALGOLIA_INDEX_NAME);
-        const product = snapshot.data.data();
-        product.objectID = snapshot.params.barcode;
-
-        return index.saveObject(product);
-    });
+    .onUpdate((snapshot) => algoliaMyShopTracking.saveObjectAlgolia(snapshot));
