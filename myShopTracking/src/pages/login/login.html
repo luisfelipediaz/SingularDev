@@ -10,13 +10,16 @@
 
 
 <ion-content padding>
-  <button ion-button icon-left block color="danger" (click)="loginUserGoogle()" *ngIf="!userProfile">
+  <button ion-button icon-left block color="danger" (click)="loginUserGoogle()" disabled>
     <ion-icon name="logo-googleplus"></ion-icon>
     Continue with Google
   </button>
-  <button ion-button icon-left block color="facebook" (click)="loginUserFacebook()" *ngIf="!userProfile">
+  <button ion-button icon-left block color="facebook" (click)="loginUserFacebook()" disabled>
     <ion-icon name="logo-facebook"></ion-icon>
     Continue with Facebook
   </button>
-
+  <h3>While we finish the development stage, we can only be logged anonymously</h3>
+  <button ion-button icon-left block (click)="loginUserAnonymous()">
+    Continue as anonymous
+  </button>
 </ion-content>

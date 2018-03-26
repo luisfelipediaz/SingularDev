@@ -25,6 +25,10 @@ export class LoginPage {
     this.login(new firebase.auth.FacebookAuthProvider());
   }
 
+  loginUserAnonymous(): void {
+    this.afAuth.auth.signInAnonymously();
+  }
+
   private login(provider: firebase.auth.AuthProvider): void {
     if (this.platform.is('cordova') && !this.platform.is('core'))
       this.afAuth.auth.signInWithRedirect(provider).catch((error) => {

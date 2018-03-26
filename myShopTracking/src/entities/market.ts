@@ -49,9 +49,11 @@ export class Market {
     }
 
     public delete(product: Product): void {
-        var indexDel = -1;
-        for (var index = 0; index < this.products.length; index++) {
+        let indexDel = -1;
+        let productToDelete: ProductMarket;
+        for (let index = 0; index < this.products.length; index++) {
             if (product.id === this.products[index].product.id) {
+                productToDelete = this.products[index];
                 indexDel = index;
                 break;
             }
@@ -61,11 +63,13 @@ export class Market {
             this.products.splice(indexDel, 1);
             this.calculateTotal();
         }
+
+        this.marketServiceProvider.deleteProduct(this, productToDelete);
     }
 
     public calculateTotal(): void {
         this.total = 0;
-        for (var index = 0; index < this.products.length; index++) {
+        for (let index = 0; index < this.products.length; index++) {
             this.total += this.products[index].price;
         }
     }

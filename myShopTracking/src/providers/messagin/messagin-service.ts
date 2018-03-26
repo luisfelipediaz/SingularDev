@@ -42,8 +42,6 @@ export class MessagingService {
             }).catch(err => {
                 console.log(err)
             });
-
-
         }
     }
 }

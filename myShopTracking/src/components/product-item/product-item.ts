@@ -35,7 +35,11 @@ export class ProductItemComponent {
   }
 
   public minus(): void {
-    this.productMinus.emit(this.item);
+    if (this.item.count === 1) {
+      this.delete();
+    } else {
+      this.productMinus.emit(this.item);
+    }
   }
 
   public more(): void {

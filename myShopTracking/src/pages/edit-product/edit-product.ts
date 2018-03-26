@@ -20,6 +20,7 @@ export class EditProductPage implements OnInit {
   public convertToNumber(event): number { return +event; }
 
   public guardar(): void {
+    debugger;
     const callBack = this.navParams.get("callback");
 
     if (this.custom) {

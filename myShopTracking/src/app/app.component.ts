@@ -33,16 +33,16 @@ export class MyApp {
       { title: 'Shopping', component: 'ShoppingPage' },
       { title: 'ListProduct', component: 'ListProductPage' },
       { title: 'Supermarket', component: 'SupermarketPage' },
-      { title: 'My List Market', component: 'MyMarketListPage' },
+      { title: 'My list market', component: 'MyMarketListPage' },
       { title: 'Login', component: 'LoginPage' }
     ];
 
     this.initializeApp();
 
-    this.rootPage = 'ShoppingPage';
+    //this.rootPage = 'ShoppingPage';
 
     //EL plugin de dynamic links de cordova aun esta defectuoso
-    /*afAuth.authState.subscribe(user => {
+    afAuth.authState.subscribe(user => {
       if (!user) {
         AppConfig.user = null;
         this.rootPage = 'LoginPage';
@@ -51,9 +51,7 @@ export class MyApp {
         AppConfig.user = user;
         this.rootPage = 'ShoppingPage';
       }
-    });*/
-
-
+    });
   }
 
   isAuthenticated(): boolean {
@@ -75,7 +73,11 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    if (this.isAuthenticated()) {
+      this.nav.setRoot(page.component);
+    } else {
+      this.nav.setRoot('LoginPage');
+    }
   }
 
   logout() {

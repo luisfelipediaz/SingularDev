@@ -12,25 +12,24 @@ export class MarketServiceProvider {
 
   pushMarket(market: Market) {
     if (!AppConfig.user) return;
-    this.afFS.doc(`/markets/${AppConfig.user.uid}/${market.date}`).set({
+    this.afFS.doc(`/markets/${AppConfig.user.uid}/history/${market.date}`).set({
       date: market.date,
-      supermarket: market.supermarket ? market.supermarket.id : null,
-      products: market.products
+      supermarket: market.supermarket.id
     });
   }
 
   pushProduct(market: Market, product: ProductMarket) {
     if (!AppConfig.user) return;
-    this.afFS.doc(`/markets/${AppConfig.user.uid}/${market.date}/products/${product.product.id}`).update({
+    this.afFS.doc(`/markets/${AppConfig.user.uid}/history/${market.date}/products/${product.product.id}`).set({
       count: product.count,
       price: product.price,
-      unitPrice: product.product.supermarkets[market.supermarket.id]
+      unitPrice: product.product.supermarkets[market.supermarket.id].price
     });
   }
 
   updateProduct(market: Market, product: ProductMarket) {
-    if (!AppConfig.user) return;    
-    this.afFS.doc(`/markets/${AppConfig.user.uid}/${market.date}/products/${product.product.id}`).update({
+    if (!AppConfig.user) return;
+    this.afFS.doc(`/markets/${AppConfig.user.uid}/history/${market.date}/products/${product.product.id}`).update({
       count: product.count,
       price: product.price
     });
@@ -38,7 +37,7 @@ export class MarketServiceProvider {
 
   deleteProduct(market: Market, product: ProductMarket) {
     if (!AppConfig.user) return;
-    this.afFS.doc(`/markets/${AppConfig.user.uid}/${market.date}/products/${product.product.id}`).delete();
+    this.afFS.doc(`/markets/${AppConfig.user.uid}/history/${market.date}/products/${product.product.id}`).delete();
   }
 
 }
