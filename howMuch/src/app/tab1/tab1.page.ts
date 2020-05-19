@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +8,12 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  constructor(private barcodeScanner: BarcodeScanner) { }
+
+  async hagalePsHpta() {
+    const result = await this.barcodeScanner.scan({ orientation: 'portrait', showTorchButton: true });
+    if (result.cancelled) { alert('No sea loca'); }
+    alert(`Funiona catre hpta ${result.text}`);
+  }
 
 }
