@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">howMuch</string>
+    <string name="title_activity_main">howMuch</string>
+    <string name="package_name">io.howMuch.pipe</string>
+    <string name="custom_url_scheme">io.howMuch.pipe</string>
+</resources>
