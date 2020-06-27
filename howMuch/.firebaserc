@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "shoptracking-90587"
+  },
+  "targets": {
+    "shoptracking-90587": {
+      "hosting": {
+        "app": [
+          "shoptracking-90587"
+        ]
+      }
+    }
   }
 }

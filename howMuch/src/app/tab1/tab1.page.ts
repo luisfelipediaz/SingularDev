@@ -10,10 +10,10 @@ export class Tab1Page {
 
   constructor(private barcodeScanner: BarcodeScanner) { }
 
-  async hagalePsHpta() {
+  async hagalePs() {
     const result = await this.barcodeScanner.scan({ orientation: 'portrait', showTorchButton: true });
     if (result.cancelled) { alert('No sea loca'); }
-    alert(`Funiona catre hpta ${result.text}`);
+    alert(`Funiona catre ${result.text}`);
   }
 
 }
