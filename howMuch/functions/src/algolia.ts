@@ -15,10 +15,10 @@ export class AlgoliaMyShopTracking {
         this.index = this.client.initIndex(ALGOLIA_INDEX_NAME);
     }
 
-    saveObjectAlgolia(snapshot: any) {
-        const product = snapshot.data.data();
-        product.objectID = snapshot.params.barcode;
+    async saveObjectAlgolia(snapshot: any, params: any) {
+        const product = { ...snapshot.data() };
+        product.objectID = params.barcode;
 
-        return this.index.saveObject(product);
+        return await this.index.saveObject(product);
     }
 }

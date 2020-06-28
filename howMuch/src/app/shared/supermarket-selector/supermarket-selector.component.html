@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Select supermarket</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar placeholder="Search"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-radio-group [value]="currentSelectedId$ | async">
+      <ng-template ngFor let-brand [ngForOf]="supermarketByBrand$ | async | keyvalue">
+        <ion-list-header>
+          <ion-label>
+            {{brand.key}}
+          </ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let supermarket of brand.value">
+          <ion-label>{{supermarket.name}}</ion-label>
+          <ion-radio [value]="supermarket.id" (click)="marketSelect(supermarket)">
+          </ion-radio>
+        </ion-item>
+      </ng-template>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>

@@ -1,27 +1,10 @@
 import { createAction, props } from '@ngrx/store';
-import { Product } from 'src/app/app.model';
+import { Product, Supermarket, ProductInMarket } from 'src/app/app.model';
 
-export const ChangeSupermarket = createAction(
-    '[Market] Change supermarket',
-    props<{ supermarket: string }>()
-);
-
-export const AddProduct = createAction(
-    '[Market] Add product',
-    props<{ product: Product }>()
-);
-
-export const DeleteProduct = createAction(
-    '[Market] Delete product',
-    props<{ product: string }>()
-);
-
-export const IncreaseQuantityProduct = createAction(
-    '[Market] Increase quantity product',
-    props<{ product: string }>()
-);
-
-export const DecreaseQuantityProduct = createAction(
-    '[Market] Decrease quantity product',
-    props<{ product: string }>()
-);
+export const changeSupermarket = createAction('[Market] Change supermarket', props<{ supermarket: Supermarket }>());
+export const preAddProduct = createAction('[Market] Pre add Product', props<{ product: string }>());
+export const addProduct = createAction('[Market] Add product', props<{ product: ProductInMarket }>());
+export const deleteProduct = createAction('[Market] Delete product', props<{ product: string }>());
+export const increaseQuantityProduct = createAction('[Market] Increase quantity product', props<{ product: string }>());
+export const decreaseQuantityProduct = createAction('[Market] Decrease quantity product', props<{ product: string }>());
+export const registerNewProduct = createAction('[Market] register new product', props<{ productBarcode: string, supermarket: string }>());

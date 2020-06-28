@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Shopping</ion-title>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="openSelectSupermarket()">
         <ion-icon slot="icon-only" name="options"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -22,13 +22,25 @@
     </div>
   </div>
   <ng-template #market>
-    
+
   </ng-template>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed" (click)="scanProduct()">
+    <ion-fab-button>
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="clipboard"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 
-<ion-navbar>
-  <ion-title class="ion-text-center">
-    {{ marketTotal$ | async | number }}
-  </ion-title>
-</ion-navbar>
+<ion-footer mode="ios">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      {{ marketTotal$ | async | number }}
+    </ion-title>
+  </ion-toolbar>
 </ion-footer>

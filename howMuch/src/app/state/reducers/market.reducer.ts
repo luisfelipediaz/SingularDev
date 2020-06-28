@@ -1,37 +1,51 @@
-import { createReducer, on } from '@ngrx/store';
-import { ProductInMarket } from 'src/app/app.model';
+import { createReducer, on, Action } from '@ngrx/store';
+import { ProductInMarket, Supermarket } from 'src/app/app.model';
 
 import * as actions from '../actions/market.actions';
 
 export interface MarketState {
     markets: { [market: string]: { [product: string]: ProductInMarket } };
-    current: string;
+    current: Supermarket;
 }
 
 export const initialState: MarketState = {
     markets: {},
-    current: ''
+    current: null
 };
 
-const reducer = createReducer(initialState,
-    on(actions.ChangeSupermarket, (state, { supermarket }) => ({
+const marketReducer = createReducer(initialState,
+    on(actions.changeSupermarket, (state, { supermarket }) => ({
         ...state,
-        [supermarket]: state[supermarket] || [],
+        markets: {
+            ...state.markets,
+            [supermarket.id]: state.markets[supermarket.id] || {}
+        },
         current: supermarket
     })),
-    on(actions.AddProduct, (state, { product }) => ({
+    on(actions.addProduct, (state, { product }) => ({
         ...state,
-        [state.current]: {
-            ...state[state.current],
-            [product.id]: {
-                ...state[state.current][product.id] || { ...product },
-                units: state[state.current][product.id].units + 1,
-                total: state[state.current][product.id].units * state[state.current][product.id].price
+        markets: {
+            ...state.markets,
+            [state.current.id]: {
+                ...state[state.current.id],
+                [product.id]: {
+                    ...product,
+                    units: getUnits(state, product),
+                    total: getTotal(state, product)
+                }
             }
         }
     }))
 );
 
-export function marketReducer(state, action) {
-    return reducer(state, action);
+function getTotal(state: MarketState, product: ProductInMarket) {
+    return product.price * getUnits(state, product);
+}
+
+function getUnits(state: MarketState, product: ProductInMarket) {
+    return (state.markets[state.current.id][product.id] || product).units;
+}
+
+export function reducer(state: MarketState, action: Action) {
+    return marketReducer(state, action);
 }
