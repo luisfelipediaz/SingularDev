@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Shopping</ion-title>
+    <ion-title>Market</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openSelectSupermarket()">
         <ion-icon slot="icon-only" name="options"></ion-icon>
@@ -19,19 +19,25 @@
       <p>
         Here we go!
       </p>
+      <p>
+        Please select a supermarket
+      </p>
     </div>
   </div>
   <ng-template #market>
-
+    <ion-list>
+      <app-product-in-market *ngFor="let item of products$ | async" [item]="item" (more)="moreOfProduct(item)"
+        (minus)="minusOfProduct(item)" (delete)="deleteProduct(item)"></app-product-in-market>
+    </ion-list>
   </ng-template>
 
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed" (click)="scanProduct()">
-    <ion-fab-button>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="scanProduct()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button color="secondary">
       <ion-icon name="clipboard"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -40,7 +46,7 @@
 <ion-footer mode="ios">
   <ion-toolbar>
     <ion-title class="ion-text-center">
-      {{ marketTotal$ | async | number }}
+      {{ marketTotal$ | async | currency:'USD':'symbol-narrow':'1.0-2' }}
     </ion-title>
   </ion-toolbar>
 </ion-footer>

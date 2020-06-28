@@ -27,7 +27,7 @@ const marketReducer = createReducer(initialState,
         markets: {
             ...state.markets,
             [state.current.id]: {
-                ...state[state.current.id],
+                ...state.markets[state.current.id],
                 [product.id]: {
                     ...product,
                     units: getUnits(state, product),
@@ -35,7 +35,49 @@ const marketReducer = createReducer(initialState,
                 }
             }
         }
-    }))
+    })),
+    on(actions.increaseQuantityProduct, (state, { product }) => ({
+        ...state,
+        markets: {
+            ...state.markets,
+            [state.current.id]: {
+                ...state.markets[state.current.id],
+                [product]: {
+                    ...state.markets[state.current.id][product],
+                    units: state.markets[state.current.id][product].units + 1,
+                    total: (state.markets[state.current.id][product].units + 1) * state.markets[state.current.id][product].price,
+                }
+            }
+        }
+    })),
+    on(actions.decreaseQuantityProduct, (state, { product }) => ({
+        ...state,
+        markets: {
+            ...state.markets,
+            [state.current.id]: {
+                ...state.markets[state.current.id],
+                [product]: {
+                    ...state.markets[state.current.id][product],
+                    units: state.markets[state.current.id][product].units - 1,
+                    total: (state.markets[state.current.id][product].units - 1) * state.markets[state.current.id][product].price,
+                }
+            }
+        }
+    })),
+    on(actions.deleteProduct, (state, { product }) => {
+        const currentMarket = { ...state.markets[state.current.id] };
+        delete currentMarket[product];
+
+        return {
+            ...state,
+            markets: {
+                ...state.markets,
+                [state.current.id]: {
+                    ...currentMarket
+                }
+            }
+        };
+    })
 );
 
 function getTotal(state: MarketState, product: ProductInMarket) {

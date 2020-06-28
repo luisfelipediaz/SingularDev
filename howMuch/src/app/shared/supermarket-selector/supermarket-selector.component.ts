@@ -34,4 +34,8 @@ export class SupermarketSelectorComponent implements OnInit {
     this.modalCtrl.dismiss(supermarket);
   }
 
+  dismiss() {
+    this.modalCtrl.dismiss();
+  }
+
 }

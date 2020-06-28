@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
+
 import { SupermarketSelectorComponent } from '../shared/supermarket-selector/supermarket-selector.component';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ProductInMarket } from '../app.model';
+import { Observable } from 'rxjs';
 
 import * as marketActions from '../state/actions/market.actions';
+import * as marketSelectors from '../state/selectors/market.selectors';
 
 @Component({
   selector: 'app-market',
@@ -12,14 +16,23 @@ import * as marketActions from '../state/actions/market.actions';
   styleUrls: ['./market.page.scss'],
 })
 export class MarketPage implements OnInit {
+  isEmpty$: Observable<boolean>;
+  marketTotal$: Observable<number>;
+  products$: Observable<ProductInMarket[]>;
+
   constructor(
     private store: Store,
     public modalCtrl: ModalController,
-    private barcodeScanner: BarcodeScanner
+    private barcodeScanner: BarcodeScanner,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
     this.openSelectSupermarket();
+
+    this.isEmpty$ = this.store.select(marketSelectors.isEmpty);
+    this.products$ = this.store.select(marketSelectors.getProducts);
+    this.marketTotal$ = this.store.select(marketSelectors.getTotal);
   }
 
   async openSelectSupermarket() {
@@ -29,7 +42,8 @@ export class MarketPage implements OnInit {
 
     await modal.present();
     const { data: supermarket } = await modal.onWillDismiss();
-    this.store.dispatch(marketActions.changeSupermarket({ supermarket }));
+
+    if (!!supermarket) { this.store.dispatch(marketActions.changeSupermarket({ supermarket })); }
   }
 
   async scanProduct() {
@@ -40,6 +54,26 @@ export class MarketPage implements OnInit {
     } catch {
       this.store.dispatch(marketActions.preAddProduct({ product: prompt('Digite el código') }));
     }
+  }
 
+  moreOfProduct({ id: product }: ProductInMarket) {
+    this.store.dispatch(marketActions.increaseQuantityProduct({ product }));
+  }
+
+  minusOfProduct({ id: product }: ProductInMarket) {
+    this.store.dispatch(marketActions.decreaseQuantityProduct({ product }));
+  }
+
+  async deleteProduct({ id: product }: ProductInMarket) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: 'Do you want remove product?',
+      buttons: [
+        { text: 'Okay', handler: () => this.store.dispatch(marketActions.deleteProduct({ product })) },
+        { text: 'Cancel', role: 'cancel' }
+      ]
+    });
+
+    await alert.present();
   }
 }

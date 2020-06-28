@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Product } from 'src/app/app.model';
 
 @Component({
   selector: 'app-register-product',
@@ -8,7 +9,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
   styleUrls: ['./register-product.component.scss'],
 })
 export class RegisterProductComponent implements OnInit {
-  @Input() productBarcode: string;
+  @Input() product: Product;
 
   register: FormGroup;
 
@@ -19,11 +20,13 @@ export class RegisterProductComponent implements OnInit {
 
   ngOnInit() {
     this.register = this.fb.group({
-      id: [this.productBarcode, [Validators.required]],
+      id: [null, [Validators.required]],
       name: [null, [Validators.required]],
       brand: [null, [Validators.required]],
       price: [null, [Validators.required]]
     });
+
+    this.register.patchValue(this.product);
   }
 
   save() {

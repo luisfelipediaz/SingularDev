@@ -30,34 +30,36 @@ export class MarketEffects {
                 !!product && this.firestore.doc<{ price: number }>(`products/${productBarcode}/supermarkets/${supermarket}`)
                     .valueChanges().pipe(
                         map(productInSupermarket =>
+                            !!productInSupermarket &&
                             marketActions.addProduct({ product: { ...product, price: productInSupermarket.price, units: 1, total: 0 } })
+                            || marketActions.registerNewProduct(({ product, supermarket }))
                         )
                     ) ||
-                of(marketActions.registerNewProduct({ productBarcode, supermarket }))
+                of(marketActions.registerNewProduct({ product: { id: productBarcode }, supermarket }))
             )
         )),
     ));
 
     registerNewProduct$ = createEffect(() => this.actions$.pipe(
         ofType(marketActions.registerNewProduct),
-        mergeMap(({ productBarcode, supermarket }) => from(this.getDataOfNewProduct(productBarcode))
+        mergeMap(({ product, supermarket }) => from(this.getDataProductFromPage(product))
             .pipe(
-                mergeMap(async ({ data }) => (await this.registerNewProduct(productBarcode, data, supermarket))),
+                mergeMap(async ({ data }) => (await this.registerNewProductInFirestore(product.id, data, supermarket))),
                 map((data) => marketActions.addProduct({ product: { ...data, total: 0, units: 1 } }))
             )
         )
     ));
 
-    private async registerNewProduct(productBarcode: string, data: any, supermarket: string): Promise<ProductInMarket> {
+    private async registerNewProductInFirestore(productBarcode: string, data: any, supermarket: string): Promise<ProductInMarket> {
         await this.firestore.doc(`products/${productBarcode}`).set({ brand: data.brand, id: data.id, name: data.name });
         await this.firestore.doc(`products/${productBarcode}/supermarkets/${supermarket}`).set({ price: data.price });
         return data;
     }
 
-    private async getDataOfNewProduct(productBarcode: string): Promise<{ data?: any }> {
+    private async getDataProductFromPage(product: Partial<Product>): Promise<{ data?: any }> {
         const modal = await this.modalController.create({
             component: RegisterProductComponent,
-            componentProps: { productBarcode }
+            componentProps: { product }
         });
         await modal.present();
         return modal.onWillDismiss();

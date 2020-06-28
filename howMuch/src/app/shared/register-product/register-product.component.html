@@ -1,10 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Register new product</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class="ion-padding">
   <form [formGroup]="register">
     <ion-list>
       <ion-item>
@@ -23,10 +28,9 @@
         <ion-label position="floating">Price</ion-label>
         <ion-input type="number" inputmode="numeric" formControlName="price"></ion-input>
       </ion-item>
+      <div class="ion-padding">
+        <ion-button color="primary" [disabled]="register.invalid" expand="block" (click)="save()">Guardar</ion-button>
+      </div>
     </ion-list>
   </form>
 </ion-content>
-
-<ion-footer>
-  <ion-button color="primary" [disabled]="register.invalid" expand="block" (click)="save()">Guardar</ion-button>
-</ion-footer>
