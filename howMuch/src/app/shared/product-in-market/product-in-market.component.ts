@@ -32,6 +32,7 @@ export class ProductInMarketComponent implements OnInit {
   }
 
   async emitEdit(slidingItem: IonItemSliding) {
+    debugger;
     await slidingItem.close();
     this.edit.emit();
   }

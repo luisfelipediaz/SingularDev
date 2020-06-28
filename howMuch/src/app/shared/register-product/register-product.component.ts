@@ -22,7 +22,7 @@ export class RegisterProductComponent implements OnInit {
     this.register = this.fb.group({
       id: [null, [Validators.required]],
       name: [null, [Validators.required]],
-      brand: [null, [Validators.required]],
+      brand: [null],
       price: [null, [Validators.required]]
     });
 

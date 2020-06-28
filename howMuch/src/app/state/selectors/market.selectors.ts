@@ -9,8 +9,7 @@ export const getCurrentSupermarketId = createSelector(getCurrentSupermarket, sta
 
 export const getCurrentMarket = createSelector(
     supermarketFeature,
-    getCurrentSupermarketId,
-    (state, supermarket) => state.markets[supermarket] || {}
+    (state) => state.markets || {}
 );
 
 export const getProducts = createSelector(

@@ -76,4 +76,8 @@ export class MarketPage implements OnInit {
 
     await alert.present();
   }
+
+  editProduct(product: ProductInMarket) {
+    this.store.dispatch(marketActions.launchUpdateProduct({ product }));
+  }
 }

@@ -27,7 +27,7 @@
   <ng-template #market>
     <ion-list>
       <app-product-in-market *ngFor="let item of products$ | async" [item]="item" (more)="moreOfProduct(item)"
-        (minus)="minusOfProduct(item)" (delete)="deleteProduct(item)"></app-product-in-market>
+        (minus)="minusOfProduct(item)" (delete)="deleteProduct(item)" (edit)="editProduct(item)"></app-product-in-market>
     </ion-list>
   </ng-template>
 

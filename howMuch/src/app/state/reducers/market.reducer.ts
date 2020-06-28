@@ -4,7 +4,7 @@ import { ProductInMarket, Supermarket } from 'src/app/app.model';
 import * as actions from '../actions/market.actions';
 
 export interface MarketState {
-    markets: { [market: string]: { [product: string]: ProductInMarket } };
+    markets: { [product: string]: ProductInMarket };
     current: Supermarket;
 }
 
@@ -14,78 +14,72 @@ export const initialState: MarketState = {
 };
 
 const marketReducer = createReducer(initialState,
-    on(actions.changeSupermarket, (state, { supermarket }) => ({
-        ...state,
-        markets: {
-            ...state.markets,
-            [supermarket.id]: state.markets[supermarket.id] || {}
-        },
-        current: supermarket
-    })),
-    on(actions.addProduct, (state, { product }) => ({
-        ...state,
-        markets: {
-            ...state.markets,
-            [state.current.id]: {
-                ...state.markets[state.current.id],
-                [product.id]: {
-                    ...product,
-                    units: getUnits(state, product),
-                    total: getTotal(state, product)
-                }
-            }
-        }
-    })),
-    on(actions.increaseQuantityProduct, (state, { product }) => ({
-        ...state,
-        markets: {
-            ...state.markets,
-            [state.current.id]: {
-                ...state.markets[state.current.id],
-                [product]: {
-                    ...state.markets[state.current.id][product],
-                    units: state.markets[state.current.id][product].units + 1,
-                    total: (state.markets[state.current.id][product].units + 1) * state.markets[state.current.id][product].price,
-                }
-            }
-        }
-    })),
-    on(actions.decreaseQuantityProduct, (state, { product }) => ({
-        ...state,
-        markets: {
-            ...state.markets,
-            [state.current.id]: {
-                ...state.markets[state.current.id],
-                [product]: {
-                    ...state.markets[state.current.id][product],
-                    units: state.markets[state.current.id][product].units - 1,
-                    total: (state.markets[state.current.id][product].units - 1) * state.markets[state.current.id][product].price,
-                }
-            }
-        }
-    })),
-    on(actions.deleteProduct, (state, { product }) => {
-        const currentMarket = { ...state.markets[state.current.id] };
-        delete currentMarket[product];
-
-        return {
-            ...state,
-            markets: {
-                ...state.markets,
-                [state.current.id]: {
-                    ...currentMarket
-                }
-            }
-        };
-    })
+    on(actions.changeSupermarket, (state, { supermarket }) => changeSupermarket(state, supermarket)),
+    on(actions.addProduct, (state, { product }) => addProduct(state, product)),
+    on(actions.increaseQuantityProduct, (state, { product }) => increaseQuantityProduct(state, product)),
+    on(actions.decreaseQuantityProduct, (state, { product }) => decreaseQuantityProduct(state, product)),
+    on(actions.deleteProduct, (state, { product }) => deleteProduct(state, product))
 );
+
+function changeSupermarket(state: MarketState, supermarket: Supermarket): MarketState {
+    return ({ ...state, current: supermarket });
+}
+
+function addProduct(state: MarketState, product: ProductInMarket): MarketState {
+    return ({
+        ...state,
+        markets: {
+            ...state.markets,
+            [product.id]: {
+                ...product,
+                units: getUnits(state, product),
+                total: getTotal(state, product)
+            }
+        }
+    });
+}
+
+function increaseQuantityProduct(state: MarketState, product: string): MarketState {
+    return ({
+        ...state,
+        markets: {
+            ...state.markets,
+            [product]: {
+                ...state.markets[product],
+                units: state.markets[product].units + 1,
+                total: (state.markets[product].units + 1) * state.markets[product].price,
+            }
+        }
+    });
+}
+
+function decreaseQuantityProduct(state: MarketState, product: string): MarketState {
+    return ({
+        ...state,
+        markets: {
+            ...state.markets,
+            [product]: {
+                ...state.markets[product],
+                units: state.markets[product].units - 1,
+                total: (state.markets[product].units - 1) * state.markets[product].price,
+            }
+        }
+    });
+}
+
+function deleteProduct(state: MarketState, product: string) {
+    const currentMarket = { ...state.markets };
+    delete currentMarket[product];
+
+    return { ...state, markets: { ...currentMarket } };
+}
 
 function getTotal(state: MarketState, product: ProductInMarket) {
     return product.price * getUnits(state, product);
 }
 
 function getUnits(state: MarketState, product: ProductInMarket) {
-    return (state.markets[state.current.id][product.id] || product).units;
+    return (state.markets[product.id] || product).units;
 }
 
 export function reducer(state: MarketState, action: Action) {

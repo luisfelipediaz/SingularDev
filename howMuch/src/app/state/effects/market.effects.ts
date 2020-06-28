@@ -27,21 +27,28 @@ export class MarketEffects {
         mergeMap(([productBarcode, supermarket]) => this.firestore.doc<Product>(`products/${productBarcode}`).valueChanges().pipe(
             take(1),
             mergeMap(product =>
-                !!product && this.firestore.doc<{ price: number }>(`products/${productBarcode}/supermarkets/${supermarket}`)
-                    .valueChanges().pipe(
+                !!product && this.firestore.doc<{ price: number }>(`products/${productBarcode}/supermarkets/${supermarket}`).valueChanges()
+                    .pipe(
                         map(productInSupermarket =>
                             !!productInSupermarket &&
                             marketActions.addProduct({ product: { ...product, price: productInSupermarket.price, units: 1, total: 0 } })
-                            || marketActions.registerNewProduct(({ product, supermarket }))
+                            || marketActions.registerOrUpdateProduct(({ product, supermarket }))
                         )
                     ) ||
-                of(marketActions.registerNewProduct({ product: { id: productBarcode }, supermarket }))
+                of(marketActions.registerOrUpdateProduct({ product: { id: productBarcode }, supermarket }))
             )
         )),
     ));
 
+    launchUpdateProduct$ = createEffect(() => this.actions$.pipe(
+        ofType(marketActions.launchUpdateProduct),
+        map(action => action.product),
+        withLatestFrom(this.store.select(marketSelectors.getCurrentSupermarketId)),
+        map(([product, supermarket]) => marketActions.registerOrUpdateProduct(({ product, supermarket })))
+    ));
+
     registerNewProduct$ = createEffect(() => this.actions$.pipe(
-        ofType(marketActions.registerNewProduct),
+        ofType(marketActions.registerOrUpdateProduct),
         mergeMap(({ product, supermarket }) => from(this.getDataProductFromPage(product))
             .pipe(
                 mergeMap(async ({ data }) => (await this.registerNewProductInFirestore(product.id, data, supermarket))),
