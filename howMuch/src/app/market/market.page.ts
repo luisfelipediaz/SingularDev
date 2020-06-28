@@ -56,6 +56,10 @@ export class MarketPage implements OnInit {
     }
   }
 
+  addCustomProduct() {
+    this.store.dispatch(marketActions.addCustomProduct());
+  }
+
   moreOfProduct({ id: product }: ProductInMarket) {
     this.store.dispatch(marketActions.increaseQuantityProduct({ product }));
   }

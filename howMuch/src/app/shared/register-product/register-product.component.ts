@@ -23,7 +23,8 @@ export class RegisterProductComponent implements OnInit {
       id: [null, [Validators.required]],
       name: [null, [Validators.required]],
       brand: [null],
-      price: [null, [Validators.required]]
+      price: [null, [Validators.required]],
+      isCustom: [false]
     });
 
     this.register.patchValue(this.product);
@@ -31,6 +32,10 @@ export class RegisterProductComponent implements OnInit {
 
   save() {
     this.modalController.dismiss(this.register.value);
+  }
+
+  dismiss() {
+    this.modalController.dismiss();
   }
 
 }

@@ -2,6 +2,7 @@ export interface Product {
     id: string;
     name: string;
     brand: string;
+    isCustom: boolean;
     supermarkets?: { [id: string]: ProductSupermarket };
 }
 

@@ -10,3 +10,5 @@ export const increaseQuantityProduct = createAction('[Market] Increase quantity 
 export const decreaseQuantityProduct = createAction('[Market] Decrease quantity product', props<{ product: string }>());
 export const registerOrUpdateProduct = createAction('[Market] register or update product', props<{ product: Partial<Product>, supermarket: string }>());
 export const launchUpdateProduct = createAction('[Market] launch update product', props<{ product: Product }>());
+export const addCustomProduct = createAction('[Market] add custom product');
+export const cancelAdd = createAction('[Market] cancel add product');

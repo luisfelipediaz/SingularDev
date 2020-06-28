@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-button>
+      <ion-button (click)="dismiss()">
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -12,7 +12,7 @@
 <ion-content class="ion-padding">
   <form [formGroup]="register">
     <ion-list>
-      <ion-item>
+      <ion-item *ngIf="!register.value.isCustom">
         <ion-label position="floating">Id</ion-label>
         <ion-input type="text" formControlName="id"></ion-input>
       </ion-item>
