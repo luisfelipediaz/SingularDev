@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import * as supermarketActions from '../../state/actions/supermarket.actions';
-import * as supermarketSelectors from '../../state/selectors/supermarket.selectors';
-import * as marketSelectors from '../../state/selectors/market.selectors';
 import { Supermarket } from 'src/app/app.model';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
+
+import * as supermarketActions from '../../state/actions/supermarket.actions';
+import * as supermarketSelectors from '../../state/selectors/supermarket.selectors';
+import * as marketSelectors from '../../state/selectors/market.selectors';
 
 @Component({
   selector: 'app-supermarket-selector',

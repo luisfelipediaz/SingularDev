@@ -13,9 +13,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <ion-list *ngIf="supermarketByBrand$ | async as supermarketByBrand; else loading">
     <ion-radio-group [value]="currentSelectedId$ | async">
-      <ng-template ngFor let-brand [ngForOf]="supermarketByBrand$ | async | keyvalue">
+      <ng-template ngFor let-brand [ngForOf]="supermarketByBrand | keyvalue">
         <ion-list-header>
           <ion-label>
             {{brand.key}}
@@ -29,4 +29,7 @@
       </ng-template>
     </ion-radio-group>
   </ion-list>
+  <ng-template #loading>
+    <ion-spinner></ion-spinner>
+  </ng-template>
 </ion-content>

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { mergeMap, map, take, withLatestFrom } from 'rxjs/operators';
+import { mergeMap, map, take, withLatestFrom, tap, debounceTime } from 'rxjs/operators';
 import { Product, ProductInMarket } from '../../app.model';
 
 import { of, from, EMPTY } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { RegisterProductComponent } from 'src/app/shared/register-product/register-product.component';
 
 import * as marketActions from '../actions/market.actions';
@@ -14,11 +14,14 @@ import * as marketSelectors from '../selectors/market.selectors';
 
 @Injectable()
 export class MarketEffects {
+    private loader: HTMLIonLoadingElement;
+
     constructor(
         private actions$: Actions,
         private store: Store,
         private firestore: AngularFirestore,
-        private modalController: ModalController
+        private modalController: ModalController,
+        private loadingController: LoadingController
     ) { }
 
     addCustomProduct$ = createEffect(() => this.actions$.pipe(
@@ -34,6 +37,7 @@ export class MarketEffects {
     preAddProduct$ = createEffect(() => this.actions$.pipe(
         ofType(marketActions.preAddProduct),
         map(action => action.product),
+        tap(async () => await (this.loader = await this.loadingController.create({ message: 'Please wait...' })).present()),
         withLatestFrom(this.store.select(marketSelectors.getCurrentSupermarketId)),
         mergeMap(([productBarcode, supermarket]) => this.firestore.doc<Product>(`products/${productBarcode}`).valueChanges().pipe(
             take(1),
@@ -49,6 +53,7 @@ export class MarketEffects {
                 of(marketActions.registerOrUpdateProduct({ product: { id: productBarcode }, supermarket }))
             )
         )),
+        tap(async () => await this.loader.dismiss())
     ));
 
     launchUpdateProduct$ = createEffect(() => this.actions$.pipe(
