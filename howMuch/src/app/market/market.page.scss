@@ -21,3 +21,7 @@ div[empty-screen] > div {
 div[empty-screen] > div > ion-icon {
     font-size: 15rem;
 }
+
+ion-footer > ion-toolbar {
+    padding-bottom: 0;
+}

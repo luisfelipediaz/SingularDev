@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { mergeMap, map, take, withLatestFrom, tap, debounceTime } from 'rxjs/operators';
+import { mergeMap, map, take, withLatestFrom, tap } from 'rxjs/operators';
 import { Product, ProductInMarket } from '../../app.model';
 
-import { of, from, EMPTY } from 'rxjs';
+import { of, from } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ModalController, LoadingController } from '@ionic/angular';
 import { RegisterProductComponent } from 'src/app/shared/register-product/register-product.component';
@@ -63,17 +63,19 @@ export class MarketEffects {
         map(([product, supermarket]) => marketActions.registerOrUpdateProduct(({ product, supermarket })))
     ));
 
-    registerNewProduct$ = createEffect(() => this.actions$.pipe(
+    registerOrUpdateProduct$ = createEffect(() => this.actions$.pipe(
         ofType(marketActions.registerOrUpdateProduct),
         mergeMap(({ product, supermarket }) => from(this.getDataProductFromPage(product))
             .pipe(
+                tap(async () => await (this.loader = await this.loadingController.create({ message: 'Please wait...' })).present()),
                 mergeMap(async ({ data }) => !!data && (await this.registerNewProductInFirestore(product.id, data, supermarket))),
                 map((data) =>
                     !!data && marketActions.addProduct({ product: { ...data, total: 0, units: 1 } })
                     || marketActions.cancelAdd()
                 )
             )
-        )
+        ),
+        tap(async () => await this.loader.dismiss())
     ));
 
     private async registerNewProductInFirestore(productBarcode: string, data: any, supermarket: string): Promise<ProductInMarket> {

@@ -7,13 +7,5 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-
-  constructor(private barcodeScanner: BarcodeScanner) { }
-
-  async hagalePs() {
-    const result = await this.barcodeScanner.scan({ orientation: 'portrait', showTorchButton: true });
-    if (result.cancelled) { alert('No sea loca'); }
-    alert(`Funiona catre ${result.text}`);
-  }
-
+  constructor() { }
 }

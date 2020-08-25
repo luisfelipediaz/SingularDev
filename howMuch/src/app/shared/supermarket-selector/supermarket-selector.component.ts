@@ -27,8 +27,7 @@ export class SupermarketSelectorComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(supermarketActions.loadSupermarket());
     this.currentSelectedId$ = this.store.select(marketSelectors.getCurrentSupermarketId);
-    this.supermarketByBrand$ = this.store.select(supermarketSelectors.getSupermarketsByBrand)
-      .pipe(tap((a) => console.log(a)));
+    this.supermarketByBrand$ = this.store.select(supermarketSelectors.getSupermarketsByBrand);
   }
 
   marketSelect(supermarket: Supermarket) {
