@@ -37,7 +37,7 @@ export class MarketEffects {
     preAddProduct$ = createEffect(() => this.actions$.pipe(
         ofType(marketActions.preAddProduct),
         map(action => action.product),
-        tap(async () => await (this.loader = await this.loadingController.create({ message: 'Please wait...' })).present()),
+        tap(async () => await this.openLoader()),
         withLatestFrom(this.store.select(marketSelectors.getCurrentSupermarketId)),
         mergeMap(([productBarcode, supermarket]) => this.firestore.doc<Product>(`products/${productBarcode}`).valueChanges().pipe(
             take(1),
@@ -67,16 +67,23 @@ export class MarketEffects {
         ofType(marketActions.registerOrUpdateProduct),
         mergeMap(({ product, supermarket }) => from(this.getDataProductFromPage(product))
             .pipe(
-                tap(async () => await (this.loader = await this.loadingController.create({ message: 'Please wait...' })).present()),
+                tap(async ({ data }) => {
+                    if (!data) { return; }
+                    await this.openLoader();
+                }),
                 mergeMap(async ({ data }) => !!data && (await this.registerNewProductInFirestore(product.id, data, supermarket))),
-                map((data) =>
-                    !!data && marketActions.addProduct({ product: { ...data, total: 0, units: 1 } })
+                map((data) => !!data && marketActions.addProduct({ product: { ...data, total: 0, units: 1 } })
                     || marketActions.cancelAdd()
                 )
             )
         ),
         tap(async () => await this.loader.dismiss())
     ));
+
+    private async openLoader() {
+        !!this.loader && await this.loader.dismiss();
+        await (this.loader = await this.loadingController.create({ message: 'Please wait...' })).present();
+    }
 
     private async registerNewProductInFirestore(productBarcode: string, data: any, supermarket: string): Promise<ProductInMarket> {
         await this.firestore.doc(`products/${productBarcode}`).set({ brand: data.brand, id: data.id, name: data.name });
