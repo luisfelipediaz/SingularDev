@@ -1,0 +1,28 @@
+<ion-item-sliding #slidingItem>
+  <ion-item class="ion-no-padding">
+    <ion-fab-button size="small" color="danger" (click)="emmitMinus()">
+      <ion-icon name="remove"></ion-icon>
+    </ion-fab-button>
+    <div item-left>
+      {{ item.units | number: '2.0' }}
+    </div>
+    <ion-fab-button size="small" color="secondary" (click)="emmitMore()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-label>
+      <h3>{{ item.name }}</h3>
+      <p>{{ item.price | currency:'USD':'symbol-narrow':'1.0-2' }} c/unidad</p>
+    </ion-label>
+    <strong>{{ item.total | currency:'USD':'symbol-narrow':'1.0-2' }}</strong>
+  </ion-item>
+  <ion-item-options side="start">
+    <ion-item-option color="secondary" (click)="emitEdit(slidingItem)">
+      Editar
+    </ion-item-option>
+  </ion-item-options>
+  <ion-item-options side="end">
+    <ion-item-option color="danger" (click)="emmitDelete()">
+      Eliminar
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>

@@ -1,0 +1,7 @@
+{
+  "name": "howMuch",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

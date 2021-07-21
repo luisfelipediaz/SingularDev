@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Market</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openSelectSupermarket()">
+        <ion-icon slot="icon-only" name="options"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="isEmpty$ | async; else market" empty-screen>
+    <div text-center>
+      <ion-icon name="cart"></ion-icon>
+      <h2 class="slide-title">
+        Welcome to <b>How much</b>
+      </h2>
+      <p>
+        Here we go!
+      </p>
+      <p>
+        Please select a supermarket
+      </p>
+    </div>
+  </div>
+  <ng-template #market>
+    <ion-list>
+      <app-product-in-market *ngFor="let item of products$ | async" [item]="item" (more)="moreOfProduct(item)"
+        (minus)="minusOfProduct(item)" (delete)="deleteProduct(item)" (edit)="editProduct(item)"></app-product-in-market>
+    </ion-list>
+  </ng-template>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="scanProduct()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary" (click)="addCustomProduct()">
+      <ion-icon name="clipboard"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ion-footer mode="ios">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      {{ marketTotal$ | async | currency:'USD':'symbol-narrow':'1.0-2' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>
